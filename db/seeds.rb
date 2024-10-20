@@ -29,4 +29,9 @@
 #   puts 'Failed to save feedback: ' + feedback.errors.full_messages.join(', ')
 # end
 
+# Add data to districts table where model name is District
+District.create([
+  { name: 'Naogaon', created_at: Time.now, updated_at: Time.now }, 
+   { name: 'Rajshahi', created_at: Time.now, updated_at: Time.now },
+])
 
