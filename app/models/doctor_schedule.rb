@@ -1,0 +1,2 @@
+class DoctorSchedule < ApplicationRecord
+end
