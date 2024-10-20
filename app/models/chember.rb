@@ -1,0 +1,2 @@
+class Chember < ApplicationRecord
+end
