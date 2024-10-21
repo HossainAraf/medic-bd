@@ -1,4 +1,4 @@
 class Chember < ApplicationRecord
-  belongs_to :District
-  has_many :DoctorSchedule
+  belongs_to :district
+  has_many :doctor_schedules
 end

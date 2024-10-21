@@ -1,3 +1,3 @@
 class DoctorSchedule < ApplicationRecord
-  belongs_to :District
+  belongs_to :district
 end

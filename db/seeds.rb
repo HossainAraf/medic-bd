@@ -35,14 +35,34 @@
 #   { name: 'ল্যাবএইড লিমিটেড', address; ' কাজীর মোড়, নওগাঁ', type: 'Diagnostic', district_id: '1', contact: '01766-661313', created_at: Time.now, updated_at: Time.now }, 
 # ])
 
+# chember = Chember.new(
+#   name: 'শুভ ক্লিনিক',
+#   address: 'চকএনায়েত, দয়ালের মোড়, নওগাঁ',
+#   chembers_type: 'clinic',
+#   district_id: '1',
+#   contact: '01728-174202',
+#   created_at: Time.now,
+#   updated_at: Time.now
+# )
+# chember.save
+
+# db/seeds.rb
+
+# Create Chember with district_id 1 (Naogaon)
 chember = Chember.new(
   name: 'শুভ ক্লিনিক',
   address: 'চকএনায়েত, দয়ালের মোড়, নওগাঁ',
-  chember_type: 'clinic',
-  district_id: '1',
-  contact: '01728-174202',
-  created_at: Time.now,
-  updated_at: Time.now
+  chembers_type: 'clinic',
+  district_id: 1, # Ensure this matches a valid district ID
+  contact: '01728-174202'
 )
-chember.save
+
+if chember.save
+  puts "Chember saved successfully!"
+else
+  puts "Failed to save Chember:"
+  puts chember.errors.full_messages
+end
+
+
 
