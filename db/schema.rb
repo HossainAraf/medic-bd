@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_21_043037) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_21_055402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "chembers", force: :cascade do |t|
     t.string "name"
-    t.string "type"
+    t.string "chembers_type"
     t.string "address"
     t.integer "district_id"
     t.datetime "created_at", null: false
@@ -66,5 +66,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_21_043037) do
   end
 
   add_foreign_key "chembers", "districts"
+  add_foreign_key "doctor_schedules", "chembers"
+  add_foreign_key "doctor_schedules", "districts"
+  add_foreign_key "doctor_schedules", "doctors"
   add_foreign_key "doctors", "specifications", name: "doctors_specification_id_fkey"
 end

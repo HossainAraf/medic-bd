@@ -30,8 +30,19 @@
 # end
 
 # Add data to districts table where model name is District
-District.create([
-  { name: 'Naogaon', created_at: Time.now, updated_at: Time.now }, 
-   { name: 'Rajshahi', created_at: Time.now, updated_at: Time.now },
-])
+# Chember.create([
+#   { name: 'শুভ ক্লিনিক', address; ' চকএনায়েত, দয়ালের মোড়, নওগাঁ', type: 'clinic', district_id: '1', contact: '01728-174202', created_at: Time.now, updated_at: Time.now }, 
+#   { name: 'ল্যাবএইড লিমিটেড', address; ' কাজীর মোড়, নওগাঁ', type: 'Diagnostic', district_id: '1', contact: '01766-661313', created_at: Time.now, updated_at: Time.now }, 
+# ])
+
+chember = Chember.new(
+  name: 'শুভ ক্লিনিক',
+  address: 'চকএনায়েত, দয়ালের মোড়, নওগাঁ',
+  chember_type: 'clinic',
+  district_id: '1',
+  contact: '01728-174202',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+chember.save
 
