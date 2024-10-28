@@ -49,20 +49,38 @@
 # db/seeds.rb
 
 # Create Chember with district_id 1 (Naogaon)
-chember = Chember.new(
-  name: 'শুভ ক্লিনিক',
-  address: 'চকএনায়েত, দয়ালের মোড়, নওগাঁ',
-  chembers_type: 'clinic',
-  district_id: 1, # Ensure this matches a valid district ID
-  contact: '01728-174202'
+# chember = Chember.new(
+#   name: 'কমপ্যাথ মেডিক্যাল সেন্টার',
+#   address: 'কাজীর মোড়, নওগাঁ',
+#   chembers_type: 'Diagnostic',
+#   district_id: 1,
+#   contact: '01712-959699'
+# )
+
+# if chember.save
+#   puts "Chember saved successfully!"
+# else
+#   puts "Failed to save Chember:"
+#   puts chember.errors.full_messages
+# end
+
+# Create DoctroSchedule with district_id 1 (Naogaon)
+doctor_schedule = DoctorSchedule.new(
+  doctor_id: 2,
+  district_id: 1,
+  chember_id: 2,
+  available_day: 'শুক্রবার',
+  available_time: 'সকাল ১১:০০ - বিকাল ৪:০০',
+  created_at: Time.now,
+  updated_at: Time.now
 )
 
-if chember.save
-  puts "Chember saved successfully!"
+if doctor_schedule.save
+  puts "DoctorSchedule saved successfully!"
 else
-  puts "Failed to save Chember:"
-  puts chember.errors.full_messages
+  puts "Failed to save DoctorSchedule:"
+  puts doctor_schedule.errors.full_messages
 end
-
+  
 
 
