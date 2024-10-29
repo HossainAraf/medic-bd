@@ -65,22 +65,22 @@
 # end
 
 # Create DoctroSchedule with district_id 1 (Naogaon)
-doctor_schedule = DoctorSchedule.new(
-  doctor_id: 2,
-  district_id: 1,
-  chember_id: 2,
-  available_day: 'শুক্রবার',
-  available_time: 'সকাল ১১:০০ - বিকাল ৪:০০',
-  created_at: Time.now,
-  updated_at: Time.now
-)
+# doctor_schedule = DoctorSchedule.new(
+#   doctor_id: 2,
+#   district_id: 1,
+#   chember_id: 2,
+#   available_day: 'শুক্রবার',
+#   available_time: 'সকাল ১১:০০ - বিকাল ৪:০০',
+#   created_at: Time.now,
+#   updated_at: Time.now
+# )
 
-if doctor_schedule.save
-  puts "DoctorSchedule saved successfully!"
-else
-  puts "Failed to save DoctorSchedule:"
-  puts doctor_schedule.errors.full_messages
-end
+# if doctor_schedule.save
+#   puts "DoctorSchedule saved successfully!"
+# else
+#   puts "Failed to save DoctorSchedule:"
+#   puts doctor_schedule.errors.full_messages
+# end
   
 
 
