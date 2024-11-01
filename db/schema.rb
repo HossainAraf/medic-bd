@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_21_055402) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_31_050012) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,7 +21,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_21_055402) do
     t.integer "district_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "contact"
   end
 
   create_table "districts", force: :cascade do |t|
@@ -40,22 +39,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_21_055402) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "doctors", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255, null: false
-    t.integer "specification_id", null: false
-    t.integer "display_order", null: false
-    t.string "degree", limit: 255
-    t.string "designation", limit: 255
-    t.string "chember", limit: 255
-    t.string "time", limit: 255
-    t.string "contact", limit: 255
-    t.string "expertise", limit: 255
-  end
-
-  create_table "specifications", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255, null: false
-  end
-
   create_table "user_feedbacks", force: :cascade do |t|
     t.string "feedback"
     t.string "name"
@@ -68,6 +51,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_21_055402) do
   add_foreign_key "chembers", "districts"
   add_foreign_key "doctor_schedules", "chembers"
   add_foreign_key "doctor_schedules", "districts"
-  add_foreign_key "doctor_schedules", "doctors"
-  add_foreign_key "doctors", "specifications", name: "doctors_specification_id_fkey"
 end
