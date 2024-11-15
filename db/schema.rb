@@ -10,24 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_18_055755) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_01_184424) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "doctors", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255, null: false
-    t.integer "specification_id", null: false
-    t.integer "display_order", null: false
-    t.string "degree", limit: 255
-    t.string "designation", limit: 255
-    t.string "chember", limit: 255
-    t.string "time", limit: 255
-    t.string "contact", limit: 255
-    t.string "expertise", limit: 255
+  create_table "chembers", force: :cascade do |t|
+    t.string "name"
+    t.string "chembers_type"
+    t.string "address"
+    t.integer "district_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "specifications", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255, null: false
+  create_table "districts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "doctor_schedules", force: :cascade do |t|
+    t.integer "doctor_id"
+    t.integer "district_id"
+    t.integer "chember_id"
+    t.string "available_day"
+    t.string "available_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "doctors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "specializations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_feedbacks", force: :cascade do |t|
@@ -39,5 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_18_055755) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "doctors", "specifications", name: "doctors_specification_id_fkey"
+  add_foreign_key "chembers", "districts"
+  add_foreign_key "doctor_schedules", "chembers"
+  add_foreign_key "doctor_schedules", "districts"
 end
