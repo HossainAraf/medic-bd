@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_01_184424) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_16_030854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,9 +18,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_184424) do
     t.string "name"
     t.string "chembers_type"
     t.string "address"
-    t.integer "district_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "district_id"
+    t.index ["district_id"], name: "index_chembers_on_district_id"
   end
 
   create_table "districts", force: :cascade do |t|
@@ -30,19 +31,32 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_184424) do
   end
 
   create_table "doctor_schedules", force: :cascade do |t|
-    t.integer "doctor_id"
-    t.integer "district_id"
-    t.integer "chember_id"
     t.string "available_day"
     t.string "available_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "doctor_id"
+    t.bigint "district_id"
+    t.bigint "chember_id"
+    t.index ["chember_id"], name: "index_doctor_schedules_on_chember_id"
+    t.index ["district_id"], name: "index_doctor_schedules_on_district_id"
+    t.index ["doctor_id"], name: "index_doctor_schedules_on_doctor_id"
   end
 
   create_table "doctors", force: :cascade do |t|
     t.string "name"
+    t.bigint "specialization_id"
+    t.string "expertise"
+    t.string "qualification"
+    t.string "designation"
+    t.bigint "chember_id"
+    t.bigint "doctor_schedule_id"
+    t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["chember_id"], name: "index_doctors_on_chember_id"
+    t.index ["doctor_schedule_id"], name: "index_doctors_on_doctor_schedule_id"
+    t.index ["specialization_id"], name: "index_doctors_on_specialization_id"
   end
 
   create_table "specializations", force: :cascade do |t|
@@ -51,16 +65,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_184424) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_feedbacks", force: :cascade do |t|
-    t.string "feedback"
-    t.string "name"
-    t.string "email"
-    t.string "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   add_foreign_key "chembers", "districts"
   add_foreign_key "doctor_schedules", "chembers"
   add_foreign_key "doctor_schedules", "districts"
+  add_foreign_key "doctor_schedules", "doctors"
+  add_foreign_key "doctors", "chembers"
+  add_foreign_key "doctors", "doctor_schedules"
+  add_foreign_key "doctors", "specializations"
 end
