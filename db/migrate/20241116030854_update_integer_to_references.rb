@@ -1,4 +1,4 @@
-class UpdateIntegerToReferencesInDoctorSchedules < ActiveRecord::Migration[7.1]
+class UpdateIntegerToReferences < ActiveRecord::Migration[7.1]
   def change
      # Doctor Schedule Table Changes
      remove_column :doctor_schedules, :doctor_id, :integer
