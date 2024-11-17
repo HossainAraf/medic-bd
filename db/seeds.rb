@@ -10,8 +10,20 @@
 #   end
 # end
 
-# # ADD DOCTORS
-doctors = Doctor.create(name: 'মোঃ মামুনুর রশীদ', specialty: 'চর্ম ও যৌন', qualification: 'এমবিবিএস, বিসিএস (স্বাস্থ্য), ডিডিভি (চর্ম ও যৌন), থাইল্যান্ড', experience: 'সহকারী পরিচালক,  জাতীয় হৃদরোগ ইন্সটিটিউট, ঢাকা', order: 700007)
+doctor = Doctor.create(
+  name: 'মোঃ মামুনুর রশীদ',
+  specialty: 'চর্ম, অ্যালার্জি, চুল, নখ, যৌন রোগ বিশেষজ্ঞ ও লেজার সার্জন',
+  qualification: 'এমবিবিএস, বিসিএস (স্বাস্থ্য), ডিডিভি (চর্ম ও যৌন), থাইল্যান্ড',
+  experience: 'সহকারী পরিচালক,  জাতীয় হৃদরোগ ইন্সটিটিউট, ঢাকা',
+  order: 700007
+)
+
+if doctor.persisted?
+  puts "Doctor created: #{doctor.name}"
+else
+  puts "Doctor creation failed: #{doctor.errors.full_messages.join(', ')}"
+end
+
 
 
 # specialization = Specialization.create(name: 'হৃদরোগ')
