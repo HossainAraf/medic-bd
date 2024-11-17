@@ -1,12 +1,6 @@
 class Doctor < ApplicationRecord
-  belongs_to :specialization
-  has_many :doctor_schedules
-  has_many :chembers, through: :doctor_schedules
-  def self.with_schedule(selected_specialization)
-    joins(:specialization, doctor_schedules: :chembers)
-      .select('doctors.name,
-      chembers.name as chember_name,
-      doctor_schedules.available_day, doctor_schedules.available_time')
-      .where('specializations.name = ?', selected_specialization)
-  end
+  validates :order, presence: true,
+                    numericality: { only_integer: true,
+                                    greater_than_or_equal_to: 100_000,
+                                    less_than_or_equal_to: 9_999_999 }
 end
