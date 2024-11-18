@@ -7,4 +7,6 @@ class Doctor < ApplicationRecord
   has_many :specializations, through: :doctor_specializations
   has_many :doctor_schedules
   has_many :chembers, through: :doctor_schedules
+
+  validates :name, presence: true
 end
