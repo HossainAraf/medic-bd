@@ -25,12 +25,20 @@
 # end
 
 # CREATE DISTRICTS
-districts = ['নওগাঁ', 'রাজশাহী', 'বগুড়া']
-districts.each do |district|
-  district = District.create(name: district)
-  if district.persisted?
-    puts "District created: #{district.name}"
-  else
-    puts "District creation failed for #{district}."
-  end
-end
+# districts = ['নওগাঁ', 'রাজশাহী', 'বগুড়া']
+# districts.each do |district|
+#   district = District.create(name: district)
+#   if district.persisted?
+#     puts "District created: #{district.name}"
+#   else
+#     puts "District creation failed for #{district}."
+#   end
+# end
+
+# CREATE CHEMBERS
+# chembers= Chember.create(
+#   name: "কমপ্যাথ মেডিক্যাল সেন্টার",
+#   type: "ডায়াগনস্টিক সেন্টার",
+#   address: "কাজীর মোড়, নওগাঁ",
+#   district_id: 1
+# )
