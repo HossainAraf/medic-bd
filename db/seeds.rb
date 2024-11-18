@@ -38,7 +38,7 @@
 # CREATE CHEMBERS
 # chembers= Chember.create(
 #   name: "কমপ্যাথ মেডিক্যাল সেন্টার",
-#   type: "ডায়াগনস্টিক সেন্টার",
+#   category: "ডায়াগনস্টিক সেন্টার",
 #   address: "কাজীর মোড়, নওগাঁ",
 #   district_id: 1
 # )
