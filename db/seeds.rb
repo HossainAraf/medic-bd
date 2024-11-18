@@ -10,26 +10,27 @@
 #   end
 # end
 
-doctor = Doctor.create(
-  name: 'মোঃ মামুনুর রশীদ',
-  specialty: 'চর্ম, অ্যালার্জি, চুল, নখ, যৌন রোগ বিশেষজ্ঞ ও লেজার সার্জন',
-  qualification: 'এমবিবিএস, বিসিএস (স্বাস্থ্য), ডিডিভি (চর্ম ও যৌন), থাইল্যান্ড',
-  experience: 'সহকারী পরিচালক,  জাতীয় হৃদরোগ ইন্সটিটিউট, ঢাকা',
-  order: 700007
-)
+# doctor = Doctor.create(
+#   name: 'মোঃ মামুনুর রশীদ',
+#   specialty: 'চর্ম, অ্যালার্জি, চুল, নখ, যৌন রোগ বিশেষজ্ঞ ও লেজার সার্জন',
+#   qualification: 'এমবিবিএস, বিসিএস (স্বাস্থ্য), ডিডিভি (চর্ম ও যৌন), থাইল্যান্ড',
+#   experience: 'সহকারী পরিচালক,  জাতীয় হৃদরোগ ইন্সটিটিউট, ঢাকা',
+#   order: 700007
+# )
 
-if doctor.persisted?
-  puts "Doctor created: #{doctor.name}"
-else
-  puts "Doctor creation failed: #{doctor.errors.full_messages.join(', ')}"
-end
-
-
-
-# specialization = Specialization.create(name: 'হৃদরোগ')
-
-# if specialization.persisted?
-#   puts "Specialization created: #{specialization.name}"
+# if doctor.persisted?
+#   puts "Doctor created: #{doctor.name}"
 # else
-#   puts "Specialization creation failed."
+#   puts "Doctor creation failed: #{doctor.errors.full_messages.join(', ')}"
 # end
+
+# CREATE DISTRICTS
+districts = ['নওগাঁ', 'রাজশাহী', 'বগুড়া']
+districts.each do |district|
+  district = District.create(name: district)
+  if district.persisted?
+    puts "District created: #{district.name}"
+  else
+    puts "District creation failed for #{district}."
+  end
+end
