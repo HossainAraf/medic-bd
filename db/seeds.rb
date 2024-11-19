@@ -42,3 +42,15 @@
 #   address: "কাজীর মোড়, নওগাঁ",
 #   district_id: 1
 # )
+
+## CREATE DOCTOR-SPECIALIZATIONS   // **We have to find more efficient way to add data in production
+# doctor = Doctor.find_by(name: 'মোঃ মামুনুর রশীদ')
+# specialization = Specialization.find_by(name: 'চর্ম ও যৌনরোগ ')
+# unless doctor.nil? || specialization.nil?
+#   doctor_specialization = DoctorSpecialization.find_or_create_by(doctor: doctor, specialization: specialization)
+#   if doctor_specialization.persisted?
+#     puts "DoctorSpecialization created: #{doctor_specialization.doctor.name} - #{doctor_specialization.specialization.name}"
+#   else
+#     puts "DoctorSpecialization creation failed for #{doctor.name} - #{specialization.name}."
+#   end
+# end
