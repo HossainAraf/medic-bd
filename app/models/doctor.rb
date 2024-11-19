@@ -6,10 +6,10 @@ class Doctor < ApplicationRecord
   has_many :doctor_specializations
   has_many :specializations, through: :doctor_specializations
   has_many :doctor_schedules
-  has_many :chembers, through: :doctor_schedules
+  has_many :chamber, through: :doctor_schedules
 
   validates :name, presence: true
 
   scope :by_specialization, ->(specialization_id) { joins(:specializations).where(specializations: { id: specialization_id }) }
-  scope :by_district, ->(district_id) { joins(:chembers).where(chembers: { district_id: district_id }) }
+  scope :by_district, ->(district_id) { joins(:chamber).where(chamber: { district_id: district_id }) }
 end
