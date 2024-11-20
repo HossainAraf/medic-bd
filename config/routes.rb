@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :doctors, only: [:index, :show, :create, :destroy, :update]  #Limit the routes to only for specific actions
-      resources :specializations do
-        get 'doctors', on:  :member
+      resources :doctors, only: [:index, :show, :create, :destroy, :update]  do
+      # Custom route for filtering doctors by district and specialization
+        collection do
+          get 'filtered_doctors'
+        end
       end
-      resources :user_feedbacks, only: [:index, :create, :update, :destroy]
     end  
   end
       # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
