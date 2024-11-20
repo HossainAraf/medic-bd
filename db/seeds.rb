@@ -56,13 +56,13 @@
 # end
 
 ## ADD DATA TO DOCTOR-SCHEDULES
-doctor = Doctor.find_by(name: 'মোঃ মামুনুর রশীদ')
-chamber = Chamber.find_by(name: 'কমপ্যাথ মেডিক্যাল সেন্টার')
-unless doctor.nil? || chamber.nil?
-  doctor_schedule = DoctorSchedule.create(doctor: doctor, chamber: chamber, available_day: 'শুক্রবার', available_time: 'সকাল ১০:০০  - বিকাল ৪:০০ ')
-  if doctor_schedule.persisted?
-    puts "DoctorSchedule created: #{doctor_schedule.doctor.name} - #{doctor_schedule.chamber.name}"
-  else
-    puts "DoctorSchedule creation failed for #{doctor.name} - #{chamber.name}."
-  end
-end
+# doctor = Doctor.find_by(name: 'মোঃ মামুনুর রশীদ')
+# chamber = Chamber.find_by(name: 'কমপ্যাথ মেডিক্যাল সেন্টার')
+# unless doctor.nil? || chamber.nil?
+#   doctor_schedule = DoctorSchedule.create(doctor: doctor, chamber: chamber, available_day: 'শুক্রবার', available_time: 'সকাল ১০:০০  - বিকাল ৪:০০ ')
+#   if doctor_schedule.persisted?
+#     puts "DoctorSchedule created: #{doctor_schedule.doctor.name} - #{doctor_schedule.chamber.name}"
+#   else
+#     puts "DoctorSchedule creation failed for #{doctor.name} - #{chamber.name}."
+#   end
+# end
