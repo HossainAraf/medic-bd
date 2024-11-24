@@ -17,6 +17,13 @@
 #   experience: 'সহকারী পরিচালক,  জাতীয় হৃদরোগ ইন্সটিটিউট, ঢাকা',
 #   order: 700007
 # )
+# doctor = Doctor.create(
+#   name: 'মোঃ এস এম শামসুজ্জোহা',
+#   specialty: 'চর্ম, অ্যালার্জি ও যৌন রোগ বিশেষজ্ঞ',
+#   qualification: 'এমবিবিএস, বিসিএস (স্বাস্থ্য), ডিডিভি (বিএসএমএমইউ)',
+#   experience: 'কনসালটেন্ট (চর্ম ও যৌন),  সদর হাসপাতাল, নওগাঁ',
+#   order: 700017
+# )
 
 # if doctor.persisted?
 #   puts "Doctor created: #{doctor.name}"
@@ -43,17 +50,17 @@
 #   district_id: 1
 # )
 
-## CREATE DOCTOR-SPECIALIZATIONS   // **We have to find more efficient way to add data in production
-# doctor = Doctor.find_by(name: 'মোঃ মামুনুর রশীদ')
-# specialization = Specialization.find_by(name: 'চর্ম ও যৌনরোগ ')
-# unless doctor.nil? || specialization.nil?
-#   doctor_specialization = DoctorSpecialization.find_or_create_by(doctor: doctor, specialization: specialization)
-#   if doctor_specialization.persisted?
-#     puts "DoctorSpecialization created: #{doctor_specialization.doctor.name} - #{doctor_specialization.specialization.name}"
-#   else
-#     puts "DoctorSpecialization creation failed for #{doctor.name} - #{specialization.name}."
-#   end
-# end
+# CREATE DOCTOR-SPECIALIZATIONS   // **We have to find more efficient way to add data in production
+doctor = Doctor.find_by(name: 'মোঃ এস এম শামসুজ্জোহা')
+specialization = Specialization.find_by(name: 'চর্ম ও যৌনরোগ')
+unless doctor.nil? || specialization.nil?
+  doctor_specialization = DoctorSpecialization.find_or_create_by(doctor: doctor, specialization: specialization)
+  if doctor_specialization.persisted?
+    puts "DoctorSpecialization created: #{doctor_specialization.doctor.name} - #{doctor_specialization.specialization.name}"
+  else
+    puts "DoctorSpecialization creation failed for #{doctor.name} - #{specialization.name}."
+  end
+end
 
 ## ADD DATA TO DOCTOR-SCHEDULES
 # doctor = Doctor.find_by(name: 'মোঃ মামুনুর রশীদ')
