@@ -1,4 +1,4 @@
-# # ADD SPECIALIZATIONS
+# ADD SPECIALIZATIONS
 # names = ['হৃদরোগ', 'মেডিসিন', 'শিশুরোগ', 'প্রসূতি ও স্ত্রীরোগ', 'মানসিক রোগ', 'নিউরোলজি', 'চর্ম ও যৌনরোগ ', 'ডায়াবেটিস', 'ইউরোলজি', 'বক্ষব্যাধি', 'হাড়-জোড় ও মেরুদন্ড', 'ক্যান্সার', 'জেনারেল সার্জারি', 'নাক-কান-গলা', 'চক্ষুরোগ', 'হরমোন', 'দন্তরোগ', 'রক্ত ও ব্লাড ক্যান্সার']
 
 # names.each do |name|
@@ -24,7 +24,13 @@
 #   experience: 'কনসালটেন্ট (চর্ম ও যৌন),  সদর হাসপাতাল, নওগাঁ',
 #   order: 700017
 # )
-
+# doctor = Doctor.create(
+#   name: 'মোঃ আব্দুল্লাহ আল-আমিন',
+#   specialty: 'যৌন, চর্ম ও অ্যালার্জি রোগ বিশেষজ্ঞ',
+#   qualification: 'এমবিবিএস(ঢাকা), ডিডিভি (ডি ইউ), ফেলো ডাব্লিউ এইচ ও (আমেরিকা)',
+#   experience: 'অধ্যাপক ও বিভাগীয় প্রধান (চর্ম ও যৌন)(অবঃ),  রাজশাহী মেডিকেল কলেজ ও হাসপাতাল',
+#   order: 700005
+# )
 # if doctor.persisted?
 #   puts "Doctor created: #{doctor.name}"
 # else
@@ -43,15 +49,22 @@
 # end
 
 # CREATE CHAMBERS
-# chambers= chamber.create(
+# chambers= Chamber.create(
 #   name: "কমপ্যাথ মেডিক্যাল সেন্টার",
 #   category: "ডায়াগনস্টিক সেন্টার",
 #   address: "কাজীর মোড়, নওগাঁ",
 #   district_id: 1
 # )
+# CREATE CHAMBERS
+# chambers= Chamber.create(
+#   name: "পপুলার ডায়াগনস্টিক সেন্টার লিঃ",
+#   category: "ডায়াগনস্টিক সেন্টার",
+#   address: "লক্ষীপুর মোড়, রাজশাহী",
+#   district_id: 2
+# )
 
 # CREATE DOCTOR-SPECIALIZATIONS   // **We have to find more efficient way to add data in production
-doctor = Doctor.find_by(name: 'মোঃ এস এম শামসুজ্জোহা')
+doctor = Doctor.find_by(name: 'মোঃ আব্দুল্লাহ আল-আমিন')
 specialization = Specialization.find_by(name: 'চর্ম ও যৌনরোগ')
 unless doctor.nil? || specialization.nil?
   doctor_specialization = DoctorSpecialization.find_or_create_by(doctor: doctor, specialization: specialization)
