@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      resources :districts
       resources :specializations, only: [:index, :show, :create] do
         # Custom route for fetching doctors by specialization
         get 'doctors', to: 'specializations#doctors'
@@ -11,7 +12,6 @@ Rails.application.routes.draw do
           get 'filtered_doctors'
         end
          get 'test_route', to: 'doctors#test_route'
-
       end
     end  
   end
