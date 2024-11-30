@@ -10,6 +10,8 @@ class Doctor < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :by_specialization, ->(specialization_id) { joins(:specializations).where(specializations: { id: specialization_id }) }
-  scope :by_district, ->(district_id) { joins(:chamber).where(chamber: { district_id: district_id }) }
+  scope :by_specialization, lambda { |specialization_id|
+    joins(:specializations).where(specializations: { id: specialization_id })
+  }
+  scope :by_district, ->(district_id) { joins(:chamber).where(chamber: { district_id: }) }
 end

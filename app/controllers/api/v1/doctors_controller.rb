@@ -1,5 +1,5 @@
 class Api::V1::DoctorsController < ApplicationController
-# TEST ROUTE
+  # TEST ROUTE
   # def test_route
   #   render json: { message: "Route is working!", params: params }, status: :ok
   # end
@@ -16,34 +16,34 @@ class Api::V1::DoctorsController < ApplicationController
     render json: doctor
   end
 
-  # API Endpoint to fetch doctors by district and specialization (without filtering specialization) api/v1/doctors/filtered_doctors
+  # API Endpoint to fetch doctors by district and specialization
+  # (without filtering specialization) api/v1/doctors/filtered_doctors
   def filtered_doctors
     Rails.logger.info "Filtered Doctors Params: #{params.inspect}"
-  
+
     district = District.find_by(id: params[:district_id]) if params[:district_id].present?
-    specialization_id = params[:specialization_id]  # Using specialization_id instead of name
-    
+    specialization_id = params[:specialization_id] # Using specialization_id instead of name
+
     # Find specialization by ID
     specialization = Specialization.find_by(id: specialization_id)
-  
+
     unless specialization
       Rails.logger.error "Specialization not found: #{specialization_id}"
       render json: { error: 'Specialization not found' }, status: :not_found and return
     end
-  
-    if district
-      doctors = district.doctors.joins(:doctor_specializations)
-                             .where(doctor_specializations: { specialization_id: specialization.id })
-    else
-      doctors = Doctor.joins(:doctor_specializations)
-                      .where(doctor_specializations: { specialization_id: specialization.id })
-    end
-  
+
+    doctors = if district
+                district.doctors.joins(:doctor_specializations)
+                  .where(doctor_specializations: { specialization_id: specialization.id })
+              else
+                Doctor.joins(:doctor_specializations)
+                  .where(doctor_specializations: { specialization_id: specialization.id })
+              end
+
     # Return the filtered list of doctors
-    render json: doctors, only: [:id, :name, :specialty, :qualification, :experience], status: :ok
+    render json: doctors, only: %i[id name specialty qualification experience], status: :ok
   end
-  
-  
+
   # POST /api/v1/doctors
   def create
     @doctor = Doctor.new(doctor_params)

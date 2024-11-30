@@ -25,10 +25,10 @@
 #   order: 700017
 # )
 # doctor = Doctor.create(
-#   name: 'মোঃ আব্দুল্লাহ আল-আমিন',
-#   specialty: 'যৌন, চর্ম ও অ্যালার্জি রোগ বিশেষজ্ঞ',
-#   qualification: 'এমবিবিএস(ঢাকা), ডিডিভি (ডি ইউ), ফেলো ডাব্লিউ এইচ ও (আমেরিকা)',
-#   experience: 'অধ্যাপক ও বিভাগীয় প্রধান (চর্ম ও যৌন)(অবঃ),  রাজশাহী মেডিকেল কলেজ ও হাসপাতাল',
+#   name: 'মোঃ রইস উদ্দিন',
+#   specialty: 'হৃদরোগ ও মেডিসিন বিশেষজ্ঞ',
+#   qualification: 'এমবিবিএস, এফসিপিএস (মেডিসিন), এমডি (কারডিওলজি), WHO ফেলো ইন্টারভেনশনাল কারডিওলজি(মাদ্রাজ ও কোচিন-ভারত, মালয়েশিয়া)',
+#   experience: 'অধ্যাপক ও বিভাগীয় প্রধান (হৃদরোগ),  রাজশাহী মেডিকেল কলেজ ও হাসপাতাল',
 #   order: 700005
 # )
 # if doctor.persisted?
@@ -64,22 +64,22 @@
 # )
 
 # CREATE DOCTOR-SPECIALIZATIONS   // **We have to find more efficient way to add data in production
-doctor = Doctor.find_by(name: 'মোঃ আব্দুল্লাহ আল-আমিন')
-specialization = Specialization.find_by(name: 'চর্ম ও যৌনরোগ')
-unless doctor.nil? || specialization.nil?
-  doctor_specialization = DoctorSpecialization.find_or_create_by(doctor: doctor, specialization: specialization)
-  if doctor_specialization.persisted?
-    puts "DoctorSpecialization created: #{doctor_specialization.doctor.name} - #{doctor_specialization.specialization.name}"
-  else
-    puts "DoctorSpecialization creation failed for #{doctor.name} - #{specialization.name}."
-  end
-end
+# doctor = Doctor.find_by(name: 'মোঃ রইস উদ্দিন')
+# specialization = Specialization.find_by(name: 'হৃদরোগ')
+# unless doctor.nil? || specialization.nil?
+#   doctor_specialization = DoctorSpecialization.find_or_create_by(doctor: doctor, specialization: specialization)
+#   if doctor_specialization.persisted?
+#     puts "DoctorSpecialization created: #{doctor_specialization.doctor.name} - #{doctor_specialization.specialization.name}"
+#   else
+#     puts "DoctorSpecialization creation failed for #{doctor.name} - #{specialization.name}."
+#   end
+# end
 
 ## ADD DATA TO DOCTOR-SCHEDULES
-# doctor = Doctor.find_by(name: 'মোঃ মামুনুর রশীদ')
-# chamber = Chamber.find_by(name: 'কমপ্যাথ মেডিক্যাল সেন্টার')
+# doctor = Doctor.find_by(name: 'মোঃ রইস উদ্দিন')
+# chamber = Chamber.find_by(name: 'পপুলার ডায়াগনস্টিক সেন্টার লিঃ')
 # unless doctor.nil? || chamber.nil?
-#   doctor_schedule = DoctorSchedule.create(doctor: doctor, chamber: chamber, available_day: 'শুক্রবার', available_time: 'সকাল ১০:০০  - বিকাল ৪:০০ ')
+#   doctor_schedule = DoctorSchedule.create(doctor: doctor, chamber: chamber, available_day: 'শনিবার থেকে বৃহস্পতিবার ', available_time: ' সন্ধ্যা ৬:০০  - রাত ১১:০০ ')
 #   if doctor_schedule.persisted?
 #     puts "DoctorSchedule created: #{doctor_schedule.doctor.name} - #{doctor_schedule.chamber.name}"
 #   else
