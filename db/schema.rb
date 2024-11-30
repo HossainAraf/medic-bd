@@ -10,9 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_17_032412) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_19_030123) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chambers", force: :cascade do |t|
+    t.string "name"
+    t.string "category"
+    t.string "address"
+    t.bigint "district_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_chambers_on_district_id"
+  end
+
+  create_table "districts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "doctor_schedules", force: :cascade do |t|
+    t.string "available_day"
+    t.string "available_time"
+    t.bigint "doctor_id", null: false
+    t.bigint "chamber_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chamber_id"], name: "index_doctor_schedules_on_chamber_id"
+    t.index ["doctor_id"], name: "index_doctor_schedules_on_doctor_id"
+  end
+
+  create_table "doctor_specializations", force: :cascade do |t|
+    t.bigint "specialization_id", null: false
+    t.bigint "doctor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_doctor_specializations_on_doctor_id"
+    t.index ["specialization_id"], name: "index_doctor_specializations_on_specialization_id"
+  end
 
   create_table "doctors", force: :cascade do |t|
     t.string "name", null: false
@@ -32,4 +68,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_17_032412) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "chambers", "districts"
+  add_foreign_key "doctor_schedules", "chambers"
+  add_foreign_key "doctor_schedules", "doctors"
+  add_foreign_key "doctor_specializations", "doctors"
+  add_foreign_key "doctor_specializations", "specializations"
 end
