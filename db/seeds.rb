@@ -63,6 +63,13 @@
 #   district_id: 2
 # )
 
+# chambers= Chamber.create(
+#   name: "শুভ ক্লিনিক",
+#   category: "clinic/hospital",
+#   address: "চকএনায়েত, দয়ালের মোড়, নওগাঁ",
+#   district_id: 1
+# )
+
 # CREATE DOCTOR-SPECIALIZATIONS   // **We have to find more efficient way to add data in production
 # doctor = Doctor.find_by(name: 'মোঃ রইস উদ্দিন')
 # specialization = Specialization.find_by(name: 'হৃদরোগ')
