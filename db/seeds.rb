@@ -57,10 +57,17 @@
 # )
 # CREATE CHAMBERS
 # chambers= Chamber.create(
-#   name: "পপুলার ডায়াগনস্টিক সেন্টার লিঃ",
+#   name: "পপুলার ডায়াগনস্টিক সেন্টার লিঃ,বগুড়া",
 #   category: "ডায়াগনস্টিক সেন্টার",
-#   address: "লক্ষীপুর মোড়, রাজশাহী",
-#   district_id: 2
+#   address: "ঠনঠনিয়া, বগুড়া",
+#   district_id: 3
+# )
+
+# chambers= Chamber.create(
+#   name: "TMSS মেডিকেল কলেজ হাসপাতাল, বগুড়া",
+#   category: "hospital",
+#   address: "মহাস্থান রোড, বগুড়া",
+#   district_id: 3
 # )
 
 # CREATE DOCTOR-SPECIALIZATIONS   // **We have to find more efficient way to add data in production
