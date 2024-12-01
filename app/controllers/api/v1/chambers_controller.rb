@@ -9,5 +9,5 @@ class Api::V1::ChambersController < ApplicationController
     @chambers = @chambers.where(category: params[:category].split(',').map(&:strip)) if params[:category].present?
 
     render json: @chambers.as_json(include: { district: { only: [:name] } })
-    end
+  end
 end

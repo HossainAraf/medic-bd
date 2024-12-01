@@ -56,12 +56,12 @@
 #   district_id: 1
 # )
 # CREATE CHAMBERS
-chambers= Chamber.create(
-  name: "পপুলার ডায়াগনস্টিক সেন্টার লিঃ,বগুড়া",
-  category: "ডায়াগনস্টিক সেন্টার",
-  address: "ঠনঠনিয়া, বগুড়া",
-  district_id: 3
-)
+# chambers= Chamber.create(
+#   name: "পপুলার ডায়াগনস্টিক সেন্টার লিঃ,বগুড়া",
+#   category: "ডায়াগনস্টিক সেন্টার",
+#   address: "ঠনঠনিয়া, বগুড়া",
+#   district_id: 3
+# )
 
 # chambers= Chamber.create(
 #   name: "TMSS মেডিকেল কলেজ হাসপাতাল, বগুড়া",
