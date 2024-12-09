@@ -45,15 +45,43 @@ class Api::V1::DoctorsController < ApplicationController
   end
 
   # POST /api/v1/doctors
+  # def create
+  #   @doctor = Doctor.new(doctor_params)
+  #   if @doctor.save
+  #     render json: @doctor, status: :created
+  #   else
+  #     Rails.logger.debug("Errors: #{@doctor.errors.full_messages}")
+  #     render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end  
+
+  # def create
+  #   Rails.logger.info("Doctor Params: #{doctor_params.inspect}")
+  #   @doctor = Doctor.new(doctor_params)
+  
+  #   if @doctor.save
+  #     render json: @doctor, status: :created
+  #   else
+  #     Rails.logger.error("Errors: #{@doctor.errors.full_messages}")
+  #     render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end  
   def create
     @doctor = Doctor.new(doctor_params)
+  
     if @doctor.save
-      render json: @doctor, status: :created
+      render json: @doctor.as_json(
+        include: {
+          chambers: { only: [:id, :name, :category, :address, :district_id] },
+          doctor_schedules: { only: [:id, :available_day, :available_time, :contact, :chamber_id] },
+          specializations: { only: [:id, :name] }
+        }
+      ), status: :created
     else
-      render json: @doctor.errors, status: :unprocessable_entity
+      render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
     end
   end
-
+  
   private
 
   def doctor_params
@@ -61,8 +89,9 @@ class Api::V1::DoctorsController < ApplicationController
       :name, :specialty, :order, :qualification, :experience, :phone,
       chambers_attributes: [:name, :category, :address, :district_id], 
       doctor_specializations_attributes: [:specialization_id],
-      doctor_schedules_attributes: [:day, :start_time, :end_time, :chamber_id, :contact]
+      doctor_schedules_attributes: [:available_day, :available_time, :contact, chamber_attributes: [:name, :category, :address, :district_id]
+    ]
     )
-  end  
+  end
 end
 
