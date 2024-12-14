@@ -9,7 +9,10 @@ module StripWhitespace
 
   def strip_whitespace
     attributes.each do |key, value|
-      self[key] = value.strip if value.is_a?(String)
+      if value.is_a?(String)
+        # Remove leading/trailing whitespace and normalize inner spaces
+        self[key] = value.strip.gsub(/\s+/, ' ')
+      end
     end
   end
 end
