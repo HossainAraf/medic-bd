@@ -1,0 +1,15 @@
+module StripWhitespace
+  extend ActiveSupport::Concern
+
+  included do
+    before_save :strip_whitespace
+  end
+
+  private
+
+  def strip_whitespace
+    attributes.each do |key, value|
+      self[key] = value.strip if value.is_a?(String)
+    end
+  end
+end
