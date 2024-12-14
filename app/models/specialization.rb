@@ -3,4 +3,5 @@ class Specialization < ApplicationRecord
   has_many :doctors, through: :doctor_specializations
 
   # validates :name, presence: true
+  include ::StripWhitespace
 end

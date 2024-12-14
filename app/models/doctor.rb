@@ -1,4 +1,8 @@
+# require_dependency 'strip_whitespace'
+
 class Doctor < ApplicationRecord
+
+  include ::StripWhitespace
   # validates :order, presence: true,
   #                   numericality: { only_integer: true,
   #                                   greater_than_or_equal_to: 100_000,

@@ -3,5 +3,27 @@ class Chamber < ApplicationRecord
   has_many :doctor_schedules
   has_many :doctors, through: :doctor_schedules
 
-  # validates :name, :category, :address, :district_id, presence: true
+  accepts_nested_attributes_for :doctor_schedules
+
+  # Include the StripWhitespace module for trimming direct attributes
+  include ::StripWhitespace
+
+  # Validation for required fields
+  validates :name, :category, :address, :district_id, presence: true
+
+  # Callback to strip whitespace from nested attributes
+  before_save :strip_nested_attributes_whitespace
+
+  private
+
+  # Trims whitespace from all nested attributes
+  def strip_nested_attributes_whitespace
+    doctor_schedules.each do |schedule|
+      schedule.attributes.each do |key, value|
+        if value.is_a?(String)
+          schedule[key] = value.strip.gsub(/\s+/, ' ')
+        end
+      end
+    end
+  end
 end
