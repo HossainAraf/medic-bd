@@ -2,5 +2,5 @@ class Specialization < ApplicationRecord
   has_many :doctor_specializations
   has_many :doctors, through: :doctor_specializations
 
-  validates :name, presence: true
+  # validates :name, presence: true
 end

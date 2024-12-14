@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_19_030123) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_14_091056) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_19_030123) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["district_id"], name: "index_chambers_on_district_id"
+    t.index ["name", "district_id"], name: "index_chambers_on_name_and_district_id", unique: true
   end
 
   create_table "districts", force: :cascade do |t|
@@ -37,6 +38,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_19_030123) do
     t.bigint "chamber_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contact", null: false
     t.index ["chamber_id"], name: "index_doctor_schedules_on_chamber_id"
     t.index ["doctor_id"], name: "index_doctor_schedules_on_doctor_id"
   end

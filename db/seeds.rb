@@ -1,5 +1,5 @@
-# ADD SPECIALIZATIONS
-# names = ['হৃদরোগ', 'মেডিসিন', 'শিশুরোগ', 'প্রসূতি ও স্ত্রীরোগ', 'মানসিক রোগ', 'নিউরোলজি', 'চর্ম ও যৌনরোগ ', 'ডায়াবেটিস', 'ইউরোলজি', 'বক্ষব্যাধি', 'হাড়-জোড় ও মেরুদন্ড', 'ক্যান্সার', 'জেনারেল সার্জারি', 'নাক-কান-গলা', 'চক্ষুরোগ', 'হরমোন', 'দন্তরোগ', 'রক্ত ও ব্লাড ক্যান্সার']
+# # ADD SPECIALIZATIONS
+# names = ['হৃদরোগ', 'মেডিসিন', 'শিশুরোগ', 'প্রসূতি ও স্ত্রীরোগ', 'মানসিক রোগ', 'নিউরোলজি', 'চর্ম ও যৌনরোগ', 'ডায়াবেটিস', 'ইউরোলজি', 'বক্ষব্যাধি', 'হাড়-জোড় ও মেরুদন্ড', 'ক্যান্সার', 'জেনারেল সার্জারি', 'নাক-কান-গলা', 'চক্ষুরোগ', 'হরমোন', 'দন্তরোগ', 'রক্ত ও ব্লাড ক্যান্সার']
 
 # names.each do |name|
 #   specialization = Specialization.create(name: name)
@@ -38,7 +38,7 @@
 # end
 
 # CREATE DISTRICTS
-# districts = ['নওগাঁ', 'রাজশাহী', 'বগুড়া']
+# districts = ['Naogaon', 'Rajshahi', 'Bogura']
 # districts.each do |district|
 #   district = District.create(name: district)
 #   if district.persisted?
@@ -84,9 +84,9 @@
 
 ## ADD DATA TO DOCTOR-SCHEDULES
 # doctor = Doctor.find_by(name: 'মোঃ রইস উদ্দিন')
-# chamber = Chamber.find_by(name: 'পপুলার ডায়াগনস্টিক সেন্টার লিঃ')
+# chamber = Chamber.find_by(name: 'পপুলার ডায়াগনস্টিক সেন্টার লিঃ, রাজশাহী')
 # unless doctor.nil? || chamber.nil?
-#   doctor_schedule = DoctorSchedule.create(doctor: doctor, chamber: chamber, available_day: 'শনিবার থেকে বৃহস্পতিবার ', available_time: ' সন্ধ্যা ৬:০০  - রাত ১১:০০ ')
+#   doctor_schedule = DoctorSchedule.create(doctor: doctor, chamber: chamber, available_day: 'শনিবার থেকে বৃহস্পতিবার ', available_time: ' সন্ধ্যা ৬:০০  - রাত ১১:০০ ', contact: '09666787811')
 #   if doctor_schedule.persisted?
 #     puts "DoctorSchedule created: #{doctor_schedule.doctor.name} - #{doctor_schedule.chamber.name}"
 #   else
