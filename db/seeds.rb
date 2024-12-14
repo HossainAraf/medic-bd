@@ -38,7 +38,7 @@
 # end
 
 # CREATE DISTRICTS
-# districts = ['নওগাঁ', 'রাজশাহী', 'বগুড়া']
+# districts = ['Naogaon', 'Rajshahi', 'Bogura']
 # districts.each do |district|
 #   district = District.create(name: district)
 #   if district.persisted?
