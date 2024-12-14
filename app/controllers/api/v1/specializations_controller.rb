@@ -1,7 +1,7 @@
 class Api::V1::SpecializationsController < ApplicationController
   def index
     specializations = Specialization.all
-    specializations = specializations.sort_by { |specialization| specialization.id }
+    specializations = specializations.sort_by(&:id)
     render json: specializations
   end
 
