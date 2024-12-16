@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_14_091056) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_16_135205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_14_091056) do
     t.string "experience", null: false
     t.string "phone"
     t.integer "order", null: false
-    t.check_constraint "\"order\" >= 100000 AND \"order\" <= 9999999", name: "order_range"
+    t.check_constraint "\"order\" >= 1000000 AND \"order\" <= 9999999", name: "order_range"
   end
 
   create_table "specializations", force: :cascade do |t|
