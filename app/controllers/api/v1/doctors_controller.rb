@@ -5,9 +5,9 @@ class Api::V1::DoctorsController < ApplicationController
 
     render json: doctors.as_json(
       include: {
-        chambers: { only: [:id, :name, :category, :address, :district_id] },
-        doctor_schedules: { only: [:id, :available_day, :available_time, :contact, :chamber_id] },
-        specializations: { only: [:id, :name] }
+        chambers: { only: %i[id name category address district_id] },
+        doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+        specializations: { only: %i[id name] }
       }
     ), status: :ok
   end
@@ -18,9 +18,9 @@ class Api::V1::DoctorsController < ApplicationController
 
     render json: doctor.as_json(
       include: {
-        chambers: { only: [:id, :name, :category, :address, :district_id] },
-        doctor_schedules: { only: [:id, :available_day, :available_time, :contact, :chamber_id] },
-        specializations: { only: [:id, :name] }
+        chambers: { only: %i[id name category address district_id] },
+        doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+        specializations: { only: %i[id name] }
       }
     ), status: :ok
   end
@@ -50,9 +50,9 @@ class Api::V1::DoctorsController < ApplicationController
 
     render json: doctors.as_json(
       include: {
-        chambers: { only: [:id, :name, :category, :address, :district_id] },
-        doctor_schedules: { only: [:id, :available_day, :available_time, :contact, :chamber_id] },
-        specializations: { only: [:id, :name] }
+        chambers: { only: %i[id name category address district_id] },
+        doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+        specializations: { only: %i[id name] }
       }
     ), status: :ok
   end
@@ -62,17 +62,17 @@ class Api::V1::DoctorsController < ApplicationController
     ActiveRecord::Base.transaction do
       # Preprocess the doctor schedules to handle chamber attributes
       processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
-  
+
       # Build the doctor with processed schedules
       @doctor = Doctor.new(doctor_params.except(:doctor_schedules_attributes))
       @doctor.doctor_schedules.build(processed_schedules)
-  
+
       if @doctor.save
         render json: @doctor.as_json(
           include: {
-            chambers: { only: [:id, :name, :category, :address, :district_id] },
-            doctor_schedules: { only: [:id, :available_day, :available_time, :contact, :chamber_id] },
-            specializations: { only: [:id, :name] }
+            chambers: { only: %i[id name category address district_id] },
+            doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+            specializations: { only: %i[id name] }
           }
         ), status: :created
       else
@@ -82,14 +82,14 @@ class Api::V1::DoctorsController < ApplicationController
   rescue ActiveRecord::RecordInvalid => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
-  
+
   private
-  
+
   def preprocess_schedules(schedules_attributes)
     schedules_attributes.map do |schedule|
       if schedule[:chamber_attributes].present?
         chamber_attributes = schedule.delete(:chamber_attributes)
-  
+
         # Find existing chamber or create a new one
         existing_chamber = Chamber.find_or_create_by!(
           name: chamber_attributes[:name],
@@ -98,24 +98,21 @@ class Api::V1::DoctorsController < ApplicationController
           chamber.category = chamber_attributes[:category]
           chamber.address = chamber_attributes[:address]
         end
-  
+
         # Replace chamber_attributes with chamber_id
         schedule[:chamber_id] = existing_chamber.id
       end
       schedule
     end
-  end      
-  
-  private
+  end
 
   def doctor_params
     params.require(:doctor).permit(
       :name, :specialty, :order, :qualification, :experience, :phone,
-      chambers_attributes: [:name, :category, :address, :district_id], 
+      chambers_attributes: %i[name category address district_id],
       doctor_specializations_attributes: [:specialization_id],
-      doctor_schedules_attributes: [:available_day, :available_time, :contact, chamber_attributes: [:name, :category, :address, :district_id]
-    ]
-
+      doctor_schedules_attributes: [:available_day, :available_time,
+                                    :contact, { chamber_attributes: %i[name category address district_id] }]
     )
   end
 end

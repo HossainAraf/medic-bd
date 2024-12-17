@@ -20,9 +20,7 @@ class Chamber < ApplicationRecord
   def strip_nested_attributes_whitespace
     doctor_schedules.each do |schedule|
       schedule.attributes.each do |key, value|
-        if value.is_a?(String)
-          schedule[key] = value.strip.gsub(/\s+/, ' ')
-        end
+        schedule[key] = value.strip.gsub(/\s+/, ' ') if value.is_a?(String)
       end
     end
   end
