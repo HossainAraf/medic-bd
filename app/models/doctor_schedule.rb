@@ -4,6 +4,8 @@ class DoctorSchedule < ApplicationRecord
   before_save :ensure_chamber
   # validates :available_day, presence: true
   # validates :available_time, presence: true
+  include ::StripWhitespace
+
   accepts_nested_attributes_for :chamber
 
   validates :contact, presence: true

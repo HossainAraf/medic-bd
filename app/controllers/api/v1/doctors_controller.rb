@@ -111,8 +111,8 @@ class Api::V1::DoctorsController < ApplicationController
       :name, :specialty, :order, :qualification, :experience, :phone,
       chambers_attributes: %i[name category address district_id],
       doctor_specializations_attributes: [:specialization_id],
-      doctor_schedules_attributes: [:available_day, :available_time, :contact,
-                                    { chamber_attributes: %i[name category address district_id] }]
+      doctor_schedules_attributes: [:available_day, :available_time,
+                                    :contact, { chamber_attributes: %i[name category address district_id] }]
     )
   end
 end
