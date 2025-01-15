@@ -1,4 +1,6 @@
 class Api::V1::DoctorsController < ApplicationController
+  before_action :set_doctors, only: %i[show update]
+
   # GET /api/v1/doctors
   def index
     doctors = Doctor.includes(:chambers, :doctor_schedules, :specializations).all
@@ -83,6 +85,28 @@ class Api::V1::DoctorsController < ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
+  # UPDATE /api/v1/doctors/:id
+
+  def update
+    @doctor = Doctor.find(params[:id])
+
+    ActiveRecord::Base.transaction do
+      # Preprocess the doctor schedules to handle chamber attributes
+
+      processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
+
+      if @doctor.update(doctor_params.except(:doctor_schedules_attributes))
+        # Update doctor schedules
+        @doctor.doctor_schedules.destroy_all
+        @doctor.doctor_schedules.create(processed_schedules)
+      else
+        render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def preprocess_schedules(schedules_attributes)
@@ -104,6 +128,10 @@ class Api::V1::DoctorsController < ApplicationController
       end
       schedule
     end
+  end
+
+  def set_doctors
+    @doctor = Doctor.find(params[:id])
   end
 
   def doctor_params
