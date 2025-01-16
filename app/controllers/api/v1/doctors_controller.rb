@@ -87,18 +87,33 @@ class Api::V1::DoctorsController < ApplicationController
 
   # UPDATE /api/v1/doctors/:id
 
+  # UPDATE /api/v1/doctors/:id
   def update
-    @doctor = Doctor.find(params[:id])
-
     ActiveRecord::Base.transaction do
-      # Preprocess the doctor schedules to handle chamber attributes
-
       processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
 
-      if @doctor.update(doctor_params.except(:doctor_schedules_attributes))
+      # Handle doctor_specializations separately to prevent duplicate specialization assignments
+      if doctor_params[:doctor_specializations_attributes].present?
+        doctor_params[:doctor_specializations_attributes].each do |specialization_param|
+          specialization_id = specialization_param[:specialization_id]
+          next if @doctor.specializations.exists?(id: specialization_id)
+
+          @doctor.doctor_specializations.create!(specialization_id:)
+        end
+      end
+
+      # Update doctor attributes
+      if @doctor.update(doctor_params.except(:doctor_schedules_attributes, :doctor_specializations_attributes))
         # Update doctor schedules
         @doctor.doctor_schedules.destroy_all
-        @doctor.doctor_schedules.create(processed_schedules)
+        @doctor.doctor_schedules.create!(processed_schedules)
+        render json: @doctor.as_json(
+          include: {
+            chambers: { only: %i[id name category address district_id] },
+            doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+            specializations: { only: %i[id name] }
+          }
+        ), status: :ok
       else
         render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
       end
