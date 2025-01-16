@@ -87,8 +87,8 @@ class Api::V1::DoctorsController < ApplicationController
 
   # UPDATE /api/v1/doctors/:id
 
-   # UPDATE /api/v1/doctors/:id
-   def update
+  # UPDATE /api/v1/doctors/:id
+  def update
     ActiveRecord::Base.transaction do
       processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
 
@@ -98,7 +98,7 @@ class Api::V1::DoctorsController < ApplicationController
           specialization_id = specialization_param[:specialization_id]
           next if @doctor.specializations.exists?(id: specialization_id)
 
-          @doctor.doctor_specializations.create!(specialization_id: specialization_id)
+          @doctor.doctor_specializations.create!(specialization_id:)
         end
       end
 
