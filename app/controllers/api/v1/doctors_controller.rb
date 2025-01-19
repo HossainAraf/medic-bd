@@ -33,6 +33,7 @@ class Api::V1::DoctorsController < ApplicationController
     doctors = Doctor.where(order: params[:order])
     render json: doctors
   end
+
   # GET /api/v1/doctors/filtered_doctors
   def filtered_doctors
     Rails.logger.info "Filtered Doctors Params: #{params.inspect}"
