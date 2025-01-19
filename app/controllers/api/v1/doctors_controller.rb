@@ -27,6 +27,12 @@ class Api::V1::DoctorsController < ApplicationController
     ), status: :ok
   end
 
+  # FILTER BY DOCTOR'S ORDER
+  # GET /api/v1/doctors/order/:order
+  def filter_by_order
+    doctors = Doctor.where(order: params[:order])
+    render json: doctors
+  end
   # GET /api/v1/doctors/filtered_doctors
   def filtered_doctors
     Rails.logger.info "Filtered Doctors Params: #{params.inspect}"
