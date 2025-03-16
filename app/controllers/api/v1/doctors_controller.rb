@@ -110,7 +110,10 @@ def update
     # Update doctor attributes
     if @doctor.update(doctor_params.except(:doctor_schedules_attributes, :doctor_specializations_attributes))
       existing_schedule_ids = @doctor.doctor_schedules.pluck(:id)
-      
+      new_schedule_ids = processed_schedules.map { |s| s[:id] }.compact
+
+      # Delete schedules not included in the update request
+      @doctor.doctor_schedules.where.not(id: new_schedule_ids).destroy_all
       processed_schedules.each do |schedule|
         if schedule[:id].present? && existing_schedule_ids.include?(schedule[:id])
           # Update existing schedule
