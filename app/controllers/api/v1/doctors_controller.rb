@@ -93,41 +93,49 @@ class Api::V1::DoctorsController < ApplicationController
   end
 
   # UPDATE /api/v1/doctors/:id
+def update
+  ActiveRecord::Base.transaction do
+    processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
 
-  # UPDATE /api/v1/doctors/:id
-  def update
-    ActiveRecord::Base.transaction do
-      processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
+    # Handle doctor_specializations separately to prevent duplicate specialization assignments
+    if doctor_params[:doctor_specializations_attributes].present?
+      doctor_params[:doctor_specializations_attributes].each do |specialization_param|
+        specialization_id = specialization_param[:specialization_id]
+        next if @doctor.specializations.exists?(id: specialization_id)
 
-      # Handle doctor_specializations separately to prevent duplicate specialization assignments
-      if doctor_params[:doctor_specializations_attributes].present?
-        doctor_params[:doctor_specializations_attributes].each do |specialization_param|
-          specialization_id = specialization_param[:specialization_id]
-          next if @doctor.specializations.exists?(id: specialization_id)
+        @doctor.doctor_specializations.create!(specialization_id:)
+      end
+    end
 
-          @doctor.doctor_specializations.create!(specialization_id:)
+    # Update doctor attributes
+    if @doctor.update(doctor_params.except(:doctor_schedules_attributes, :doctor_specializations_attributes))
+      existing_schedule_ids = @doctor.doctor_schedules.pluck(:id)
+      
+      processed_schedules.each do |schedule|
+        if schedule[:id].present? && existing_schedule_ids.include?(schedule[:id])
+          # Update existing schedule
+          existing_schedule = @doctor.doctor_schedules.find(schedule[:id])
+          existing_schedule.update!(schedule)
+        else
+          # Add new schedule
+          @doctor.doctor_schedules.create!(schedule)
         end
       end
 
-      # Update doctor attributes
-      if @doctor.update(doctor_params.except(:doctor_schedules_attributes, :doctor_specializations_attributes))
-        # Update doctor schedules
-        @doctor.doctor_schedules.destroy_all
-        @doctor.doctor_schedules.create!(processed_schedules)
-        render json: @doctor.as_json(
-          include: {
-            chambers: { only: %i[id name category address district_id] },
-            doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
-            specializations: { only: %i[id name] }
-          }
-        ), status: :ok
-      else
-        render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
-      end
+      render json: @doctor.as_json(
+        include: {
+          chambers: { only: %i[id name category address district_id] },
+          doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+          specializations: { only: %i[id name] }
+        }
+      ), status: :ok
+    else
+      render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
     end
-  rescue ActiveRecord::RecordInvalid => e
-    render json: { error: e.message }, status: :unprocessable_entity
   end
+rescue ActiveRecord::RecordInvalid => e
+  render json: { error: e.message }, status: :unprocessable_entity
+end
 
   private
 
