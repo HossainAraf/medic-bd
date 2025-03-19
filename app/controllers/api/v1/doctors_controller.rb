@@ -52,9 +52,11 @@ class Api::V1::DoctorsController < ApplicationController
     doctors = if district
                 district.doctors.joins(:doctor_specializations)
                   .where(doctor_specializations: { specialization_id: specialization.id })
+                  .select('DISTINCT ON (doctors.id) doctors.*')
               else
                 Doctor.joins(:doctor_specializations)
                   .where(doctor_specializations: { specialization_id: specialization.id })
+                  .select('DISTINCT ON (doctors.id) doctors.*')
               end
 
     render json: doctors.as_json(
