@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_18_203307) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_25_211512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_18_203307) do
     t.string "phone"
     t.integer "order", null: false
     t.check_constraint "\"order\" >= 100000 AND \"order\" <= 9999999", name: "order_range"
+  end
+
+  create_table "jwt_denylists", force: :cascade do |t|
+    t.string "jti"
+    t.datetime "exp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_denylists_on_jti"
   end
 
   create_table "specializations", force: :cascade do |t|
