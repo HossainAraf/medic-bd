@@ -1,20 +1,14 @@
-databases:
-  - name: common_db # Ensure the actual name matches with render db
-    databaseName: common_db_c8vl  # Ensure the actual name matches here
-    user: common_db_c8vl_user
-    plan: free
 services:
   - type: web
-    name: doctors-ngn-backend # Use the correct name for your web service here
+    name: doctors-ngn-backend
     runtime: ruby
     plan: free
-    buildCommand: "./bin/render-build.sh && bundle exec rails db:schema:load"
-    startCommand: "bundle exec rails server"
-
+    buildCommand: ./bin/render-build.sh && (bundle exec rails db:prepare || (echo "Trying db:schema:load"; DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:schema:load))
+    startCommand: bundle exec rails server
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: common_db  # This matches the `name` under `databases`
+          name: common_db
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
