@@ -46,3 +46,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+# Devise gem for authentication
+gem 'devise'
+gem 'devise-jwt'
