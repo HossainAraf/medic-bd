@@ -38,15 +38,15 @@
 # end
 
 # CREATE DISTRICTS
-# districts = ['Naogaon', 'Rajshahi', 'Bogura']
-# districts.each do |district|
-#   district = District.create(name: district)
-#   if district.persisted?
-#     puts "District created: #{district.name}"
-#   else
-#     puts "District creation failed for #{district}."
-#   end
-# end
+districts = ['Naogaon', 'Rajshahi', 'Bogura']
+districts.each do |district|
+  district = District.create(name: district)
+  if district.persisted?
+    puts "District created: #{district.name}"
+  else
+    puts "District creation failed for #{district}."
+  end
+end
 
 # CREATE CHAMBERS
 # chambers= Chamber.create(
