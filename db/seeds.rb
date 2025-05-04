@@ -38,15 +38,17 @@
 # end
 
 # CREATE DISTRICTS
-districts = ['Naogaon', 'Rajshahi', 'Bogura']
-districts.each do |district|
-  district = District.create(name: district)
-  if district.persisted?
-    puts "District created: #{district.name}"
-  else
-    puts "District creation failed for #{district}."
-  end
-end
+# districts = ['Naogaon', 'Rajshahi', 'Bogura']
+
+# districts.each do |name|
+#   district = District.find_or_create_by(name: name)
+#   if district.persisted?
+#     puts "District created or already exists: #{district.name}"
+#   else
+#     puts "District creation failed for #{name}."
+#   end
+# end
+
 
 # CREATE CHAMBERS
 # chambers= Chamber.create(
@@ -91,5 +93,17 @@ end
 #     puts "DoctorSchedule created: #{doctor_schedule.doctor.name} - #{doctor_schedule.chamber.name}"
 #   else
 #     puts "DoctorSchedule creation failed for #{doctor.name} - #{chamber.name}."
+#   end
+# end
+
+# ADD SPECIALIZATIONS
+# names = ['হৃদরোগ', 'মেডিসিন', 'শিশুরোগ', 'প্রসূতি ও স্ত্রীরোগ', 'মানসিক রোগ', 'নিউরোলজি', 'চর্ম ও যৌনরোগ ', 'ডায়াবেটিস', 'ইউরোলজি', 'বক্ষব্যাধি', 'হাড়-জোড় ও মেরুদন্ড', 'ক্যান্সার', 'জেনারেল সার্জারি', 'নাক-কান-গলা', 'চক্ষুরোগ', 'হরমোন', 'দন্তরোগ', 'রক্ত ও ব্লাড ক্যান্সার']
+
+# names.each do |name|
+#   specialization = Specialization.find_or_create_by(name: name.strip)
+#   if specialization.persisted?
+#     puts "Specialization created or exists: #{specialization.name}"
+#   else
+#     puts "Specialization creation failed for #{name}."
 #   end
 # end
