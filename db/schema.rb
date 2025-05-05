@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_25_211512) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_05_221917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_25_211512) do
     t.string "experience", null: false
     t.string "phone"
     t.integer "order", null: false
+    t.string "photo"
     t.check_constraint "\"order\" >= 100000 AND \"order\" <= 9999999", name: "order_range"
   end
 
