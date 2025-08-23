@@ -28,5 +28,10 @@ module DoctorsNgnBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Add this configuration for environment-specific credentials
+    config.credentials.content_path = "config/credentials/#{Rails.env}.yml.enc"
+    config.credentials.key_path = "config/credentials/#{Rails.env}.key"
+
   end
 end
