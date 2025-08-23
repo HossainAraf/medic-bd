@@ -27,3 +27,6 @@
 }
 ----------------------------------
 --------------
+EDITOR="code --wait" bin/rails credentials:edit --environment production
+---------------------
+-----------

@@ -1,11 +1,11 @@
 databases:
-  - name: doctors_ngn  # Match this to the actual Render database
-    databaseName: doctors_ngn_119b  # Ensure the actual name matches here
+  - name: myDB  # Match this to the actual Render database
+    databaseName: mydb_1gbd  # Ensure the actual name matches here
     user: hossain_araf
     plan: free
 services:
   - type: web
-    name: doctors_ngn  # Use the correct name for your web service here
+    name: medic-bd-api  # Use the correct name for your web service here
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh && bundle exec rails db:migrate && rails db:schema:load"
@@ -13,7 +13,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: doctors_ngn  # This matches the `name` under `databases`
+          name: myDB  # This matches the `name` under `databases`
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false

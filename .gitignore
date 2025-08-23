@@ -36,3 +36,5 @@
 
 # Ignore seed.md
 /_NOTES/seed.md
+
+/config/credentials/production.key
