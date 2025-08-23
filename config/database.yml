@@ -21,7 +21,7 @@ default: &default
 
 development:
   <<: *default
-  database: common_db
+  database: medic-bd-dev
   user: <%= Rails.application.credentials.dig(:development, :database_user) %>
   password: <%= Rails.application.credentials.dig(:development, :database_password) %>
 
