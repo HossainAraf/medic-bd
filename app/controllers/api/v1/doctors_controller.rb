@@ -158,7 +158,7 @@ class Api::V1::DoctorsController < ApplicationController
 
   def doctor_params
     params.require(:doctor).permit(
-      :name, :specialty, :order, :qualification, :experience, :phone,
+      :bangla_name, :name, :specialty, :order, :qualification, :experience, :phone, :special_notes, :description, :photo_url,
       chambers_attributes: %i[name category address district_id],
       doctor_specializations_attributes: [:specialization_id],
       doctor_schedules_attributes: [:available_day, :available_time,
