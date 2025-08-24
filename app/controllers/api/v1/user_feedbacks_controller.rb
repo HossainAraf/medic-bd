@@ -37,8 +37,6 @@ class Api::V1::UserFeedbacksController < ApplicationController
   end
 end
 
-private
-
 def user_feedback_params
   params.require(:user_feedback).permit(:name, :email, :feedback, :phone)
 end

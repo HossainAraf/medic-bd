@@ -32,7 +32,12 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/config/credentials/development.key
+/config/credentials/
 
 # Ignore seed.md
 /_NOTES/seed.md
+/_NOTES/non-sharebleNOTE.md
+
+/config/credentials/production.key
+
+/config/credentials/development.key

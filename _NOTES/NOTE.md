@@ -1,4 +1,16 @@
+<!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
+<!-- Fronend form -->
+const AddDoctorForm = () => {
+  const categories = [
+    { id: 1, name: 'Diagnostic' },
+    { id: 2, name: 'Clinic' },
+    { id: 3, name: 'Hospital' },
+    { id: 4, name: 'Private Chamber' },
+  ];
+--------------------------------------------
+
 <!-- POST: api/v1/doctors -->
+<!-- Not a good practice, rather we should us 'find' -->
 {
   "doctor": {
     "name": "Tasnia Habib",
@@ -26,4 +38,10 @@
   }
 }
 ----------------------------------
+--------------
+EDITOR="code --wait" bin/rails credentials:edit --environment production
+---------------------
+-----------
+sslmode: require
+-----------------------
 --------------

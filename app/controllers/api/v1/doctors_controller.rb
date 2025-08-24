@@ -93,8 +93,6 @@ class Api::V1::DoctorsController < ApplicationController
   end
 
   # UPDATE /api/v1/doctors/:id
-
-  # UPDATE /api/v1/doctors/:id
   def update
     ActiveRecord::Base.transaction do
       processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
@@ -158,7 +156,8 @@ class Api::V1::DoctorsController < ApplicationController
 
   def doctor_params
     params.require(:doctor).permit(
-      :bangla_name, :name, :specialty, :order, :qualification, :experience, :phone, :special_notes, :description, :photo_url,
+      :bangla_name, :name, :specialty, :order,
+      :qualification, :experience, :phone, :special_notes, :description, :photo_url,
       chambers_attributes: %i[name category address district_id],
       doctor_specializations_attributes: [:specialization_id],
       doctor_schedules_attributes: [:available_day, :available_time,
