@@ -93,8 +93,6 @@ class Api::V1::DoctorsController < ApplicationController
   end
 
   # UPDATE /api/v1/doctors/:id
-
-  # UPDATE /api/v1/doctors/:id
   def update
     ActiveRecord::Base.transaction do
       processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
