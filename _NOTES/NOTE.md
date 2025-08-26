@@ -39,7 +39,7 @@ const AddDoctorForm = () => {
 }
 -----------------------------
 -----------------
-<!-- example payload for user sign up -->
+<!-- example payload for user sign up  format-->
 {
   "medic_user": {
     "name": "Araf",
@@ -50,9 +50,17 @@ const AddDoctorForm = () => {
     "role": "admin"
   }
 }
-
 ----------------------------------
 --------------
+<!-- example log in pay load format -->
+{
+  "medic_user": {
+    "email": "<user email>",
+    "password": "<user pass>"
+  }
+}
+------------------------
+--------
 EDITOR="code --wait" bin/rails credentials:edit --environment production
 ---------------------
 -----------
