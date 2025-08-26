@@ -100,6 +100,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
+    jwt (2.10.2)
+      base64
     language_server-protocol (3.17.0.3)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -216,6 +218,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.18)
   bootsnap
   debug
+  jwt (~> 2.6)
   pg (~> 1.1)
   puma (>= 5.0)
   rack-cors
