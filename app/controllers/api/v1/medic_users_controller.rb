@@ -25,7 +25,6 @@ class Api::V1::MedicUsersController < ApplicationController
   end
 
   def user_response(user)
-    user.as_json(only: [:id, :name, :email, :phone, :role, :created_at, :updated_at])
+    user.as_json(only: %i[id name email phone role created_at updated_at])
   end
-
 end

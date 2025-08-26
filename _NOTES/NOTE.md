@@ -67,3 +67,7 @@ EDITOR="code --wait" bin/rails credentials:edit --environment production
 sslmode: require
 -----------------------
 --------------
+<!-- detect and autocorrect rubocop linter -->
+rubocop -A
+-------------------
+---------
