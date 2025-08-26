@@ -37,6 +37,20 @@ const AddDoctorForm = () => {
     ]
   }
 }
+-----------------------------
+-----------------
+<!-- example payload for user sign up -->
+{
+  "medic_user": {
+    "name": "Araf",
+    "email": "araf@example.com",
+    "phone": "017xxxxxxxx",
+    "password": "secret123",
+    "password_confirmation": "secret123",
+    "role": "admin"
+  }
+}
+
 ----------------------------------
 --------------
 EDITOR="code --wait" bin/rails credentials:edit --environment production

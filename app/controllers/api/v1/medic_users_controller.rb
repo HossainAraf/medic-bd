@@ -3,10 +3,10 @@ class Api::V1::MedicUsersController < ApplicationController
 
   # POST /api/v1/medic_users
   def create
-    user = MedicUser.new(medic_user_params)
+    user = MedicUser.new(user_params)
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { token, user: user_response(user) }, status: :created
+      render json: { token: token, user: user_response(user) }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class Api::V1::MedicUsersController < ApplicationController
   private
 
   def user_params
-    params.require(:medic_user).permit(:name, :email, :phone, :password,, :password_confiramtion, :role)
+    params.require(:medic_user).permit(:name, :email, :phone, :password, :password_confiramtion, :role)
   end
 
   def user_response(user)
