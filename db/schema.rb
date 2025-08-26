@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_23_075625) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_26_192928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_23_075625) do
     t.text "special_notes"
     t.text "description"
     t.check_constraint "\"order\" >= 100000 AND \"order\" <= 9999999", name: "order_range"
+  end
+
+  create_table "medic_users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.string "password_digest"
+    t.string "role"
+    t.integer "created_by"
+    t.integer "updated_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_medic_users_on_email", unique: true
   end
 
   create_table "specializations", force: :cascade do |t|
