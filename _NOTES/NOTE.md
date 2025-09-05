@@ -71,3 +71,5 @@ sslmode: require
 rubocop -A
 -------------------
 ---------
+<!-- TO DO  -->
+# Added bangla_name to doictors controllers functions. Check where need where not 

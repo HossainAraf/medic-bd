@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authorize_request
+  # before_action :authorize_request
 
   private
 

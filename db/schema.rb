@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_26_192928) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_05_181037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_26_192928) do
     t.text "photo_url"
     t.text "special_notes"
     t.text "description"
+    t.index ["name", "bangla_name"], name: "index_doctors_on_name_and_bangla_name_unique", unique: true
     t.check_constraint "\"order\" >= 100000 AND \"order\" <= 9999999", name: "order_range"
   end
 
