@@ -1,5 +1,7 @@
 class Api::V1::DoctorsController < ApplicationController
   before_action :set_doctors, only: %i[show update]
+  # Unprotect all GET requests
+  skip_before_action :authenticate_request, only: %i[index show filtered_doctors filter_by_order]
 
   # GET /api/v1/doctors
   def index
