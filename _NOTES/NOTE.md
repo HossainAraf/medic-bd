@@ -72,4 +72,13 @@ rubocop -A
 -------------------
 ---------
 <!-- TO DO  -->
-# Added bangla_name to doictors controllers functions. Check where need where not 
+# Added bangla_name to doictors controllers functions. Check where need where not
+---------------------------------------
+---------------------
+In Ruby, the private keyword makes all methods defined after it private to the class. Private methods cannot be called as before_action callbacks.
+
+When Rails tries to run the callback chain, it looks for the :authorize_admin method. Because it's marked as 
+private
+, Rails cannot find it in the list of available actions and fails.
+----------------------------
+-----------
