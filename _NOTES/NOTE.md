@@ -1,3 +1,6 @@
+RAILS_ENV=production bundle exec rails db:migrate
+
+
 <!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
 <!-- Fronend form -->
 const AddDoctorForm = () => {
