@@ -1,9 +1,9 @@
 class Api::V1::DoctorsController < ApplicationController
-    # Skip auth for public GET requests
+  # Skip auth for public GET requests
   # skip_before_action :authorize_request, only: %i[index show filtered_doctors filter_by_order]
 
   # Ensure these actions are authenticated and user is an admin
-   # For actions that modify data (create, update, destroy), run both:
+  # For actions that modify data (create, update, destroy), run both:
   # 1. authorize_request (sets @current_user)
   # 2. authorize_admin (checks if @current_user is an admin)
   before_action :authorize_request, only: %i[create update]
