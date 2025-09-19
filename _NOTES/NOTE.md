@@ -1,5 +1,20 @@
+<!-- Syntax to Connent to render databse   -->
+**CAUTION: Must not push the original valuse by any developer**
+# ~/.pg_service.conf.template
+[mydb_render]
+host=<YOUR_HOST>
+port=5432
+user=<YOUR_USER>
+dbname=<YOUR_DB>
+password=<YOUR_PASSWORD>
+--------------------------------
+---------
+
 RAILS_ENV=production bundle exec rails db:migrate
 
+<!-- Force update commit messege -->
+[ flow: wrong commit messege > push commit   > amend  commit messege ] > 
+git push --force-with-lease origin <branch_name>
 
 <!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
 <!-- Fronend form -->
@@ -60,6 +75,13 @@ const AddDoctorForm = () => {
   "medic_user": {
     "email": "<user email>",
     "password": "<user pass>"
+  }
+}
+------
+{
+  "medic_user": {
+    "email": "arafat.kd@gmail.com>",
+    "password": "123456"
   }
 }
 ------------------------
