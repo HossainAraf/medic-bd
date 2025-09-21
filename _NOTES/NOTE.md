@@ -10,6 +10,11 @@ password=<YOUR_PASSWORD>
 --------------------------------
 ---------
 
+# Open the encrypted credentials file in VS Code
+EDITOR="code --wait" rails credentials:edit
+------------------------------
+------
+
 RAILS_ENV=production bundle exec rails db:migrate
 
 <!-- Force update commit messege -->
