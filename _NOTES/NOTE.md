@@ -1,3 +1,9 @@
+----------------------------------------
+----------
+get in to shared databse using respective schema (here : medicbd )
+SELECT * FROM medicbd.medic_users;
+------------------------------------
+---------
 <!-- Syntax to Connent to render databse   -->
 **CAUTION: Must not push the original valuse by any developer**
 # ~/.pg_service.conf.template
@@ -31,9 +37,11 @@ const AddDoctorForm = () => {
     { id: 4, name: 'Private Chamber' },
   ];
 --------------------------------------------
-
+# find_or_create_by! or similar methods for lookups to avoid duplicates.
 <!-- POST: api/v1/doctors -->
 <!-- Not a good practice, rather we should us 'find' -->
+-----------------------------
+----------------
 {
   "doctor": {
     "name": "Tasnia Habib",
@@ -112,3 +120,4 @@ private
 , Rails cannot find it in the list of available actions and fails.
 ----------------------------
 -----------
+
