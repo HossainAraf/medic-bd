@@ -120,4 +120,44 @@ private
 , Rails cannot find it in the list of available actions and fails.
 ----------------------------
 -----------
+# Rails + PostgreSQL Notes
 
+## Table Name Prefix
+- `self.table_name_prefix = 'md_'` in `ApplicationRecord` applies only to models that inherit from it.
+- Existing migrations are unaffected; only new models will get prefixed tables.
+- Explicit `self.table_name` overrides the prefix.
+- Best practice: use prefix only for user/auth tables (e.g., `medic_users`).
+
+## Database Setup
+- Default PostgreSQL port: 5432 (Rails may try 5433 if misconfigured).
+- Ensure `config/database.yml` matches credentials and port.
+- Grant `CREATEDB` privilege to app user or create DB manually.
+
+## Credentials
+- `config/master.key` must match `credentials.yml.enc`.
+- Comment out entire blocks in YAML, not just parent keys.
+- Keep secrets scoped per environment (development, production).
+
+## Associations
+- Prefixed tables (like `medic_users`) need explicit associations when linking to unprefixed tables.
+
+-----------------------
+# Test with NULL audit fields
+user = MedicUser.new(
+  name: "Test User",
+  email: "test@example.com",
+  phone: "123-456-7890", 
+  password: "password123",
+  password_confirmation: "password123",
+  role: "patient"
+  # Don't set created_by or updated_by - let them be NULL
+)
+
+if user.save
+  puts "✓ User saved successfully with NULL audit fields!"
+  puts "User ID: #{user.id}"
+  puts "Created by: #{user.created_by.inspect}"
+  puts "Updated by: #{user.updated_by.inspect}"
+else
+  puts "✗ Failed to save: #{user.errors.full_messages}"
+end

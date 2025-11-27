@@ -21,7 +21,7 @@ class Api::V1::MedicUsersController < ApplicationController
   private
 
   def user_params
-    params.require(:medic_user).permit(:name, :email, :phone, :password, :password_confiramtion, :role)
+    params.require(:medic_user).permit(:name, :email, :phone, :password, :password_confirmation, :role)
   end
 
   def user_response(user)
