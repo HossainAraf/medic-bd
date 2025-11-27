@@ -127,7 +127,7 @@ private
 - Existing migrations are unaffected; only new models will get prefixed tables.
 - Explicit `self.table_name` overrides the prefix.
 - Best practice: use prefix only for user/auth tables (e.g., `medic_users`).
-
+[Note that, we removed prefix later]
 ## Database Setup
 - Default PostgreSQL port: 5432 (Rails may try 5433 if misconfigured).
 - Ensure `config/database.yml` matches credentials and port.
@@ -141,23 +141,62 @@ private
 ## Associations
 - Prefixed tables (like `medic_users`) need explicit associations when linking to unprefixed tables.
 
------------------------
-# Test with NULL audit fields
-user = MedicUser.new(
-  name: "Test User",
-  email: "test@example.com",
-  phone: "123-456-7890", 
-  password: "password123",
-  password_confirmation: "password123",
-  role: "patient"
-  # Don't set created_by or updated_by - let them be NULL
-)
+-------------------------------
+--------------------------
+## SEED example
+## db/seeds.rb
 
-if user.save
-  puts "✓ User saved successfully with NULL audit fields!"
-  puts "User ID: #{user.id}"
-  puts "Created by: #{user.created_by.inspect}"
-  puts "Updated by: #{user.updated_by.inspect}"
-else
-  puts "✗ Failed to save: #{user.errors.full_messages}"
+# Seed :medic_users
+
+puts "Seeding MedicUsers..."
+
+def create_medic_user(attributes)
+  user = MedicUser.find_or_initialize_by(email: attributes[:email])
+  
+  if user.new_record?
+    user.assign_attributes(attributes)
+    if user.save
+      puts "✅ Created: #{user.name} (#{user.role}) - #{user.email}"
+      return user
+    else
+      puts "❌ Failed: #{user.name} - #{user.errors.full_messages.join(', ')}"
+      return nil
+    end
+  else
+    puts "⏩ Exists: #{user.name} (#{user.role})"
+    return user
+  end
 end
+
+# Seed data
+users = [
+  {
+    name: "Dr. John Smith",
+    email: "john.smith@hospital.com",
+    phone: "+1-234-567-8900",
+    password: "Password123!",
+    password_confirmation: "Password123!",
+    role: "doctor"
+  },
+  {
+    name: "Patient David Wilson",
+    email: "david.wilson@example.com",
+    phone: "+1-234-567-8906",
+    password: "Patient123!",
+    password_confirmation: "Patient123!",
+    role: "patient"
+  }
+]
+
+created_count = 0
+users.each do |user_attrs|
+  user = create_medic_user(user_attrs)
+  created_count += 1 if user&.persisted?
+end
+
+puts "\n🎉 MedicUsers seeding completed!"
+puts "Total users in database: #{MedicUser.count}"
+puts "New users created: #{created_count}"
+......................................
+# Seed: District
+puts 

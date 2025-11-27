@@ -12,6 +12,8 @@ class JsonWebToken
   end
 
   def self.secret
-    ENV['JWT_SECRET'].presence || Rails.application.credentials.jwt_secret || Rails.application.credentials.secret_key_base
+    ENV['JWT_SECRET'].presence ||
+      Rails.application.credentials.jwt_secret ||
+      Rails.application.credentials.secret_key_base
   end
 end

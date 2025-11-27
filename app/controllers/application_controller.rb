@@ -9,16 +9,23 @@ class ApplicationController < ActionController::API
 
   private
 
-  def authorize_request
+  def
+    authorize_request
     header = request.headers['Authorization']
-    puts "DEBUG: Authorization Header: #{header}" # Debug line
+    puts "DEBUG: Authorization Header:
+    #{header}"
+    # Debug line
 
     token = header.split.last if header
-    puts "DEBUG: Extracted Token: #{token}" # Debug line
+    puts "DEBUG:
+    Extracted Token: #{token}" # Debug line
 
     begin
       payload = JsonWebToken.decode(token)
-      puts "DEBUG: Decoded Payload: #{payload.inspect}" # Debug line
+      puts "DEBUG:
+      Decoded Payload:
+      #{payload.inspect}"
+      # Debug line
 
       @current_user = MedicUser.find_by(id: payload[:user_id]) if payload
       puts "DEBUG: Current User: #{@current_user.inspect}" # Debug line
