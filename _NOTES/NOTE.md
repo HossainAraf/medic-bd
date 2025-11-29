@@ -1,7 +1,7 @@
 ----------------------------------------
 ----------
-get in to shared databse using respective schema (here : medicbd )
-SELECT * FROM medicbd.medic_users;
+#Log in to DB
+psql -U <userName> -d <databaseName>
 ------------------------------------
 ---------
 <!-- Syntax to Connent to render databse   -->
