@@ -9,39 +9,46 @@ class ApplicationController < ActionController::API
 
   private
 
-  def
-    authorize_request
-    header = request.headers['Authorization']
-    puts "DEBUG: Authorization Header:
-    #{header}"
-    # Debug line
-
-    token = header.split.last if header
-    puts "DEBUG:
-    Extracted Token: #{token}" # Debug line
-
-    begin
-      payload = JsonWebToken.decode(token)
-      puts "DEBUG:
-      Decoded Payload:
-      #{payload.inspect}"
-      # Debug line
-
-      @current_user = MedicUser.find_by(id: payload[:user_id]) if payload
-      puts "DEBUG: Current User: #{@current_user.inspect}" # Debug line
-    rescue JWT::DecodeError => e
-      puts "DEBUG: JWT Decode Error: #{e.message}" # Debug line
-      render json: { error: 'Invalid token' }, status: :unauthorized
-      return
-    rescue StandardError => e
-      puts "DEBUG: Other Error: #{e.message}" # Debug line
-      render json: { error: 'Token error' }, status: :unauthorized
-      return
-    end
-
+  def authorize_request
+    @current_user = authenticate_user_from_token
+    
     return if @current_user
 
-    puts 'DEBUG: Current user is NIL' # Debug line
+    log_debug('Current user is NIL')
     render json: { error: 'Not Authorized' }, status: :unauthorized
   end
+  
+  def authenticate_user_from_token
+    token = extract_token_from_header
+    return nil unless token
+
+    payload = decode_token(token)
+    MedicUser.find_by(id: payload[:user_id]) if payload
+
+  rescue JWT::DecodeError => e
+    log_debug("JWT Decode Error: #{e.message}")
+    render json: { error: 'Invalid token' }, status: :unauthorized
+    nil
+  rescue StandardError => e
+    log_debug("Other Error: #{e.message}")
+    render json: { error: 'Token error' }, status: :unauthorized
+    nil
+  end
+
+  def extract_token_from_header
+    header = request.headers['Authorization']
+    log_debug("Authorization Header: #{header}")
+    header&.split&.last
+  end
+  
+  def decode_token(token)
+    log_debug("Extracted Token: #{token}")
+    payload = JsonWebToken.decode(token)
+    log_debug("Decoded Payload: #{payload.inspect}")
+    payload
+  end
+
+  def log_debug(message)
+    puts "DEBUG: #{message}"
+  end 
 end
