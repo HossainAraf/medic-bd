@@ -4,7 +4,8 @@ class ApplicationController < ActionController::API
 
   # Public method for admin authorization(used as callback)
   def authorize_admin
-    render json: { error: 'Forbidden: Admins only' }, status: :forbidden unless @current_user&.role == 'admin'
+    return if @current_user&.role == 'admin'
+    render json: { error: 'Forbidden: Admins only' }, status: :forbidden
   end
 
   private
