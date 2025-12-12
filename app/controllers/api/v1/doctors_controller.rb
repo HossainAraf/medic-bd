@@ -26,9 +26,7 @@ class Api::V1::DoctorsController < ApplicationController
 
   # GET /api/v1/doctors/:id
   def show
-    doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find(params[:id])
-
-    render json: doctor.as_json(
+    render json: @doctor.as_json(
       include: {
         chambers: { only: %i[id name category address district_id] },
         doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
@@ -139,6 +137,10 @@ class Api::V1::DoctorsController < ApplicationController
 
   private
 
+  def set_doctor
+    @doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find(params[:id])
+  end
+
   def preprocess_schedules(schedules_attributes)
     schedules_attributes.map do |schedule|
       if schedule[:chamber_attributes].present?
@@ -158,10 +160,6 @@ class Api::V1::DoctorsController < ApplicationController
       end
       schedule
     end
-  end
-
-  def set_doctors
-    @doctor = Doctor.find(params[:id])
   end
 
   def doctor_params
