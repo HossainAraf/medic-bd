@@ -247,9 +247,18 @@ WHERE id = '10';
 -----------------
 
 # Connect to your Render DB
-export DATABASE_URL="< external link of render db>
+export DATABASE_URL="< external link of render db>"
 psql $DATABASE_URL
 
 # In psql, create the schema
 CREATE SCHEMA IF NOT EXISTS medicbd;
 \q
+
+------------------------
+--------------
+# Skip for Future 
+'sslmode: require' in darabase.yml/production env
+We remove it for now, because:
+ We could sedd data in render DB, & data can be retrived from Database in terminal but when try to retrive from POSTMAN/frontednd GET request it shows [] (black array)  
+ ----------------
+ --------------
