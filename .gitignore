@@ -41,3 +41,9 @@
 /config/credentials/production.key
 
 /config/credentials/development.key
+
+# Ignore database config.
+.pg_service.conf
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+

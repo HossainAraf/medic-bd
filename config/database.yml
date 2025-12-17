@@ -6,11 +6,14 @@ default: &default
 
 development:
   <<: *default
-  database: medic-bd-dev
+  database: medic_bd_dev
   user: <%= Rails.application.credentials.dig(:development, :database_user) %>
   password: <%= Rails.application.credentials.dig(:development, :database_password) %>
+  host: 127.0.0.1
+  port: 5432
 
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
- 
+  schema_search_path: medicbd
+  

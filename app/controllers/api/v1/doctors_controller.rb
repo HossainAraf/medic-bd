@@ -1,5 +1,15 @@
 class Api::V1::DoctorsController < ApplicationController
-  before_action :set_doctors, only: %i[show update]
+  # Skip auth for public GET requests
+  skip_before_action :authorize_request, only: %i[index show filtered_doctors filter_by_order]
+  # Set doctor for show and update actions
+  before_action :set_doctor, only: %i[show update]
+  # Ensure these actions are authenticated and user is an admin
+  # For actions that modify data (create, update, destroy), run both:
+  # 1. authorize_request (sets @current_user)
+  # 2. authorize_admin (checks if @current_user is an admin)
+  before_action :authorize_request, only: %i[create update]
+  before_action :authorize_admin, only: %i[create update]
+  # {/*Destroy action also needed to be restricted to admin only but currently not implemented*/}
 
   # GET /api/v1/doctors
   def index
@@ -16,9 +26,7 @@ class Api::V1::DoctorsController < ApplicationController
 
   # GET /api/v1/doctors/:id
   def show
-    doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find(params[:id])
-
-    render json: doctor.as_json(
+    render json: @doctor.as_json(
       include: {
         chambers: { only: %i[id name category address district_id] },
         doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
@@ -129,6 +137,10 @@ class Api::V1::DoctorsController < ApplicationController
 
   private
 
+  def set_doctor
+    @doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find(params[:id])
+  end
+
   def preprocess_schedules(schedules_attributes)
     schedules_attributes.map do |schedule|
       if schedule[:chamber_attributes].present?
@@ -148,10 +160,6 @@ class Api::V1::DoctorsController < ApplicationController
       end
       schedule
     end
-  end
-
-  def set_doctors
-    @doctor = Doctor.find(params[:id])
   end
 
   def doctor_params
