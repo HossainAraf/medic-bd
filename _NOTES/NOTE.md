@@ -1,6 +1,17 @@
+#  Check Current Search Path:
+-- Shows what schemas are searched and in what order
+SHOW search_path;
+-- Example output: search_path
+-- medicbd, public
+
+ # Check Current Active Schema:
+-- Shows which schema you're currently working in
+SELECT current_schema();
+-- Example output: current_schema
+-- medicbd
 ----------------------------------------
 ----------
-#Log in to DB
+#Log in to local DB
 psql -U <userName> -d <databaseName>
 ------------------------------------
 ---------
@@ -102,9 +113,6 @@ const AddDoctorForm = () => {
 EDITOR="code --wait" bin/rails credentials:edit --environment production
 ---------------------
 -----------
-sslmode: require
------------------------
---------------
 <!-- detect and autocorrect rubocop linter -->
 rubocop -A
 -------------------
@@ -244,7 +252,7 @@ WHERE id = '10';
 ---------------
 -----------------
 # Connect to the Render DB
-export DATABASE_URL="< external link of render db>
+export DATABASE_URL="< external link of render db>"
 psql $DATABASE_URL
 ------------------------
 --------------
