@@ -242,18 +242,10 @@ UPDATE specializations
 SET name = 'শিশুরোগ'
 WHERE id = '10';
 ---------------
-# seed medic_users;
-
 -----------------
-
-# Connect to your Render DB
-export DATABASE_URL="< external link of render db>"
+# Connect to the Render DB
+export DATABASE_URL="< external link of render db>
 psql $DATABASE_URL
-
-# In psql, create the schema
-CREATE SCHEMA IF NOT EXISTS medicbd;
-\q
-
 ------------------------
 --------------
 # Skip for Future 
