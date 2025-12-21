@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
     # API root welcome
-  root to: proc { [200, {}, ['{"message": "Welcome to the API"}']] }, via: :get
+  # root to: proc { [200, {}, ['{"message": "Welcome to the API"}']] }, via: :get
   # Lightweight health check
-  get '/health', to: ->(_) { [200, {}, ['OK']] }
+  # get '/health', to: ->(_) { [200, {}, ['OK']] }
 
   namespace :api do
     namespace :v1 do
@@ -28,4 +28,20 @@ Rails.application.routes.draw do
       end
     end  
   end
+
+  # Regular Rails routes for full-stack functionality
+   # Root route
+  root 'home#index'
+
+  # Specializations > Districts > Doctors
+  resources :specializations, only: [:index, :show] do
+    resources :districts, only: [:index, :show] do
+      resources :doctors, only: [:index, :show]
+    end
+  end  
+
+  # Static pages
+
+  # Health check route
+  get '/health', to: ->(_) { [200, {}, ['OK']] }
 end
