@@ -301,3 +301,36 @@ app/views/
 │   ├── about.html.erb              # About page
 │   ├── disclaimer.html.erb         # Disclaimer page
 │   └── contact.html.erb            # Contact page
+----------------------------
+-----------
+# Home/index:
+      <%= render "home/card", title: "Chambers", path: chambers_path, icon: "🏥" %>
+      <%= render "home/card", title: "Doctors", path: doctors_path, icon: "👨‍⚕️" %>
+      <%= render "home/card", title: "Appointments", path: new_appointment_path, icon: "📅" %>
+      <%= render "home/card", title: "Diagnostics", path: diagnostics_chambers_path, icon: "🧪" %>
+      <%= render "home/card", title: "Hospitals", path: hospitals_chambers_path, icon: "🏨" %>
+      ------------------
+    #  _nav:
+    
+      <% link_to "MedicBd", root_path, class: "navbar-brand" %>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <%= link_to "Home", root_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Home", root_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "diagnostics", root_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "clinics-and-hospitals", root_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "About", about_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Contact", contact_path, class: "nav-link" %>
+    </li>
+-----------
+----------

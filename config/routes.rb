@@ -38,7 +38,14 @@ Rails.application.routes.draw do
     resources :districts, only: [:index, :show] do
       resources :doctors, only: [:index, :show]
     end
-  end  
+  end 
+  resources :doctors, only: [:index, :show]
+  resources :districts, only: [:index, :show]
+  resources :chambers, only: [:index, :show]
+  resources :medic_users, only: [:new, :create]
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :appointments, only: [:new, :create, :index, :show, :destroy]
+
 
   # Static pages
 
