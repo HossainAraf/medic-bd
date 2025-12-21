@@ -171,4 +171,5 @@ Accept: application/json (optional)
 --------
 
 # Future features:
+- ** Refactor: Create seperate actionController for API (::API) and Fullstack (::Base) to keep the API lightweight and consitent with Rails Convention
 - Stimulus controller for the slides so they auto‑rotate like a React carousel.
