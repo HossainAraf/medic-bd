@@ -21,6 +21,34 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+# Branching Strategy
+dev (default branch):
+
+    -All history lives here.
+
+   - Day‑to‑day development, experiments, and feature branches merge back into dev.
+
+v1.0-api branch (api-only):
+
+    -Cut from dev at a stable point.
+
+    -Preserves the API‑only version for demos, external clients (React/mobile), or anyone who wants to see a clean backend baseline.
+
+fullstack branch:
+
+    -Cut from api-only.
+
+    -Dedicated to Hotwire/Tailwind work, evolving the app into a full‑stack product.
+
+    <!-- -Tagged as v2.0-fullstack when stable. -->
+
+-main (production branch)
+
+    Receives merges from api-only or fullstack depending on what we want live.
+
+    -Always reflects the production‑ready state.
+
+    -Deployment pipelines point here.
 
 
 <!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
