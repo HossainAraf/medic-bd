@@ -50,7 +50,52 @@ fullstack branch:
 
     -Deployment pipelines point here.
 
+# API endpoints (JSON):
+API_BASE_URL = http://127.0.0.1:3000/api/v1
 
+- FETCH specializations: ${API_BASE_URL}/specializations
+  method: 'GET'
+
+- FETCH CHAMBERS BY DISTRICT ID AND CHAMBER CATEGORY: ${API_BASE_URL}/chambers?category=${category}&district_id=${districtId}
+  method: 'GET'
+
+- FETCH FILTERED DOCTORS BY specialization ID AND district ID: {API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}&district_id=${districtId}
+  method: 'GET'
+
+- FETCH DOCTORS BY specialization ID: ${API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}
+  method: 'GET'
+
+- FETCH ALL DOCTORS: ${API_BASE_URL}/doctors
+  method: 'GET'
+
+- FETCH DOCTOR BY ID: ${API_BASE_URL}/doctors/${id}
+  method: 'GET'
+
+- FETCH DOCTOR BY ORDER: ${API_BASE_URL}/doctors/order/${order}
+  method: 'GET'
+
+- FETCH DISTRICTS: ${API_BASE_URL}/districts
+  method: 'GET'
+
+- ADD NEW DOCTOR: ${API_BASE_URL}/doctors
+  method: 'POST'
+  headers = {
+    'Content-Type': 'application/json',
+  }
+
+- UPDATE DOCTOR: ${API_BASE_URL}/doctors/${doctor.id}
+  method: 'PUT',
+
+- FETCH Feedbacks: ${API_BASE_URL}/user_feedbacks
+  method: 'GET'
+
+- CREATE NEW Feedback: ${API_BASE_URL}/user_feedbacks
+  method: 'POST'
+  headers = {
+    'Content-Type': 'application/json',
+  }
+
+- 
 <!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
 <!-- Fronend form -->
 const AddDoctorForm = () => {
