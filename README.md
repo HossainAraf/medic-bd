@@ -169,3 +169,6 @@ Accept: application/json (optional)
 }
 ------------------------
 --------
+
+# Future features:
+- Stimulus controller for the slides so they auto‑rotate like a React carousel.
