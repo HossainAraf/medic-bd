@@ -262,3 +262,42 @@ We remove it for now, because:
  We could sedd data in render DB, & data can be retrived from Database in terminal but when try to retrive from POSTMAN/frontednd GET request it shows [] (black array)  
  ----------------
  --------------
+ # UI -plan
+app/views/
+├── layouts/
+│   ├── application.html.erb        # Main layout (navbar, footer, flash messages)
+│   ├── _navbar.html.erb            # Partial for top navigation
+│   ├── _footer.html.erb            # Partial for footer
+│   └── _flash.html.erb             # Partial for flash notices/errors
+│
+├── home/
+│   ├── index.html.erb              # Home page (slides + quick navigation cards)
+│   └── _slides.html.erb            # Partial for rotating banner/slides
+│
+├── specializations/
+│   ├── index.html.erb              # Grid of specialization cards
+│   └── _card.html.erb              # Partial for specialization card
+│
+├── districts/
+│   ├── index.html.erb              # List of districts for a specialization
+│   └── _card.html.erb              # Partial for district card
+│
+├── doctors/
+│   ├── index.html.erb              # Doctor listing (filtered by specialization + district)
+│   ├── show.html.erb               # Doctor detail page
+│   ├── _card.html.erb              # Partial for doctor card
+│   └── _profile.html.erb           # Partial for doctor profile details
+│
+├── appointments/
+│   ├── new.html.erb                # Appointment booking form
+│   └── _form.html.erb              # Partial for appointment form
+│
+├── chambers/
+│   ├── index.html.erb              # Tabs for diagnostics, hospitals, clinics
+│   ├── show.html.erb               # Chamber detail page
+│   └── _card.html.erb              # Partial for chamber card
+│
+├── static_pages/
+│   ├── about.html.erb              # About page
+│   ├── disclaimer.html.erb         # Disclaimer page
+│   └── contact.html.erb            # Contact page
