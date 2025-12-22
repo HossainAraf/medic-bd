@@ -34,5 +34,8 @@ module DoctorsNgnBackend
     # config.credentials.key_path = "config/credentials/#{Rails.env}.key"
     # Important NOTE: if the above 2 lines are uncommented master.key will not created when run rails credentials:edit
 
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    config.assets.version = '1.0'
   end
 end
