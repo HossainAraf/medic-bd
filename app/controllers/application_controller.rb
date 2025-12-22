@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  # CSRF Protection
+  protect_from_forgery with: :null_session, if: -> { request.format.json? }
+  
   protect_from_forgery with: :exception
   before_action :authorize_request
   attr_reader :current_user

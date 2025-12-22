@@ -515,3 +515,40 @@ medic-bd-api/
 [ref:]:( https://github.com/rails/tailwindcss-rails)
 ------------
 ---------
+
+**Essention tasks to convert api-only > fullstack**
+
+# Use Base in actionController
+
+/controllers/application_controller.rb
+- Use seperate ActionControllers: 
+  class ApplicationController < ActionController::Base (fullstack)
+  class ApplicationController < ActionController::API (api)
+  class ApplicationController < ActionController::web (html)
+
+# Update config/application.rb
+    config.time_zone = "Central Time (US & Canada)"
+    config.eager_load_paths << Rails.root.join("extras")
+      <!-- comment out api-only -->
+    # config.api_only = true
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    config.assets.version = '1.0'
+
+# Install Missing JavaScript/CSS Bundling
+  ``
+  bin/rails importmap:install
+  ``
+# Add Views
+
+# Add  Missing Helpers Directory
+
+# Add CSRF Protection in application_controller
+   protect_from_forgery with: :exception
+   
+   OR
+
+   -if using API + views hybrid:
+   
+  protect_from_forgery with: :null_session, if: -> { request.format.json? }
