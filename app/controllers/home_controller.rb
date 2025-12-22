@@ -1,5 +1,9 @@
-class HomeController < ApplicationController
-        skip_before_action :authorize_request, only: [:index]
-    def index
-    end
+class HomeController < ActionController::Base
+  protect_from_forgery with: :exception
+  layout 'application'
+  
+  def index
+    # Optional: Set a test flash message
+    # flash[:notice] = "Welcome to MedicBD!" if flash.empty?
+  end
 end

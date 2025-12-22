@@ -1,9 +1,10 @@
+// Import and register all your controllers
 import { application } from "./application"
-import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 
-// Eager load all controllers
-eagerLoadControllersFrom("controllers", application)
+// Import controllers here
+import HelloController from "./hello_controller"
+application.register("hello", HelloController)
 
-// Lazy load controllers (alternative approach)
-// import { lazyLoadControllersFrom } from "@hotwired/stimulus-loading"
-// lazyLoadControllersFrom("controllers", application)
+// Import modal controller if you have it
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)

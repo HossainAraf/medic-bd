@@ -51,4 +51,7 @@ Rails.application.routes.draw do
 
   # Health check route
   get '/health', to: ->(_) { [200, {}, ['OK']] }
+  
+resources :turbo_test, only: [:index, :create]
+
 end

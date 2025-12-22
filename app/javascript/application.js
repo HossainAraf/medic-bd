@@ -1,7 +1,5 @@
-console.log("JavaScript from modern app/javascript/ location");
+// This file is in modern location but may be loaded via manifest
+console.log("JavaScript in modern location (app/javascript/)");
 
-// If using Turbo, uncomment:
-// import "@hotwired/turbo-rails"
-
-// If using Stimulus, uncomment:
-// import "./controllers"
+// Note: ES6 imports (import "...") don't work with Sprockets by default
+// Use //= require directives or keep code simple
