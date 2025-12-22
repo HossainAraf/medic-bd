@@ -234,6 +234,16 @@ GEM
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     stringio (3.1.7)
+    tailwindcss-rails (4.4.0)
+      railties (>= 7.0.0)
+      tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.1.18)
+    tailwindcss-ruby (4.1.18-aarch64-linux-gnu)
+    tailwindcss-ruby (4.1.18-aarch64-linux-musl)
+    tailwindcss-ruby (4.1.18-arm64-darwin)
+    tailwindcss-ruby (4.1.18-x86_64-darwin)
+    tailwindcss-ruby (4.1.18-x86_64-linux-gnu)
+    tailwindcss-ruby (4.1.18-x86_64-linux-musl)
     thor (1.4.0)
     timeout (0.4.4)
     tsort (0.2.0)
@@ -271,6 +281,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 8.1.1)
   rubocop
+  tailwindcss-rails
   tzinfo-data
 
 RUBY VERSION

@@ -262,7 +262,7 @@ We remove it for now, because:
  We could sedd data in render DB, & data can be retrived from Database in terminal but when try to retrive from POSTMAN/frontednd GET request it shows [] (black array)  
  ----------------
  --------------
- # UI -plan
+ # UI -plan For FullStack Rails
 app/views/
 ├── layouts/
 │   ├── application.html.erb        # Main layout (navbar, footer, flash messages)
@@ -334,3 +334,11 @@ app/views/
     </li>
 -----------
 ----------
+# Install Tailwind
+``
+./bin/bundle add tailwindcss-rails
+
+``
+[ref:]:( https://github.com/rails/tailwindcss-rails)
+------------
+---------
