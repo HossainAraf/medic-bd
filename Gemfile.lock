@@ -253,6 +253,9 @@ GEM
     thor (1.4.0)
     timeout (0.4.4)
     tsort (0.2.0)
+    turbo-rails (2.0.20)
+      actionpack (>= 7.1.0)
+      railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.2.0)
@@ -289,6 +292,7 @@ DEPENDENCIES
   rubocop
   sprockets-rails
   tailwindcss-rails (~> 3.3.1)
+  turbo-rails
   tzinfo-data
 
 RUBY VERSION

@@ -39,6 +39,8 @@ gem 'bootsnap', require: false
 gem 'rack-cors', require: 'rack/cors'
 
 gem "tailwindcss-rails", "~> 3.3.1"
+gem 'sprockets-rails'
+gem "turbo-rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -51,4 +53,4 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
-gem 'sprockets-rails'
+

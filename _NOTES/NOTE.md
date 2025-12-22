@@ -263,144 +263,217 @@ We remove it for now, because:
  ----------------
  --------------
  # UI -plan For FullStack Rails
-your-app/
+medic-bd-api/
 ├── app/
 │   ├── assets/
+│   │   ├── builds/                           # Compiled assets (from esbuild/webpack)
+│   │   │   ├── application.js
+│   │   │   └── application.css
 │   │   ├── config/
-│   │   │   └── manifest.js
-│   │   ├── images/
-│   │   ├── stylesheets/
-│   │   │   ├── application.css
-│   │   │   ├── components/          # Component-specific styles
-│   │   │   └── custom/              # Custom CSS utilities
-│   │   └── javascript/
-│   │       ├── application.js       # Main entry point
-│   │       ├── controllers/
-│   │       │   ├── application.js   # Stimulus application setup
-│   │       │   ├── index.js         # Autoload controllers
-│   │       │   ├── hello_controller.js
-│   │       │   └── **/*_controller.js  # More Stimulus controllers
-│   │       ├── channels/            # Action Cable channels
-│   │       │   └── consumer.js
-│   │       └── custom/              # Custom JS utilities
+│   │   │   └── manifest.js                   # Sprockets manifest
+│   │   ├── images/                           # Static images
+│   │   │   ├── logo.png
+│   │   │   └── favicon.ico
+│   │   └── stylesheets/                      # Source CSS files
+│   │       ├── application.tailwind.css      # Tailwind entry point
+│   │       └── custom/                       # Custom CSS if needed
+│   │           └── components.css
 │   │
-│   ├── channels/
+│   ├── channels/                             # Action Cable/WebSocket
 │   │   ├── application_cable/
 │   │   │   ├── channel.rb
 │   │   │   └── connection.rb
-│   │   └── **/*_channel.rb         # Action Cable channels
+│   │   └── notifications_channel.rb          # Example channel
 │   │
-│   ├── controllers/
+│   ├── controllers/                          # Rails controllers
 │   │   ├── application_controller.rb
-│   │   ├── concerns/               # Controller concerns
-│   │   └── **/*_controller.rb      # RESTful & custom controllers
+│   │   ├── concerns/
+│   │   │   └── turbo_streamable.rb           # Turbo Stream concerns
+│   │   ├── api/                              # API controllers if needed
+│   │   │   └── v1/
+│   │   │       └── base_controller.rb
+│   │   └── pages_controller.rb               # Example controller
 │   │
-│   ├── helpers/
+│   ├── helpers/                              # View helpers
 │   │   ├── application_helper.rb
-│   │   └── **/*_helper.rb
+│   │   ├── turbo_stream_helper.rb            # Custom Turbo helpers
+│   │   └── stimulus_helper.rb                # Stimulus attribute helpers
 │   │
-│   ├── javascript/                 # Rails 7+ location for JS
-│   │   ├── controllers/            # Stimulus controllers (if using importmaps)
-│   │   ├── application.js
-│   │   └── **/*.js
+│   ├── javascript/                           # ⭐ NEW Rails 7 location
+│   │   ├── application.js                    # JavaScript entry point
+│   │   ├── controllers/                      # Stimulus controllers
+│   │   │   ├── application.js                # Stimulus app setup
+│   │   │   ├── index.js                      # Autoload controllers
+│   │   │   ├── hello_controller.js           # Example controller
+│   │   │   ├── modal_controller.js           # Modal controller
+│   │   │   ├── form_controller.js            # Form handling
+│   │   │   ├── dropdown_controller.js        # Dropdown menu
+│   │   │   └── clipboard_controller.js       # Copy to clipboard
+│   │   │
+│   │   ├── channels/                         # Action Cable consumer
+│   │   │   └── consumer.js
+│   │   │
+│   │   ├── custom/                           # Custom JavaScript modules
+│   │   │   ├── utilities.js
+│   │   │   ├── notifications.js
+│   │   │   └── analytics.js
+│   │   │
+│   │   └── lib/                              # JavaScript libraries
+│   │       └── stimulus-notification.js
 │   │
-│   ├── models/
+│   ├── models/                               # ActiveRecord models
 │   │   ├── application_record.rb
-│   │   ├── concerns/               # Model concerns
-│   │   └── **/*.rb
+│   │   ├── concerns/
+│   │   │   └── searchable.rb
+│   │   ├── user.rb
+│   │   ├── post.rb
+│   │   └── comment.rb
 │   │
-│   ├── views/
+│   ├── views/                                # View templates
 │   │   ├── layouts/
-│   │   │   ├── application.html.erb
+│   │   │   ├── application.html.erb          # Main layout
 │   │   │   ├── mailer.html.erb
 │   │   │   └── mailer.text.erb
 │   │   │
-│   │   ├── components/             # View components (optional but recommended)
-│   │   │   ├── **/*_component.rb
-│   │   │   └── **/*.html.erb
+│   │   ├── shared/                           # Shared partials
+│   │   │   ├── _flash.html.erb               # Flash messages
+│   │   │   ├── _navbar.html.erb              # Navigation
+│   │   │   ├── _footer.html.erb              # Footer
+│   │   │   ├── _sidebar.html.erb             # Sidebar
+│   │   │   └── _modal.html.erb               # Modal template
 │   │   │
-│   │   ├── shared/                 # Shared partials
-│   │   │   ├── _flash.html.erb
-│   │   │   ├── _navbar.html.erb
-│   │   │   └── _footer.html.erb
+│   │   ├── components/                       # View Components (optional but recommended)
+│   │   │   ├── button_component.rb
+│   │   │   ├── button_component.html.erb
+│   │   │   ├── card_component.rb
+│   │   │   └── card_component.html.erb
 │   │   │
-│   │   ├── turbo_stream/           # Turbo Stream templates
-│   │   │   ├── _create.turbo_stream.erb
-│   │   │   ├── _update.turbo_stream.erb
-│   │   │   └── _destroy.turbo_stream.erb
+│   │   ├── turbo_stream/                     # Turbo Stream templates
+│   │   │   ├── _flash.turbo_stream.erb       # Flash updates
+│   │   │   ├── _create.turbo_stream.erb      # Generic create
+│   │   │   ├── _update.turbo_stream.erb      # Generic update
+│   │   │   ├── _destroy.turbo_stream.erb     # Generic destroy
+│   │   │   └── _notification.turbo_stream.erb
 │   │   │
-│   │   └── [resource_name]/        # Resource views
+│   │   ├── pages/                            # Controller views
+│   │   │   ├── home.html.erb
+│   │   │   └── about.html.erb
+│   │   │
+│   │   └── users/                            # Resource views
 │   │       ├── index.html.erb
 │   │       ├── show.html.erb
 │   │       ├── new.html.erb
 │   │       ├── edit.html.erb
-│   │       ├── _form.html.erb      # Partial forms
-│   │       └── _[resource].html.erb
+│   │       ├── _form.html.erb                # Form partial
+│   │       ├── _user.html.erb                # User partial
+│   │       └── turbo_stream/                 # User-specific Turbo Streams
+│   │           ├── create.turbo_stream.erb
+│   │           └── update.turbo_stream.erb
 │   │
-│   └── mailers/
-│       ├── application_mailer.rb
-│       └── **/*_mailer.rb
+│   ├── mailers/                              # Action Mailer
+│   │   ├── application_mailer.rb
+│   │   └── user_mailer.rb
+│   │
+│   └── jobs/                                 # Active Job
+│       ├── application_job.rb
+│       └── notification_job.rb
 │
 ├── config/
+│   ├── environments/
+│   │   ├── development.rb
+│   │   ├── production.rb
+│   │   └── test.rb
+│   │
 │   ├── initializers/
-│   │   ├── assets.rb
-│   │   ├── content_security_policy.rb
+│   │   ├── assets.rb                        # Asset pipeline config
+│   │   ├── content_security_policy.rb       # CSP for Turbo/WebSocket
 │   │   ├── filter_parameter_logging.rb
 │   │   ├── inflections.rb
-│   │   └── **/*.rb
+│   │   ├── permissions_policy.rb
+│   │   ├── turbo.rb                         # Turbo-specific config
+│   │   └── stimulus.rb                      # Stimulus config (if needed)
 │   │
-│   ├── locales/
+│   ├── locales/                             # Internationalization
 │   │   ├── en.yml
-│   │   └── **/*.yml
+│   │   └── bn.yml
 │   │
-│   ├── cable.yml
+│   ├── cable.yml                            # Action Cable config
 │   ├── database.yml
 │   ├── environment.rb
+│   ├── importmap.rb                         # ⭐ Import maps config (if using)
 │   ├── puma.rb
-│   ├── routes.rb                  # Turbo routes for SPA-like navigation
-│   └── **/*.rb
+│   ├── routes.rb                            # Routes with Turbo concerns
+│   └── storage.yml                          # Active Storage
 │
 ├── db/
 │   ├── migrate/
-│   │   └── [timestamp]_create_[tables].rb
+│   │   ├── 20240101000000_create_users.rb
+│   │   ├── 20240101000001_create_posts.rb
+│   │   └── 20240101000002_add_turbo_columns.rb
 │   ├── schema.rb
-│   ├── seeds.rb
-│   └── **/*.rb
+│   ├── seeds.rb                             # Seed data with Turbo examples
+│   └── structure.sql
 │
 ├── lib/
-│   ├── assets/
-│   ├── tasks/
-│   └── **/*.rb
+│   ├── assets/                              # Library assets
+│   ├── tasks/                               # Rake tasks
+│   │   ├── turbo.rake                       # Turbo-related tasks
+│   │   └── assets.rake
+│   └── turbo_helper.rb                      # Custom Turbo helpers
+│
+├── test/                                    # or spec/ for RSpec
+│   ├── controllers/
+│   │   └── pages_controller_test.rb
+│   ├── models/
+│   │   └── user_test.rb
+│   ├── system/                              # System tests (great for Turbo!)
+│   │   ├── application_system_test_case.rb
+│   │   ├── navigation_test.rb
+│   │   └── turbo_stream_test.rb
+│   ├── test_helper.rb
+│   └── fixtures/
+│       └── users.yml
+│
+├── vendor/                                  # 3rd party assets
+│   └── javascript/                          # Downloaded JS libraries
+│
+├── storage/                                 # Active Storage files
+│   └── uploads/
+│
+├── tmp/
+│   ├── cache/
+│   ├── pids/
+│   └── sockets/                             # Action Cable sockets
 │
 ├── public/
 │   ├── 404.html
 │   ├── 422.html
 │   ├── 500.html
 │   ├── robots.txt
-│   └── **/*
+│   └── vite/                                # If using Vite
 │
-├── test/                          # or spec/ for RSpec
-│   ├── controllers/
-│   ├── models/
-│   ├── system/                    # System tests for Hotwire
-│   ├── test_helper.rb
-│   └── **/*_test.rb
+├── .gitignore
+├── .ruby-version
+├── .node-version                           # Node version for Tailwind
+├── .tool-versions                          # If using asdf
+├── .env.example                            # Environment variables
+├── .env.local
 │
-├── tmp/
-├── vendor/
-│   └── javascript/                # Node modules if using esbuild/webpack
-│
-├── storage/                       # Active Storage
-├── node_modules/                  # If using Node.js
-│
-├── package.json                   # For JavaScript dependencies
 ├── Gemfile
 ├── Gemfile.lock
+│
+├── package.json                            # Node dependencies
+├── package-lock.json
+│
+├── tailwind.config.js                      # Tailwind configuration
+├── postcss.config.js                       # PostCSS configuration
+│
+├── Procfile                                # Production process file
+├── Procfile.dev                            # Development processes
+│
 ├── README.md
 ├── Rakefile
-├── Procfile                       # For deployment (if needed)
-├── .gitignore
-└── **/*.yml
+└── config.ru
 ----------------------------
 -----------
 # Home/index:
