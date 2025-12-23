@@ -550,5 +550,56 @@ medic-bd-api/
    OR
 
    -if using API + views hybrid:
-   
+
   protect_from_forgery with: :null_session, if: -> { request.format.json? }
+
+# Update Strong Parameters (if requre) in controllers:
+
+# Missing View Templates in controllers:
+
+  rails generate erb:scaffold <Contollername>
+
+  eg; 
+  rails generate erb:scaffold User name:string email:string
+
+#  Turbo/Stimulus Issues:
+
+- Install Turbo/Stimulus if needed
+
+``
+rails turbo:install
+rails stimulus:install
+``
+
+# Session Store Configuration:
+
+# Authentication/Authorization
+
+  We were using API tokens, need to add session-based auth
+
+  Use Devise for authentication if needed
+  Add to Gemfile: gem 'devise'
+  Then run:
+  rails generate devise:install
+  rails generate devise User
+
+  # Quick Diagnostic Commands:
+
+      # Check what middleware is loaded
+    rails middleware
+
+    # Check if assets are compiling
+    rails assets:precompile
+
+    # Clear any cached files
+    rails tmp:clear
+
+# Share logic between API and HTML endpoints:
+  Approach 1: Service Objects/Interactors
+  Approach 2: Shared Base Controller with Responders(custom)
+  Approach 3: Concerns for Shared Logic
+  Approach 4: Use responders Gem
+  Approach 5: API-Only Namespace with HTML Fallback
+  Approach 6: Decorators/Presenters
+
+Slected Appraoch: 
