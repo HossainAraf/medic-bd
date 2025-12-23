@@ -610,8 +610,18 @@ Slected Appraoch: 5
 
   Create 1 base_controller and then split the behavior for API & Web:
   *controller inheritance hierarchy*
-    ApplicationController → Web::BaseController
-    ActionController::API → Api::BaseController
+    ApplicationController → Web::BaseController→<specificContoller>
+    ActionController::API → Api::BaseController→<specificContoller>
+
+ActionController (module)
+├── Base (full-featured)
+│    └── ApplicationController (your main web root)
+│          └── Web::BaseController (web-specific)
+│
+└── API (lightweight)
+     └── Api::BaseController (API-specific)
+          └── Api::V1::DoctorsController
+
   ----
 
   class ApplicationController < ActionController::Base
@@ -622,6 +632,62 @@ Slected Appraoch: 5
   module Web
     class BaseController < ApplicationController
 ----
+<!-- Rails has one ActionController module, but multiple subclasses
+module ActionController
+  class Base
+    # full-featured controller for HTML, sessions, layouts, cookies, CSRF
+  end
+
+  class API < Base
+    # lightweight subclass optimized for APIs
+  end
+end
+
+Key points
+
+ActionController::Base → full Rails controller
+
+Includes: layouts, helpers, sessions, flash, cookies, CSRF protection, all middleware stack
+
+ActionController::API → inherits from Base, but strips most middleware & helpers
+
+Lightweight → fast JSON APIs
+
+No views, no cookies, no CSRF by default
+
+So Rails has one module (ActionController) but two controller classes you choose from.
+
+class ApplicationController < ActionController::Base
+This is the main full-stack controller
+
+Handles HTML, sessions, CSRF protection
+
+Base for all web controllers
+
+module Api
+  class BaseController < ActionController::API
+  end
+end
+This is pure API
+
+Inherits from ActionController::API (which itself inherits from Base internally)
+
+Lightweight → no middleware like cookies, no layouts, no views
+
+Fast for JSON requests
+
+module Web
+  class BaseController < ApplicationController
+  end
+end
+This is your web-specific base
+
+Inherits from your ApplicationController
+
+Can add protect_from_forgery, before_action :authenticate_user!, layout etc.
+
+Keeps your web controllers isolated from API controllers
+ -->
 # Folder Srtucture: 
     app/controllers/
       api/

@@ -11,8 +11,6 @@ class ApplicationController < ActionController::Base
     render json: { error: 'Forbidden: Admins only' }, status: :forbidden
   end
 
-  private
-
   def authorize_request
     @current_user = authenticate_user_from_token
 
@@ -21,6 +19,10 @@ class ApplicationController < ActionController::Base
     log_debug('Current user is NIL')
     render json: { error: 'Not Authorized' }, status: :unauthorized
   end
+
+  private
+
+  
 
   def authenticate_user_from_token
     token = extract_token_from_header

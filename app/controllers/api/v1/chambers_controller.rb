@@ -1,5 +1,4 @@
 class Api::V1::ChambersController < Api::BaseController
-  skip_before_action :authorize_request, only: [:index]
 
   def index
     @chambers = Chamber.includes(:district)
