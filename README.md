@@ -169,6 +169,12 @@ Accept: application/json (optional)
 }
 ------------------------
 --------
+# 
+Full-stack side
+- ApplicationController < ActionController::Base
+API side
+- Api::BaseController < ActionController::API
+
 
 # Future features:
 - ** Refactor: Create seperate actionController for API (::API) and Fullstack (::Base) to keep the API lightweight and consitent with Rails Convention
