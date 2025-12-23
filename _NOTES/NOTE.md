@@ -519,12 +519,10 @@ medic-bd-api/
 **Essention tasks to convert api-only > fullstack**
 
 # Use Base in actionController
+- visual map of your controller inheritance hierarchy:
+  ApplicationController → Web::BaseController
+  ActionController::API → Api::BaseController → Api::V1::DoctorsController
 
-/controllers/application_controller.rb
-- Use seperate ActionControllers: 
-  class ApplicationController < ActionController::Base (fullstack)
-  class ApplicationController < ActionController::API (api)
-  class ApplicationController < ActionController::web (html)
 
 # Update config/application.rb
     config.time_zone = "Central Time (US & Canada)"
@@ -609,8 +607,12 @@ Slected Appraoch: 5
   - Zero breakage risk
 
   Implementation:
-  
+
   Create 1 base_controller and then split the behavior for API & Web:
+  *controller inheritance hierarchy*
+    ApplicationController → Web::BaseController
+    ActionController::API → Api::BaseController
+  ----
 
   class ApplicationController < ActionController::Base
 -----
