@@ -1,4 +1,4 @@
-class Api::V1::MedicUsersController < ApplicationController
+class Api::V1::MedicUsersController < Api::BaseController
   skip_before_action :authorize_request, only: [:create]
 
   # POST /api/v1/medic_users

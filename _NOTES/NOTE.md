@@ -603,8 +603,14 @@ rails stimulus:install
   Approach 6: Decorators/Presenters
 
 Slected Appraoch: 5
+  Advantage: 
+  - API stays untouched
+  - HTML grows naturally
+  - Zero breakage risk
 
-  - Create 1 base_controller and then split the behavior for API & Web:
+  Implementation:
+  
+  Create 1 base_controller and then split the behavior for API & Web:
 
   class ApplicationController < ActionController::Base
 -----

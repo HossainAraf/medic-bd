@@ -1,4 +1,4 @@
-class Api::V1::DoctorsController < ApplicationController
+class Api::V1::DoctorsController < Api::BaseController
   # Skip auth for public GET requests
   skip_before_action :authorize_request, only: %i[index show filtered_doctors filter_by_order]
   # Set doctor for show and update actions
