@@ -602,4 +602,43 @@ rails stimulus:install
   Approach 5: API-Only Namespace with HTML Fallback
   Approach 6: Decorators/Presenters
 
-Slected Appraoch: 
+Slected Appraoch: 5
+
+  - Create 1 base_controller and then split the behavior for API & Web:
+
+  class ApplicationController < ActionController::Base
+-----
+  module Api
+    class BaseController < ActionController::API
+-----
+  module Web
+    class BaseController < ApplicationController
+----
+# Folder Srtucture: 
+    app/controllers/
+      api/
+        v1/
+          doctors_controller.rb
+          specifications_controller.rb
+      web/
+        doctors_controller.rb
+        home_controller.rb
+
+# Routes structure:
+
+    Rails.application.routes.draw do
+      root "web/home#index"
+
+      namespace :web do
+        resources :doctors, only: [:index, :show]
+      end
+
+      namespace :api do
+        namespace :v1 do
+          resources :doctors
+          resources :specifications
+        end
+      end
+    end
+
+# 
