@@ -1,5 +1,4 @@
 class Api::V1::SpecializationsController < Api::BaseController
-  
   def index
     specializations = Specialization.all
     specializations = specializations.sort_by(&:id)

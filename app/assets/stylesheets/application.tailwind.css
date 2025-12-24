@@ -2,7 +2,6 @@
 @import url('tailwindcss/components');
 @import url('tailwindcss/utilities');
 
-
 /* Test styles to verify it works */
 .test-red {
   color: red;
