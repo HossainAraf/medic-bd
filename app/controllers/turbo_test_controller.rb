@@ -1,5 +1,4 @@
 class TurboTestController < ApplicationController
-  
   def index; end
 
   def create
