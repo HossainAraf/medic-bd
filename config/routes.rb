@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-    # API root welcome
-  # root to: proc { [200, {}, ['{"message": "Welcome to the API"}']] }, via: :get
-  # Lightweight health check
-  # get '/health', to: ->(_) { [200, {}, ['OK']] }
-
   namespace :api do
     namespace :v1 do
       post 'auth/login', to: 'sessions#create'

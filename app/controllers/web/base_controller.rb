@@ -1,6 +1,6 @@
 module Web
     class BaseController < ApplicationController
-        # Inherits CSRF protection from ApplicationController
-        layout "application"
+        protect_from_forgery with: :exception
+        # layout "application"
     end
 end

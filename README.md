@@ -169,13 +169,46 @@ Accept: application/json (optional)
 }
 ------------------------
 --------
-# 
+## Transformation of API-only app > Rails Fullstack:
+- Controller architechture:
+
+    ApplicationController
+      ├── HomeController        (public)
+      ├── PagesController       (public)
+      └── Web::BaseController   (session auth)
+            └── AdminController
+
+    Api::BaseController
+      └── Api::V1::DoctorsController (JWT auth)
+
+# Flow
 Full-stack side
 - ApplicationController < ActionController::Base
 API side
 - Api::BaseController < ActionController::API
 
+# why we removed API auth from ApplicationController to api base_controller: 
+- API → stateless → JWT → Authorization header
+
+- Web (Hotwire/HTML) → stateful → session + cookies + CSRF
+
+# Controllers hierarchy
+ApplicationController        # Web / HTML / Hotwire
+  └── Web::BaseController    # (optional, but recommended)
+
+Api::BaseController          # JSON / JWT
+
+
+
+
+What I actually demonstrated:
+
+✔ Ability to reason about inheritance
+✔ Understanding of Rails controller layers
+✔ Knowing why JWT ≠ session auth
+✔ Willingness to refactor instead of hacking
+
 
 # Future features:
-- ** Refactor: Create seperate actionController for API (::API) and Fullstack (::Base) to keep the API lightweight and consitent with Rails Convention
+
 - Stimulus controller for the slides so they auto‑rotate like a React carousel.
