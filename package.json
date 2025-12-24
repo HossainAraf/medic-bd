@@ -8,7 +8,8 @@
     "build:css": "node ./node_modules/tailwindcss/lib/cli.js -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
     "watch:css": "node ./node_modules/tailwindcss/lib/cli.js -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --watch",
     "dev": "concurrently \"npm run watch:css\" \"bin/rails server\"",
-    "clean": "rm -rf app/assets/builds/*"
+    "clean": "rm -rf app/assets/builds/*",
+    "lint:css": "stylelint '**/*.{css,scss}'"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.23",
