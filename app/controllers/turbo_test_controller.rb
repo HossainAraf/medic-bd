@@ -1,5 +1,5 @@
 class TurboTestController < ApplicationController
-  skip_before_action :authorize_request
+  
   def index; end
 
   def create
