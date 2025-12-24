@@ -212,3 +212,30 @@ What I actually demonstrated:
 # Future features:
 
 - Stimulus controller for the slides so they auto‑rotate like a React carousel.
+## 🔭Acknowledgments <a name="acknowledgements"></a>
+
+- My Family.
+- [Microverse Team](https://www.microverse.org/) for supportive documentations eg; linters, coding standard, gitflow etc.
+- 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- FAQ (optional) -->
+
+## ❓ FAQ <a name="faq"></a>
+
+- **Are you using database?**
+
+  - 
+
+- **Can I use this project for personal use?**
+
+  - 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 📝 License <a name="license"></a>
+
+This project is [MIT](./LICENSE) licensed.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
