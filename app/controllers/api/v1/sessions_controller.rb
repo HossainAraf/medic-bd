@@ -1,8 +1,6 @@
 module Api
   module V1
-    class SessionsController < ApplicationController
-      skip_before_action :authorize_request, only: [:create]
-
+    class SessionsController < Api::BaseController
       # POST /api/v1/auth/login
       def create
         email = params.dig(:medic_user, :email)&.downcase

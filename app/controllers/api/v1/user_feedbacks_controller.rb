@@ -1,4 +1,4 @@
-class Api::V1::UserFeedbacksController < ApplicationController
+class Api::V1::UserFeedbacksController < Api::BaseController
   def index
     user_feedbacks = UserFeedback.order(created_at: :desc)
     render json: user_feedbacks

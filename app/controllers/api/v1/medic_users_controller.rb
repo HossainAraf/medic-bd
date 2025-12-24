@@ -1,6 +1,4 @@
-class Api::V1::MedicUsersController < ApplicationController
-  skip_before_action :authorize_request, only: [:create]
-
+class Api::V1::MedicUsersController < Api::BaseController
   # POST /api/v1/medic_users
   def create
     user = MedicUser.new(user_params)

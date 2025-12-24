@@ -1,6 +1,4 @@
-class Api::V1::SpecializationsController < ApplicationController
-  skip_before_action :authorize_request, only: %i[index show doctors create]
-
+class Api::V1::SpecializationsController < Api::BaseController
   def index
     specializations = Specialization.all
     specializations = specializations.sort_by(&:id)

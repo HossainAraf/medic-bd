@@ -21,8 +21,81 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+# Branching Strategy
+dev (default branch):
 
+    -All history lives here.
 
+   - Day‑to‑day development, experiments, and feature branches merge back into dev.
+
+v1.0-api branch (api-only):
+
+    -Cut from dev at a stable point.
+
+    -Preserves the API‑only version for demos, external clients (React/mobile), or anyone who wants to see a clean backend baseline.
+
+fullstack branch:
+
+    -Cut from api-only.
+
+    -Dedicated to Hotwire/Tailwind work, evolving the app into a full‑stack product.
+
+    <!-- -Tagged as v2.0-fullstack when stable. -->
+
+-main (production branch)
+
+    Receives merges from api-only or fullstack depending on what we want live.
+
+    -Always reflects the production‑ready state.
+
+    -Deployment pipelines point here.
+
+# API endpoints (JSON):
+API_BASE_URL = http://127.0.0.1:3000/api/v1
+
+- FETCH specializations: ${API_BASE_URL}/specializations
+  method: 'GET'
+
+- FETCH CHAMBERS BY DISTRICT ID AND CHAMBER CATEGORY: ${API_BASE_URL}/chambers?category=${category}&district_id=${districtId}
+  method: 'GET'
+
+- FETCH FILTERED DOCTORS BY specialization ID AND district ID: {API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}&district_id=${districtId}
+  method: 'GET'
+
+- FETCH DOCTORS BY specialization ID: ${API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}
+  method: 'GET'
+
+- FETCH ALL DOCTORS: ${API_BASE_URL}/doctors
+  method: 'GET'
+
+- FETCH DOCTOR BY ID: ${API_BASE_URL}/doctors/${id}
+  method: 'GET'
+
+- FETCH DOCTOR BY ORDER: ${API_BASE_URL}/doctors/order/${order}
+  method: 'GET'
+
+- FETCH DISTRICTS: ${API_BASE_URL}/districts
+  method: 'GET'
+
+- ADD NEW DOCTOR: ${API_BASE_URL}/doctors
+  method: 'POST'
+  headers = {
+    'Content-Type': 'application/json',
+  }
+
+- UPDATE DOCTOR: ${API_BASE_URL}/doctors/${doctor.id}
+  method: 'PUT',
+
+- FETCH Feedbacks: ${API_BASE_URL}/user_feedbacks
+  method: 'GET'
+
+- CREATE NEW Feedback: ${API_BASE_URL}/user_feedbacks
+  method: 'POST'
+  headers = {
+    'Content-Type': 'application/json',
+  }
+
+- 
 <!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
 <!-- Fronend form -->
 const AddDoctorForm = () => {
@@ -96,3 +169,73 @@ Accept: application/json (optional)
 }
 ------------------------
 --------
+## Transformation of API-only app > Rails Fullstack:
+- Controller architechture:
+
+    ApplicationController
+      ├── HomeController        (public)
+      ├── PagesController       (public)
+      └── Web::BaseController   (session auth)
+            └── AdminController
+
+    Api::BaseController
+      └── Api::V1::DoctorsController (JWT auth)
+
+# Flow
+Full-stack side
+- ApplicationController < ActionController::Base
+API side
+- Api::BaseController < ActionController::API
+
+# why we removed API auth from ApplicationController to api base_controller: 
+- API → stateless → JWT → Authorization header
+
+- Web (Hotwire/HTML) → stateful → session + cookies + CSRF
+
+# Controllers hierarchy
+ApplicationController        # Web / HTML / Hotwire
+  └── Web::BaseController    # (optional, but recommended)
+
+Api::BaseController          # JSON / JWT
+
+
+
+
+What I actually demonstrated:
+
+✔ Ability to reason about inheritance
+✔ Understanding of Rails controller layers
+✔ Knowing why JWT ≠ session auth
+✔ Willingness to refactor instead of hacking
+
+
+# Future features:
+
+- Stimulus controller for the slides so they auto‑rotate like a React carousel.
+## 🔭Acknowledgments <a name="acknowledgements"></a>
+
+- My Family.
+- [Microverse Team](https://www.microverse.org/) for supportive documentations eg; linters, coding standard, gitflow etc.
+- 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- FAQ (optional) -->
+
+## ❓ FAQ <a name="faq"></a>
+
+- **Are you using database?**
+
+  - 
+
+- **Can I use this project for personal use?**
+
+  - 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 📝 License <a name="license"></a>
+
+This project is [MIT](./LICENSE) licensed.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
