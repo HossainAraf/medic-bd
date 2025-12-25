@@ -169,6 +169,13 @@ Accept: application/json (optional)
 }
 ------------------------
 --------
+## Comamnds:
+# run dev server:
+``bin/dev`` -for fullstak app
+``rails s`` - for API-only branhes
+# run production build:
+
+
 ## Transformation of API-only app > Rails Fullstack:
 - Controller architechture:
 
