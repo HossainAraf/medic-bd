@@ -29,8 +29,14 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'ambulance', to: 'ambulance#index', as: 'ambulance'
   get 'bloodbank', to: 'bloodbank#index', as: 'bloodbank'
-    get 'clinics-and-hospitals', to: 'clinics_and_hospitals#index', as: 'clinics_and_hospitals'
+  get 'clinics-and-hospitals', to: 'clinics_and_hospitals#index', as: 'clinics_and_hospitals'
   get 'diagnostics', to: 'diagnostics#index', as: 'diagnostics'
+  get 'feedback', to: 'feedbacks#index', as: 'feedback'
+  post 'feedback', to: 'feedbacks#create', as: 'create_feedback'
+  #static pages
+  get 'about_us', to: 'static_pages#about', as: 'about_us'
+  get 'contact_us', to: 'static_pages#contact_us', as: 'contact_us'
+  get 'disclaimer', to: 'static_pages#disclaimer', as: 'disclaimer'
 
 
 
