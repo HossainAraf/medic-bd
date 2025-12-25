@@ -199,7 +199,13 @@ ApplicationController        # Web / HTML / Hotwire
 Api::BaseController          # JSON / JWT
 
 
+## Command (important distinction)
 
+| Environment           | Command                                |
+| --------------------- | -------------------------------------- |
+| Development           | `bin/dev`                              |
+| Production            | `rails assets:precompile` + app server |
+| One-off backend debug | `rails s` (optional)     
 
 What I actually demonstrated:
 
