@@ -27,6 +27,12 @@ Rails.application.routes.draw do
   # Regular Rails routes for full-stack functionality
    # Root route
   root 'home#index'
+  get 'ambulance', to: 'ambulance#index', as: 'ambulance'
+  get 'bloodbank', to: 'bloodbank#index', as: 'bloodbank'
+    get 'clinics-and-hospitals', to: 'clinics_and_hospitals#index', as: 'clinics_and_hospitals'
+  get 'diagnostics', to: 'diagnostics#index', as: 'diagnostics'
+
+
 
   # Specializations > Districts > Doctors
   resources :specializations, only: [:index, :show] do
