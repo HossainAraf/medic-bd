@@ -715,4 +715,7 @@ Keeps your web controllers isolated from API controllers
       end
     end
 
-# 
+# ✅ Tailwind configuration
+# ✅ Nav-UI basic
+# NEXT ACTION:
+-  Refactor filtered_doctors(specializations>districts>doctors atrributes with assocoations) logic of doctors_controler to a shared file to Reuse both in Api/BaseController & Web/BaseController.

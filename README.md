@@ -214,10 +214,28 @@ What I actually demonstrated:
 ✔ Knowing why JWT ≠ session auth
 ✔ Willingness to refactor instead of hacking
 
+## **Dificulties faced and & how I overcome:**
+  # Tailwind configuration:
+
+Tailwind build step, Output CSS (app/assets/builds) were missing.
+Solution: 
+Add "cssbundling-rails" gem
+run:
+``bundle install``
+``rails css:install:tailwind``
+
+I was running the command `rails server`(❌) which does not compile tailwind watcher. The correct command to run dev server with tailwind is : `bin/dev` (✅).
+
+beacuse, Tailwind in Rails is not a runtime library
+It is a build-time compiler.
+
 
 # Future features:
+- Refactor filtered_doctors(specializations>districts>doctors atrributes with assocoations) logic of doctors_controler to a shared file to Reuse both in Api/BaseController & Web/BaseController.
 
 - Stimulus controller for the slides so they auto‑rotate like a React carousel.
+
+
 ## 🔭Acknowledgments <a name="acknowledgements"></a>
 
 - My Family.
