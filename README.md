@@ -249,6 +249,7 @@ It is a build-time compiler.
 
 # Future features:
 - Refactor filtered_doctors(specializations>districts>doctors atrributes with assocoations) logic of doctors_controler to a shared file to Reuse both in Api/BaseController & Web/BaseController.
+- Testing error (not failure): 'chember' is reffering yet it's not found in schema or in tables , it's only in migrations
 
 - Stimulus controller for the slides so they auto‑rotate like a React carousel.
 
