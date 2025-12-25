@@ -10,12 +10,22 @@ Things you may want to cover:
 
 * Configuration
 
-* Database creation
-
+* Database creation:
+- To create development and test database together:
+``rails db:create``
+ -To create specific database;
+ ``rails db:create RAILS_ENV=test``
+ ``rails db:create RAILS_ENV=development``
 * Database initialization
+``rails db:migrate``
+``rails db:fixtures:load``
+
+- Add 'RAILS_ENV' similar to databse creatin if initiationrequired ofr specific envirionment only
 
 * How to run the test suite
 
+
+rails test
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
