@@ -1,39 +1,71 @@
-MedicBD — Hybrid Rails (API + Full-Stack)
+# MedicBD — Hybrid Rails (API + Full-Stack)
 
+<a name="readme-top"></a>
+
+<div align="center">
+
+  <br/>
+
+</div>
+
+# 📗 Table of Contents
+
+- [📖 About the Project](#about-project)
+
+  - [🛠 Built With](#built-with)
+    - [Key Features](#key-features)
+    - [Project Evaluation](#project-evaluation)
+    - [Architecture Overview](#architecture-overview)
+- [💻 Getting Started](#getting-started)
+  - [Setup](#setup)
+  - [Branching-Strategy](#branching-strategy)
+- [API-endpoints](#api-endpoints)
+- [Pitfalls:Solved](#pitfalls)
+- [🔭 Future Features](#future-features)
+- [👥 Authors](#authors)
+- [📝 License](#license)
+- [🙏 Acknowledgements](#acknowledgements)
+  
+ ## About the project<a name="about-project"></a>
 MedicBD is a hybrid Ruby on Rails application that started as an API-only backend and is now evolving into a full-stack Rails app using Hotwire & Tailwind.
 
-The project demonstrates:
+# The project demonstrates:
 
-Clean API design with JWT authentication
+- Clean API design with JWT authentication
 
-A safe transition from API-only → full-stack Rails
+- A safe transition from API-only → full-stack Rails
 
-Clear separation between API and Web layers
+- Clear separation between API and Web layers
 
-Modern Rails 7 tooling (Hotwire, Tailwind, Importmap)
+- Modern Rails 7 tooling (Hotwire, Tailwind, Importmap)
 
-✨ Key Features
-API (v1)
+## 🛠 Built With:<a name="built-with"></a>
+- Ruby on Rails
+- PostgreSQl
 
-Doctors, Specializations, Chambers, Districts
+# ✨ Key Features<a name="key-features"></a>
 
-Filter doctors by specialization & district
+**API (v1)-**
 
-JWT-based authentication
+- Doctors, Specializations, Chambers, Districts
 
-Designed for React / mobile clients
+- Filter doctors by specialization & district
 
-Web (Full-Stack Rails)
+- JWT-based authentication
 
-Server-rendered HTML (ERB)
+- Designed for React / mobile clients
 
-Hotwire (Turbo + Stimulus)
+**Web (Full-Stack Rails)-**
 
-Tailwind CSS
+- Server-rendered HTML (ERB)
 
-Session-based authentication (planned)
+- Hotwire (Turbo + Stimulus)
 
-## 📜 Project Evolution
+- Tailwind CSS
+
+- Session-based authentication (planned)
+
+## 📜 Project Evolution<a name="project-evaluation"></a>
 
 This project was intentionally developed in phases:
 
@@ -52,111 +84,123 @@ A snapshot of this stage is preserved in the `v1.0-api` branch.
 - Added Hotwire (Turbo + Stimulus)
 - Tailwind CSS for UI
 - API v1 remains unchanged
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-🧱 Architecture Overview
+🧱 Architecture Overview<a name="architecture-overview"></a>
+
 Controller Separation (Core Design)
+
+```text
 ApplicationController < ActionController::Base
-└── Web::BaseController        # HTML / Sessions / CSRF
+└── Web::BaseController
     ├── Web::HomeController
     └── Web::DoctorsController
 
 Api::BaseController < ActionController::API
+└── Api::V1::DoctorsController
+
+Api::BaseController < ActionController::API </br>
 └── Api::V1::DoctorsController # JSON / JWT
 
-Why This Matters
-Concern	API	Web
-State	Stateless	Stateful
-Auth	JWT	Session + Cookies
-CSRF	Not needed	Required
-Views	❌	✅
 
-This separation keeps:
+### Why This Matters
+----------------------------------
+Concern	    API	        Web
+-----       -------    ---------------
+State	    Stateless	Stateful
+Auth	    JWT        	Session + Cookies
+CSRF	    Not needed	Required
+Views	    ❌	        ✅
+```
+#### This separation keeps:
 
-API backward-compatible
+-    API backward-compatible
 
-Web layer free to evolve
+-    Web layer free to evolve
 
-Zero cross-contamination of concerns
+-    Zero cross-contamination of concerns
 
-🚀 Getting Started
-Ruby & Node
+🚀 Getting Started<a name="getting-started"></a> </br>
 
-Ruby: see .ruby-version
-
-Node: see .node-version
-
-Install dependencies
+Ruby & Node check:
+```
+ruby --version
+node --version
+```
+Install dependencies:
+```
 bundle install
 npm install
-
-Database setup
+```
+Database setup: <a name="setup"></a>
+```
 rails db:create
 rails db:migrate
 rails db:fixtures:load
-
+```
 
 For specific environments:
-
+```
 RAILS_ENV=test rails db:create
 RAILS_ENV=production rails db:migrate
-
+```
 ▶️ Running the App
 Development (Full-Stack)
+```
 bin/dev
-
-
-Important:
+```
+**Important-
 bin/dev runs Rails and the Tailwind build watcher.
 rails s alone will NOT compile CSS.
 
-API-only branches
+API-only branches:
+```
 rails s
-
-🧪 Running Tests
+```
+🧪 Running Tests:
+```
 rails test
+```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+🌿 Branching Strategy<a name="branching-strategy"></a>
+```
+Branch	                Purpose
+dev	                    development branch
+v1.0-api    	        Stable API-only snapshot
+fullstack             	Hotwire + Tailwind work
+main 	                Production-ready code
+```
+This allows:
 
-🔌 API Endpoints (v1)
+-Safe experimentation
+-API stability
+-Clear evolution history
+
+🔌 API Endpoints (v1): <a name="api-endpoints"></a>
 
 Base URL:
 
 http://127.0.0.1:3000/api/v1
 
-
 Examples:
-
-Endpoint	Method
-/specializations	GET
-/doctors	GET
-/doctors/:id	GET
-/doctors/filtered_doctors	GET
-/chambers	GET
-/districts	GET
-/user_feedbacks	GET / POST
-
+```
+Endpoint	                    Method
+/auth/login                     POST
+/specializations	            GET
+/doctors	                    GET/POST
+/doctors/:id	                GET
+/doctors/filtered_doctors	    GET
+/chambers	                    GET
+/districts	                    GET
+```
 👉 Full payload examples are documented in docs/api.md
 
-🌿 Branching Strategy
-Branch	Purpose
-dev	Main development branch
-v1.0-api	Stable API-only snapshot
-fullstack	Hotwire + Tailwind work
-main	Production-ready code
+⚠️ Common Pitfalls (Solved):<a name="pitfalls"></a>
 
-This allows:
-
-Safe experimentation
-
-API stability
-
-Clear evolution history
-
-⚠️ Common Pitfalls (Solved)
 Tailwind not updating?
 
 Use:
-
 bin/dev
-
 
 Tailwind is build-time, not runtime.
 
@@ -167,16 +211,16 @@ Correct.
 API auth belongs in Api::BaseController
 
 Web uses sessions + CSRF
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+🔭 Future Roadmap<a name="future-features"></a>
 
-🔭 Future Roadmap
+-Shared service object for filtered_doctors
 
-Shared service object for filtered_doctors
+-Turbo-powered filters
 
-Turbo-powered filters
+-Stimulus carousel for doctor sliders
 
-Stimulus carousel for doctor sliders
-
-Appointment booking (full-stack)
+-Appointment booking (full-stack)
 
 🧠 What This Project Demonstrates
 
@@ -186,13 +230,13 @@ Appointment booking (full-stack)
 ✔ Hotwire done intentionally, not blindly
 ✔ Production-quality thinking
 
-📄 License
+👥 Authors:<a name="authors"></a>
 
-MIT License — see LICENSE
+📄 License<a name="license"></a>
+MIT License — see root/LICENSE.md
 
-🙏 Acknowledgments
+🙏 Acknowledgments<a name="acknowledgements"></a>
 
-Family support
-
-Microverse
+-Family support
+-Microverse
  — structure, standards, and discipline
