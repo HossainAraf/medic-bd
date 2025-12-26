@@ -1,241 +1,198 @@
-# README
+MedicBD — Hybrid Rails (API + Full-Stack)
 
+MedicBD is a hybrid Ruby on Rails application that started as an API-only backend and is now evolving into a full-stack Rails app using Hotwire & Tailwind.
 
+The project demonstrates:
 
-Things you may want to cover:
+Clean API design with JWT authentication
 
-* Ruby version
+A safe transition from API-only → full-stack Rails
 
-* System dependencies
+Clear separation between API and Web layers
 
-* Configuration
+Modern Rails 7 tooling (Hotwire, Tailwind, Importmap)
 
-* Database creation
+✨ Key Features
+API (v1)
 
-* Database initialization
+Doctors, Specializations, Chambers, Districts
 
-* How to run the test suite
+Filter doctors by specialization & district
 
-* Services (job queues, cache servers, search engines, etc.)
+JWT-based authentication
 
-* Deployment instructions
+Designed for React / mobile clients
 
-* ...
-# Branching Strategy
-dev (default branch):
+Web (Full-Stack Rails)
 
-    -All history lives here.
+Server-rendered HTML (ERB)
 
-   - Day‑to‑day development, experiments, and feature branches merge back into dev.
+Hotwire (Turbo + Stimulus)
 
-v1.0-api branch (api-only):
+Tailwind CSS
 
-    -Cut from dev at a stable point.
+Session-based authentication (planned)
 
-    -Preserves the API‑only version for demos, external clients (React/mobile), or anyone who wants to see a clean backend baseline.
+## 📜 Project Evolution
 
-fullstack branch:
+This project was intentionally developed in phases:
 
-    -Cut from api-only.
+### Phase 1 — API-Only Rails (v1)
+- Rails API-only mode
+- JWT authentication
+- JSON endpoints for doctors, chambers, districts, and feedback
+- Designed to support React and mobile clients
+- Stable and production-ready
 
-    -Dedicated to Hotwire/Tailwind work, evolving the app into a full‑stack product.
+A snapshot of this stage is preserved in the `v1.0-api` branch.
 
-    <!-- -Tagged as v2.0-fullstack when stable. -->
+### Phase 2 — Hybrid Rails (Current)
+- Transitioned to full-stack Rails
+- Introduced Web controllers alongside API controllers
+- Added Hotwire (Turbo + Stimulus)
+- Tailwind CSS for UI
+- API v1 remains unchanged
 
--main (production branch)
+🧱 Architecture Overview
+Controller Separation (Core Design)
+ApplicationController < ActionController::Base
+└── Web::BaseController        # HTML / Sessions / CSRF
+    ├── Web::HomeController
+    └── Web::DoctorsController
 
-    Receives merges from api-only or fullstack depending on what we want live.
+Api::BaseController < ActionController::API
+└── Api::V1::DoctorsController # JSON / JWT
 
-    -Always reflects the production‑ready state.
+Why This Matters
+Concern	API	Web
+State	Stateless	Stateful
+Auth	JWT	Session + Cookies
+CSRF	Not needed	Required
+Views	❌	✅
 
-    -Deployment pipelines point here.
+This separation keeps:
 
-# API endpoints (JSON):
-API_BASE_URL = http://127.0.0.1:3000/api/v1
+API backward-compatible
 
-- FETCH specializations: ${API_BASE_URL}/specializations
-  method: 'GET'
+Web layer free to evolve
 
-- FETCH CHAMBERS BY DISTRICT ID AND CHAMBER CATEGORY: ${API_BASE_URL}/chambers?category=${category}&district_id=${districtId}
-  method: 'GET'
+Zero cross-contamination of concerns
 
-- FETCH FILTERED DOCTORS BY specialization ID AND district ID: {API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}&district_id=${districtId}
-  method: 'GET'
+🚀 Getting Started
+Ruby & Node
 
-- FETCH DOCTORS BY specialization ID: ${API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}
-  method: 'GET'
+Ruby: see .ruby-version
 
-- FETCH ALL DOCTORS: ${API_BASE_URL}/doctors
-  method: 'GET'
-
-- FETCH DOCTOR BY ID: ${API_BASE_URL}/doctors/${id}
-  method: 'GET'
-
-- FETCH DOCTOR BY ORDER: ${API_BASE_URL}/doctors/order/${order}
-  method: 'GET'
-
-- FETCH DISTRICTS: ${API_BASE_URL}/districts
-  method: 'GET'
-
-- ADD NEW DOCTOR: ${API_BASE_URL}/doctors
-  method: 'POST'
-  headers = {
-    'Content-Type': 'application/json',
-  }
-
-- UPDATE DOCTOR: ${API_BASE_URL}/doctors/${doctor.id}
-  method: 'PUT',
-
-- FETCH Feedbacks: ${API_BASE_URL}/user_feedbacks
-  method: 'GET'
-
-- CREATE NEW Feedback: ${API_BASE_URL}/user_feedbacks
-  method: 'POST'
-  headers = {
-    'Content-Type': 'application/json',
-  }
-
-- 
-<!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
-<!-- Fronend form -->
-const AddDoctorForm = () => {
-  const categories = [
-    { id: 1, name: 'Diagnostic' },
-    { id: 2, name: 'Clinic' },
-    { id: 3, name: 'Hospital' },
-    { id: 4, name: 'Private Chamber' },
-  ];
---------------------------------------------
-
-<!-- POST: api/v1/doctors -->
-<!-- Not a good practice, rather we should us 'find' -->
-{
-  "doctor": {
-    "name": "Tasnia Habib",
-    "bangla_name": "তাসনিয়া হাবিব সিনথি",
-    "specialty": "স্কেলিং, ফিলিং, রুট ক্যানেল, দাঁত বাঁধাই ও অন্যান্য",
-    "qualification": "BDS, MPhil, PHD",
-    "experience": "সহকারী অধ্যাপক, উদয়ন ডেন্টাল কলেজ, রাজশাহী",
-    "order": 1800005,
-    "photo_url": "",
-    "special_notes": "প্রতি মাসের ১ম ও শেষ শুক্রবার ফ্রি চিকিৎসা সেবা দেয়া হয়",
-    "description": "",
-    "doctor_schedules_attributes": [
-      {
-        "available_day": "প্রতিদিন",
-        "available_time": "বিকাল ৪ টা থেকে রাত ৮ টা",
-        "contact": "01728-174202",
-        "chamber_attributes": {
-          "name": "শুভ ক্লিনিক",
-          "category": "Clinic",
-          "address": "চক এনায়েত, দয়ালের মোড়, নওগাঁ",
-          "district_id": 1
-        }
-      }
-    ]
-  }
-}
------------------------------
------------------
-<!-- example payload for user 'sign up'  format-->
-POST: 
-route: /api/v1/medic_users
-Content-Type: application/json
-Accept: application/json (optional)
-
-{
-  "medic_user": {
-    "name": "Araf",
-    "email": "araf@example.com",
-    "phone": "017xxxxxxxx",
-    "password": "secret123",
-    "password_confirmation": "secret123",
-    "role": "admin"
-  }
-}
-----------------------------------
---------------
-<!-- example 'Log In' pay load format -->
-POST
-route: /api/v1/auth/login
-Content-Type: application/json
-Accept: application/json (optional)
-
-{
-  "medic_user": {
-    "email": "<user email>",
-    "password": "<user pass>"
-  }
-}
-------------------------
---------
-## Transformation of API-only app > Rails Fullstack:
-- Controller architechture:
-
-    ApplicationController
-      ├── HomeController        (public)
-      ├── PagesController       (public)
-      └── Web::BaseController   (session auth)
-            └── AdminController
-
-    Api::BaseController
-      └── Api::V1::DoctorsController (JWT auth)
-
-# Flow
-Full-stack side
-- ApplicationController < ActionController::Base
-API side
-- Api::BaseController < ActionController::API
-
-# why we removed API auth from ApplicationController to api base_controller: 
-- API → stateless → JWT → Authorization header
-
-- Web (Hotwire/HTML) → stateful → session + cookies + CSRF
-
-# Controllers hierarchy
-ApplicationController        # Web / HTML / Hotwire
-  └── Web::BaseController    # (optional, but recommended)
-
-Api::BaseController          # JSON / JWT
-
-
-
-
-What I actually demonstrated:
-
-✔ Ability to reason about inheritance
-✔ Understanding of Rails controller layers
-✔ Knowing why JWT ≠ session auth
-✔ Willingness to refactor instead of hacking
-
-
-# Future features:
-
-- Stimulus controller for the slides so they auto‑rotate like a React carousel.
-## 🔭Acknowledgments <a name="acknowledgements"></a>
-
-- My Family.
-- [Microverse Team](https://www.microverse.org/) for supportive documentations eg; linters, coding standard, gitflow etc.
-- 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- FAQ (optional) -->
-
-## ❓ FAQ <a name="faq"></a>
-
-- **Are you using database?**
-
-  - 
-
-- **Can I use this project for personal use?**
-
-  - 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## 📝 License <a name="license"></a>
-
-This project is [MIT](./LICENSE) licensed.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Node: see .node-version
+
+Install dependencies
+bundle install
+npm install
+
+Database setup
+rails db:create
+rails db:migrate
+rails db:fixtures:load
+
+
+For specific environments:
+
+RAILS_ENV=test rails db:create
+RAILS_ENV=production rails db:migrate
+
+▶️ Running the App
+Development (Full-Stack)
+bin/dev
+
+
+Important:
+bin/dev runs Rails and the Tailwind build watcher.
+rails s alone will NOT compile CSS.
+
+API-only branches
+rails s
+
+🧪 Running Tests
+rails test
+
+🔌 API Endpoints (v1)
+
+Base URL:
+
+http://127.0.0.1:3000/api/v1
+
+
+Examples:
+
+Endpoint	Method
+/specializations	GET
+/doctors	GET
+/doctors/:id	GET
+/doctors/filtered_doctors	GET
+/chambers	GET
+/districts	GET
+/user_feedbacks	GET / POST
+
+👉 Full payload examples are documented in docs/api.md
+
+🌿 Branching Strategy
+Branch	Purpose
+dev	Main development branch
+v1.0-api	Stable API-only snapshot
+fullstack	Hotwire + Tailwind work
+main	Production-ready code
+
+This allows:
+
+Safe experimentation
+
+API stability
+
+Clear evolution history
+
+⚠️ Common Pitfalls (Solved)
+Tailwind not updating?
+
+Use:
+
+bin/dev
+
+
+Tailwind is build-time, not runtime.
+
+JWT auth removed from ApplicationController?
+
+Correct.
+
+API auth belongs in Api::BaseController
+
+Web uses sessions + CSRF
+
+🔭 Future Roadmap
+
+Shared service object for filtered_doctors
+
+Turbo-powered filters
+
+Stimulus carousel for doctor sliders
+
+Appointment booking (full-stack)
+
+🧠 What This Project Demonstrates
+
+✔ Rails controller inheritance mastery
+✔ JWT vs session authentication knowledge
+✔ Safe refactoring mindset
+✔ Hotwire done intentionally, not blindly
+✔ Production-quality thinking
+
+📄 License
+
+MIT License — see LICENSE
+
+🙏 Acknowledgments
+
+Family support
+
+Microverse
+ — structure, standards, and discipline
