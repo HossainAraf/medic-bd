@@ -1,283 +1,242 @@
-# README
+# MedicBD — Hybrid Rails (API + Full-Stack)
+
+<a name="readme-top"></a>
+
+<div align="center">
+
+  <br/>
+
+</div>
+
+# 📗 Table of Contents
+
+- [📖 About the Project](#about-project)
+
+  - [🛠 Built With](#built-with)
+    - [Key Features](#key-features)
+    - [Project Evaluation](#project-evaluation)
+    - [Architecture Overview](#architecture-overview)
+- [💻 Getting Started](#getting-started)
+  - [Setup](#setup)
+  - [Branching-Strategy](#branching-strategy)
+- [API-endpoints](#api-endpoints)
+- [Pitfalls:Solved](#pitfalls)
+- [🔭 Future Features](#future-features)
+- [👥 Authors](#authors)
+- [📝 License](#license)
+- [🙏 Acknowledgements](#acknowledgements)
+  
+ ## About the project<a name="about-project"></a>
+MedicBD is a hybrid Ruby on Rails application that started as an API-only backend and is now evolving into a full-stack Rails app using Hotwire & Tailwind.
+
+# The project demonstrates:
+
+- Clean API design with JWT authentication
+
+- A safe transition from API-only → full-stack Rails
+
+- Clear separation between API and Web layers
+
+- Modern Rails 7 tooling (Hotwire, Tailwind, Importmap)
+
+## 🛠 Built With:<a name="built-with"></a>
+- Ruby on Rails
+- PostgreSQl
+
+# ✨ Key Features<a name="key-features"></a>
+
+**API (v1)-**
+
+- Doctors, Specializations, Chambers, Districts
+
+- Filter doctors by specialization & district
+
+- JWT-based authentication
+
+- Designed for React / mobile clients
+
+**Web (Full-Stack Rails)-**
+
+- Server-rendered HTML (ERB)
+
+- Hotwire (Turbo + Stimulus)
+
+- Tailwind CSS
+
+- Session-based authentication (planned)
+
+## 📜 Project Evolution<a name="project-evaluation"></a>
+
+This project was intentionally developed in phases:
+
+### Phase 1 — API-Only Rails (v1)
+- Rails API-only mode
+- JWT authentication
+- JSON endpoints for doctors, chambers, districts, and feedback
+- Designed to support React and mobile clients
+- Stable and production-ready
+
+A snapshot of this stage is preserved in the `v1.0-api` branch.
+
+### Phase 2 — Hybrid Rails (Current)
+- Transitioned to full-stack Rails
+- Introduced Web controllers alongside API controllers
+- Added Hotwire (Turbo + Stimulus)
+- Tailwind CSS for UI
+- API v1 remains unchanged
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+🧱 Architecture Overview<a name="architecture-overview"></a>
+
+Controller Separation (Core Design)
+
+```text
+ApplicationController < ActionController::Base
+└── Web::BaseController
+    ├── Web::HomeController
+    └── Web::DoctorsController
+
+Api::BaseController < ActionController::API
+└── Api::V1::DoctorsController
+
+Api::BaseController < ActionController::API </br>
+└── Api::V1::DoctorsController # JSON / JWT
 
 
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation:
-- To create development and test database together:
-``rails db:create``
- -To create specific database;
- ``rails db:create RAILS_ENV=test``
- ``rails db:create RAILS_ENV=development``
-* Database initialization
-``rails db:migrate``
-``rails db:fixtures:load``
-
-- Add 'RAILS_ENV' similar to databse creatin if initiationrequired ofr specific envirionment only
-
-* How to run the test suite
-
-
-rails test
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# Branching Strategy
-dev (default branch):
-
-    -All history lives here.
-
-   - Day‑to‑day development, experiments, and feature branches merge back into dev.
-
-v1.0-api branch (api-only):
-
-    -Cut from dev at a stable point.
-
-    -Preserves the API‑only version for demos, external clients (React/mobile), or anyone who wants to see a clean backend baseline.
-
-fullstack branch:
-
-    -Cut from api-only.
-
-    -Dedicated to Hotwire/Tailwind work, evolving the app into a full‑stack product.
-
-    <!-- -Tagged as v2.0-fullstack when stable. -->
-
--main (production branch)
-
-    Receives merges from api-only or fullstack depending on what we want live.
-
-    -Always reflects the production‑ready state.
-
-    -Deployment pipelines point here.
-
-# API endpoints (JSON):
-API_BASE_URL = http://127.0.0.1:3000/api/v1
-
-- FETCH specializations: ${API_BASE_URL}/specializations
-  method: 'GET'
-
-- FETCH CHAMBERS BY DISTRICT ID AND CHAMBER CATEGORY: ${API_BASE_URL}/chambers?category=${category}&district_id=${districtId}
-  method: 'GET'
-
-- FETCH FILTERED DOCTORS BY specialization ID AND district ID: {API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}&district_id=${districtId}
-  method: 'GET'
-
-- FETCH DOCTORS BY specialization ID: ${API_BASE_URL}/doctors/filtered_doctors?specialization_id=${specializationId}
-  method: 'GET'
-
-- FETCH ALL DOCTORS: ${API_BASE_URL}/doctors
-  method: 'GET'
-
-- FETCH DOCTOR BY ID: ${API_BASE_URL}/doctors/${id}
-  method: 'GET'
-
-- FETCH DOCTOR BY ORDER: ${API_BASE_URL}/doctors/order/${order}
-  method: 'GET'
-
-- FETCH DISTRICTS: ${API_BASE_URL}/districts
-  method: 'GET'
-
-- ADD NEW DOCTOR: ${API_BASE_URL}/doctors
-  method: 'POST'
-  headers = {
-    'Content-Type': 'application/json',
-  }
-
-- UPDATE DOCTOR: ${API_BASE_URL}/doctors/${doctor.id}
-  method: 'PUT',
-
-- FETCH Feedbacks: ${API_BASE_URL}/user_feedbacks
-  method: 'GET'
-
-- CREATE NEW Feedback: ${API_BASE_URL}/user_feedbacks
-  method: 'POST'
-  headers = {
-    'Content-Type': 'application/json',
-  }
-
-- 
-<!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
-<!-- Fronend form -->
-const AddDoctorForm = () => {
-  const categories = [
-    { id: 1, name: 'Diagnostic' },
-    { id: 2, name: 'Clinic' },
-    { id: 3, name: 'Hospital' },
-    { id: 4, name: 'Private Chamber' },
-  ];
---------------------------------------------
-
-<!-- POST: api/v1/doctors -->
-<!-- Not a good practice, rather we should us 'find' -->
-{
-  "doctor": {
-    "name": "Tasnia Habib",
-    "bangla_name": "তাসনিয়া হাবিব সিনথি",
-    "specialty": "স্কেলিং, ফিলিং, রুট ক্যানেল, দাঁত বাঁধাই ও অন্যান্য",
-    "qualification": "BDS, MPhil, PHD",
-    "experience": "সহকারী অধ্যাপক, উদয়ন ডেন্টাল কলেজ, রাজশাহী",
-    "order": 1800005,
-    "photo_url": "",
-    "special_notes": "প্রতি মাসের ১ম ও শেষ শুক্রবার ফ্রি চিকিৎসা সেবা দেয়া হয়",
-    "description": "",
-    "doctor_schedules_attributes": [
-      {
-        "available_day": "প্রতিদিন",
-        "available_time": "বিকাল ৪ টা থেকে রাত ৮ টা",
-        "contact": "01728-174202",
-        "chamber_attributes": {
-          "name": "শুভ ক্লিনিক",
-          "category": "Clinic",
-          "address": "চক এনায়েত, দয়ালের মোড়, নওগাঁ",
-          "district_id": 1
-        }
-      }
-    ]
-  }
-}
------------------------------
------------------
-<!-- example payload for user 'sign up'  format-->
-POST: 
-route: /api/v1/medic_users
-Content-Type: application/json
-Accept: application/json (optional)
-
-{
-  "medic_user": {
-    "name": "Araf",
-    "email": "araf@example.com",
-    "phone": "017xxxxxxxx",
-    "password": "secret123",
-    "password_confirmation": "secret123",
-    "role": "admin"
-  }
-}
+### Why This Matters
 ----------------------------------
---------------
-<!-- example 'Log In' pay load format -->
-POST
-route: /api/v1/auth/login
-Content-Type: application/json
-Accept: application/json (optional)
+Concern	    API	        Web
+-----       -------    ---------------
+State	    Stateless	Stateful
+Auth	    JWT        	Session + Cookies
+CSRF	    Not needed	Required
+Views	    ❌	        ✅
+```
+#### This separation keeps:
 
-{
-  "medic_user": {
-    "email": "<user email>",
-    "password": "<user pass>"
-  }
-}
-------------------------
---------
-## Comamnds:
-# run dev server:
-``bin/dev`` -for fullstak app
-``rails s`` - for API-only branhes
-# run production build:
+-    API backward-compatible
 
+-    Web layer free to evolve
 
-## Transformation of API-only app > Rails Fullstack:
-- Controller architechture:
+-    Zero cross-contamination of concerns
 
-    ApplicationController
-      ├── HomeController        (public)
-      ├── PagesController       (public)
-      └── Web::BaseController   (session auth)
-            └── AdminController
+🚀 Getting Started<a name="getting-started"></a> </br>
 
-    Api::BaseController
-      └── Api::V1::DoctorsController (JWT auth)
+Ruby & Node check:
+```
+ruby --version
+node --version
+```
+Install dependencies:
+```
+bundle install
+npm install
+```
+Database setup: <a name="setup"></a>
+```
+rails db:create
+rails db:migrate
+rails db:fixtures:load
+```
 
-# Flow
-Full-stack side
-- ApplicationController < ActionController::Base
-API side
-- Api::BaseController < ActionController::API
+For specific environments:
+```
+RAILS_ENV=test rails db:create
+RAILS_ENV=production rails db:migrate
+```
+▶️ Running the App
+Development (Full-Stack)
+```
+bin/dev
+```
+**Important-
+bin/dev runs Rails and the Tailwind build watcher.
+rails s alone will NOT compile CSS.
 
-# why we removed API auth from ApplicationController to api base_controller: 
-- API → stateless → JWT → Authorization header
-
-- Web (Hotwire/HTML) → stateful → session + cookies + CSRF
-
-# Controllers hierarchy
-ApplicationController        # Web / HTML / Hotwire
-  └── Web::BaseController    # (optional, but recommended)
-
-Api::BaseController          # JSON / JWT
-
-
-## Command (important distinction)
-
-| Environment           | Command                                |
-| --------------------- | -------------------------------------- |
-| Development           | `bin/dev`                              |
-| Production            | `rails assets:precompile` + app server |
-| One-off backend debug | `rails s` (optional)     
-
-What I actually demonstrated:
-
-✔ Ability to reason about inheritance
-✔ Understanding of Rails controller layers
-✔ Knowing why JWT ≠ session auth
-✔ Willingness to refactor instead of hacking
-
-## **Dificulties faced and & how I overcome:**
-  # Tailwind configuration:
-
-Tailwind build step, Output CSS (app/assets/builds) were missing.
-Solution: 
-Add "cssbundling-rails" gem
-run:
-``bundle install``
-``rails css:install:tailwind``
-
-I was running the command `rails server`(❌) which does not compile tailwind watcher. The correct command to run dev server with tailwind is : `bin/dev` (✅).
-
-beacuse, Tailwind in Rails is not a runtime library
-It is a build-time compiler.
-
-
-# Future features:
-- Refactor filtered_doctors(specializations>districts>doctors atrributes with assocoations) logic of doctors_controler to a shared file to Reuse both in Api/BaseController & Web/BaseController.
-- Testing error (not failure): 'chember' is reffering yet it's not found in schema or in tables , it's only in migrations
-
-- Stimulus controller for the slides so they auto‑rotate like a React carousel.
-
-
-## 🔭Acknowledgments <a name="acknowledgements"></a>
-
-- My Family.
-- [Microverse Team](https://www.microverse.org/) for supportive documentations eg; linters, coding standard, gitflow etc.
-- 
-
+API-only branches:
+```
+rails s
+```
+🧪 Running Tests:
+```
+rails test
+```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+🌿 Branching Strategy<a name="branching-strategy"></a>
+```
+Branch	                Purpose
+dev	                    development branch
+v1.0-api    	        Stable API-only snapshot
+fullstack             	Hotwire + Tailwind work
+main 	                Production-ready code
+```
+This allows:
 
-<!-- FAQ (optional) -->
+-Safe experimentation
+-API stability
+-Clear evolution history
 
-## ❓ FAQ <a name="faq"></a>
+🔌 API Endpoints (v1): <a name="api-endpoints"></a>
 
-- **Are you using database?**
+Base URL:
 
-  - 
+http://127.0.0.1:3000/api/v1
 
-- **Can I use this project for personal use?**
+Examples:
+```
+Endpoint	                    Method
+/auth/login                     POST
+/specializations	            GET
+/doctors	                    GET/POST
+/doctors/:id	                GET
+/doctors/filtered_doctors	    GET
+/chambers	                    GET
+/districts	                    GET
+```
+👉 Full payload examples are documented in docs/api.md
 
-  - 
+⚠️ Common Pitfalls (Solved):<a name="pitfalls"></a>
 
+Tailwind not updating?
+
+Use:
+bin/dev
+
+Tailwind is build-time, not runtime.
+
+JWT auth removed from ApplicationController?
+
+Correct.
+
+API auth belongs in Api::BaseController
+
+Web uses sessions + CSRF
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+🔭 Future Roadmap<a name="future-features"></a>
 
-## 📝 License <a name="license"></a>
+-Shared service object for filtered_doctors
 
-This project is [MIT](./LICENSE) licensed.
+-Turbo-powered filters
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+-Stimulus carousel for doctor sliders
+
+-Appointment booking (full-stack)
+
+🧠 What This Project Demonstrates
+
+✔ Rails controller inheritance mastery
+✔ JWT vs session authentication knowledge
+✔ Safe refactoring mindset
+✔ Hotwire done intentionally, not blindly
+✔ Production-quality thinking
+
+👥 Authors:<a name="authors"></a>
+
+📄 License<a name="license"></a>
+MIT License — see root/LICENSE.md
+
+🙏 Acknowledgments<a name="acknowledgements"></a>
+
+-Family support
+-Microverse
+ — structure, standards, and discipline
