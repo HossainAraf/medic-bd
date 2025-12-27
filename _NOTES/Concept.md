@@ -221,3 +221,34 @@ Filter via EXISTS
 Precompute availability
 ---------------
 ----------
+Controller: Web::HomeController
+View path: app/views/web/home/index.html.erb
+
+Rails rule:
+
+    Module namespace = directory structure
+------------
+---------------
+Quick self-checklist for future refactors
+
+When you:
+
+add a module (Web, Admin, Api)
+
+move a controller
+
+rename a controller
+
+Always check:
+
+✅ controller path
+
+✅ class/module name
+
+✅ view directory
+
+✅ routes scope/module
+
+If all four align → Rails is happy.
+----------------
+------------

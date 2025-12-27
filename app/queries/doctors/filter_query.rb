@@ -15,7 +15,7 @@ module Doctors
 
       if @district_id.present?
         doctors = doctors.joins(:chambers)
-                         .where(chambers: { district_id: @district_id })
+          .where(chambers: { district_id: @district_id })
       end
 
       doctors.distinct
