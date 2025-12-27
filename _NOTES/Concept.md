@@ -183,5 +183,41 @@ So this does **not** affect production.
 ✔ Use **`bin/dev` every day**
 ✔ Forget `rails s` for this project
 ✔ Less confusion, fewer bugs, faster feedback
+---------------------
+--------------------
+## distinct 
+You must use distinct when:
 
+✔ joining has_many / has_and_belongs_to_many
+✔ filtering across multiple tables
+✔ returning parent records (Doctor)
 
+Your case checks all three.
+🧠 One-liner mental model (remember this)
+
+JOINs multiply rows → DISTINCT collapses them back
+
+If you remember only one sentence, remember this ☝️
+
+✅ Final verdict
+
+✔ You need distinct
+✔ It works at SQL level
+✔ Prevents duplicate doctors
+✔ Correct for your associations
+
+DISTINCT has a cost, but:
+
+✔ acceptable for v1
+✔ indexed foreign keys help
+✔ correct results matter more
+
+Later optimization:
+
+Use subqueries
+
+Filter via EXISTS
+
+Precompute availability
+---------------
+----------
