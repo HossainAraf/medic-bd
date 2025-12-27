@@ -1,0 +1,19 @@
+
+<h1>Home</h1>
+<%= render 'slides' %>
+
+<h2>Specializations</h2>
+<ul>
+  <% @specializations.each do |spec| %>
+    <li><%= spec.name %></li>
+  <% end %>
+</ul>
+
+<% if @doctors.present? %>
+  <h2>Doctors</h2>
+  <ul>
+    <% @doctors.each do |doctor| %>
+      <li><%= doctor.name %></li>
+    <% end %>
+  </ul>
+<% end %>

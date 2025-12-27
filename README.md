@@ -211,6 +211,7 @@ Correct.
 API auth belongs in Api::BaseController
 
 Web uses sessions + CSRF
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 🔭 Future Roadmap<a name="future-features"></a>
 
@@ -231,6 +232,11 @@ Web uses sessions + CSRF
 ✔ Production-quality thinking
 
 👥 Authors:<a name="authors"></a>
+
+**Md Arafat Hossain**
+
+- GitHub: <a href="https://github.com/HossainAraf">HossainAraf </a>
+- LinkedIn: <a href="https://linkedin.com/in/md-arafat-hossain-111403275"> Md. Arafat Hossain </a>
 
 📄 License<a name="license"></a>
 MIT License — see root/LICENSE.md
