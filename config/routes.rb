@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       resources :doctors, only: [:index, :show, :create, :destroy, :update]  do
       # Custom route for filtering doctors by district and specialization
         collection do
-          get 'filtered_doctors'
+          get 'by_specialization_query'
         end
 
         collection do

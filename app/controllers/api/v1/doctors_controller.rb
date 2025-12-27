@@ -1,6 +1,6 @@
 class Api::V1::DoctorsController < ApplicationController
   # Skip auth for public GET requests
-  skip_before_action :authorize_request, only: %i[index show filtered_doctors filter_by_order]
+  skip_before_action :authorize_request, only: %i[index show by_specialization_query filter_by_order]
   # Set doctor for show and update actions
   before_action :set_doctor, only: %i[show update]
   # Ensure these actions are authenticated and user is an admin
@@ -42,8 +42,8 @@ class Api::V1::DoctorsController < ApplicationController
     render json: doctors
   end
 
-  # GET /api/v1/doctors/filtered_doctors
-  def filtered_doctors
+  # GET /api/v1/doctors/by_specialization_query
+  def by_specialization_query
     doctors = Doctors::FilterQuery.new(
       specialization_id: params[:specialization_id],
       district_id: params[:district_id]
