@@ -205,14 +205,13 @@ bin/dev
 Tailwind is build-time, not runtime.
 
 JWT auth removed from ApplicationController?
+
 Correct.
 
 API auth belongs in Api::BaseController
 
 Web uses sessions + CSRF
 
-Displaying views:
-Corrected after refactoring controllers and views directories location.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 🔭 Future Roadmap<a name="future-features"></a>
 

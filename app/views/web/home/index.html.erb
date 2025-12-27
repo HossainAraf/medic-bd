@@ -1,31 +1,19 @@
-<div class="max-w-4xl bg-blue-800 mx-auto">
-  <h1 class="text-4xl font-bold text-green-600 mb-6">✅ Home Page Loaded!</h1>
-  
-  <div class="bg-white rounded-lg shadow p-6 mb-6">
-    <h2 class="text-2xl font-semibold mb-4">System Status</h2>
-    <ul class="space-y-2">
-      <li class="flex items-center">
-        <div class="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
-        Rails Server: Running
-      </li>
-      <li class="flex items-center">
-        <div class="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
-        Asset Pipeline: Working
-      </li>
-      <li class="flex items-center">
-        <div class="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
-        Tailwind CSS: Active
-      </li>
-    </ul>
-  </div>
-  
-  <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-    <h2 class="text-xl font-semibold text-blue-800 mb-4">Next Steps</h2>
-    <p>Flash messages issue fixed. Now you can:</p>
-    <ol class="list-decimal pl-5 mt-2 space-y-1">
-      <li>Add flash messages in controllers when needed</li>
-      <li>Test Turbo Streams on the test page</li>
-      <li>Build your application features</li>
-    </ol>
-  </div>
-</div>
+
+<h1>Home</h1>
+<%= render 'slides' %>
+
+<h2>Specializations</h2>
+<ul>
+  <% @specializations.each do |spec| %>
+    <li><%= spec.name %></li>
+  <% end %>
+</ul>
+
+<% if @doctors.present? %>
+  <h2>Doctors</h2>
+  <ul>
+    <% @doctors.each do |doctor| %>
+      <li><%= doctor.name %></li>
+    <% end %>
+  </ul>
+<% end %>

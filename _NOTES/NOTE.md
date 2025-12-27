@@ -719,3 +719,7 @@ Keeps your web controllers isolated from API controllers
 # ✅ Nav-UI basic
 # NEXT ACTION:
 -  Refactor filtered_doctors(specializations>districts>doctors atrributes with assocoations) logic of doctors_controler to a shared file to Reuse both in Api/BaseController & Web/BaseController.
+
+Zeitwerk issue: fixed: 
+Displaying views:
+Corrected after refactoring controllers and views directories location.
