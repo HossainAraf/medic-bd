@@ -1,3 +1,6 @@
+npx stylelint "**/*.{css,scss}" --fix
+
+
 #  Check Current Search Path:
 -- Shows what schemas are searched and in what order
 SHOW search_path;
