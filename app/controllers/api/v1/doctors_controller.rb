@@ -44,26 +44,15 @@ class Api::V1::DoctorsController < ApplicationController
 
   # GET /api/v1/doctors/filtered_doctors
   def filtered_doctors
-    Rails.logger.info "Filtered Doctors Params: #{params.inspect}"
+    doctors = Doctors::FilterQuery.new(
+      specialization_id: params[:specialization_id],
+      district_id: params[:district_id]
+    ).call
 
-    district = District.find_by(id: params[:district_id]) if params[:district_id].present?
-    specialization_id = params[:specialization_id] # Using specialization_id instead of name
-
-    # Find specialization by ID
-    specialization = Specialization.find_by(id: specialization_id)
-
-    unless specialization
-      Rails.logger.error "Specialization not found: #{specialization_id}"
-      render json: { error: 'Specialization not found' }, status: :not_found and return
+    if doctors.empty?
+      render json: { message: 'No doctors found for the given criteria' }, status: :not_found
+      return
     end
-
-    doctors = if district
-                district.doctors.joins(:doctor_specializations)
-                  .where(doctor_specializations: { specialization_id: specialization.id })
-              else
-                Doctor.joins(:doctor_specializations)
-                  .where(doctor_specializations: { specialization_id: specialization.id })
-              end
 
     render json: doctors.as_json(
       include: {
