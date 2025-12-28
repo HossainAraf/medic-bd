@@ -34,4 +34,21 @@ class MedicUserTest < ActiveSupport::TestCase
     )
     assert user.invalid? # Alternative: 'assert_not user.valid?''
   end
+
+  # --------------------------
+  # Uniqueness Validations
+  # --------------------------
+  test 'is invalid with duplicate email' do
+    existing_user = MedicUser.create!(
+      email: "user@example.com",
+      password: "securepassword"
+    )
+    duplicate_user = MedicUser.new(
+      email: "user@example.com",
+      password: "anotherpassword"
+    )
+    assert_not duplicate_user.valid?
+    assert_includes duplicate_user.errors[:email], "has already been taken"
+  end
+
 end
