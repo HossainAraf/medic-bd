@@ -211,6 +211,56 @@ Correct.
 API auth belongs in Api::BaseController
 
 Web uses sessions + CSRF
+
+🌿 Branching Strategy<a name="branching-strategy"></a>
+```
+Branch	                Purpose
+dev	                    development branch
+v1.0-api    	        Stable API-only snapshot
+fullstack             	Hotwire + Tailwind work
+main 	                Production-ready code
+```
+This allows:
+
+-Safe experimentation
+-API stability
+-Clear evolution history
+
+🔌 API Endpoints (v1): <a name="api-endpoints"></a>
+
+Base URL:
+
+http://127.0.0.1:3000/api/v1
+
+Examples:
+```
+Endpoint	                    Method
+/auth/login                     POST
+/specializations	            GET
+/doctors	                    GET/POST
+/doctors/:id	                GET
+/doctors/filtered_doctors	    GET
+/chambers	                    GET
+/districts	                    GET
+```
+👉 Full payload examples are documented in docs/api.md
+
+⚠️ Common Pitfalls (Solved):<a name="pitfalls"></a>
+
+Tailwind not updating?
+
+Use:
+bin/dev
+
+Tailwind is build-time, not runtime.
+
+JWT auth removed from ApplicationController?
+
+Correct.
+
+API auth belongs in Api::BaseController
+
+Web uses sessions + CSRF
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 🔭 Future Roadmap<a name="future-features"></a>
 
@@ -231,6 +281,39 @@ Web uses sessions + CSRF
 ✔ Production-quality thinking
 
 👥 Authors:<a name="authors"></a>
+
+📄 License<a name="license"></a>
+MIT License — see root/LICENSE.md
+
+🙏 Acknowledgments<a name="acknowledgements"></a>
+
+-Family support
+-Microverse
+ — structure, standards, and discipline
+🔭 Future Roadmap<a name="future-features"></a>
+
+-Shared service object for filtered_doctors
+
+-Turbo-powered filters
+
+-Stimulus carousel for doctor sliders
+
+-Appointment booking (full-stack)
+
+🧠 What This Project Demonstrates
+
+✔ Rails controller inheritance mastery
+✔ JWT vs session authentication knowledge
+✔ Safe refactoring mindset
+✔ Hotwire done intentionally, not blindly
+✔ Production-quality thinking
+
+👥 Authors:<a name="authors"></a>
+
+**Md Arafat Hossain**
+
+- GitHub: <a href="https://github.com/HossainAraf">HossainAraf </a>
+- LinkedIn: <a href="https://linkedin.com/in/md-arafat-hossain-111403275"> Md. Arafat Hossain </a>
 
 📄 License<a name="license"></a>
 MIT License — see root/LICENSE.md

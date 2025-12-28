@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   # Regular Rails routes for full-stack functionality
    # Root route
+   scope module: 'web' do
   root 'home#index'
   get 'ambulance', to: 'ambulance#index', as: 'ambulance'
   get 'bloodbank', to: 'bloodbank#index', as: 'bloodbank'
@@ -53,12 +54,11 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :appointments, only: [:new, :create, :index, :show, :destroy]
 
-
   # Static pages
 
   # Health check route
   get '/health', to: ->(_) { [200, {}, ['OK']] }
   
 resources :turbo_test, only: [:index, :create]
-
+  end
 end

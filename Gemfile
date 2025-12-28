@@ -38,11 +38,12 @@ gem 'bootsnap', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem 'rack-cors', require: 'rack/cors'
 
+gem 'cssbundling-rails'
 gem 'importmap-rails'
 gem 'sprockets-rails'
 gem 'tailwindcss-rails', '~> 3.3.1'
 gem 'turbo-rails'
-gem "cssbundling-rails"
+gem "image_processing", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
