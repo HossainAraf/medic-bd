@@ -1,4 +1,6 @@
-#  Check Current Search Path:
+**Squash commits when merge testing branch **
+
+  Check Current Search Path:
 -- Shows what schemas are searched and in what order
 SHOW search_path;
 -- Example output: search_path

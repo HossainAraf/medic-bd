@@ -47,14 +47,16 @@ class MedicUserTest < ActiveSupport::TestCase
   # --------------------------
   # Password Length Validations
   # --------------------------
-  test 'is invalid with short password' do
-    user = MedicUser.new(
-      email: "user@example.com",
-      password: "short"
-    )
-    assert_not user.valid?
-    assert_includes user.errors[:password], "is too short"
-  end
+ test 'is invalid with short password' do
+  user = MedicUser.new(
+    email: "user@example.com",
+    password: "12345" # 5 characters
+  )
+
+  assert_not user.valid?
+  assert_includes user.errors[:password], "is too short (minimum is 6 characters)"
+end
+
 
   # --------------------------
   # Positive Validations
