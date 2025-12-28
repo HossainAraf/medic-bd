@@ -162,7 +162,6 @@ rails s
 rails test
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 🌿 Branching Strategy<a name="branching-strategy"></a>
 ```
 Branch	                Purpose
@@ -212,6 +211,7 @@ Correct.
 API auth belongs in Api::BaseController
 
 Web uses sessions + CSRF
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 🔭 Future Roadmap<a name="future-features"></a>
 
@@ -233,11 +233,15 @@ Web uses sessions + CSRF
 
 👥 Authors:<a name="authors"></a>
 
+**Md Arafat Hossain**
+
+- GitHub: <a href="https://github.com/HossainAraf">HossainAraf </a>
+- LinkedIn: <a href="https://linkedin.com/in/md-arafat-hossain-111403275"> Md. Arafat Hossain </a>
+
 📄 License<a name="license"></a>
 MIT License — see root/LICENSE.md
 
 🙏 Acknowledgments<a name="acknowledgements"></a>
 
--Family support
--Microverse
- — structure, standards, and discipline
+- Family support
+- Microverse — structure, standards, and discipline
