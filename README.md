@@ -238,8 +238,6 @@ Web uses sessions + CSRF
 - GitHub: <a href="https://github.com/HossainAraf">HossainAraf </a>
 - LinkedIn: <a href="https://linkedin.com/in/md-arafat-hossain-111403275"> Md. Arafat Hossain </a>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 📄 License<a name="license"></a>
 MIT License — see root/LICENSE.md
 
