@@ -49,6 +49,7 @@ class MedicUserTest < ActiveSupport::TestCase
   # --------------------------
   test 'is valid with valid attributes' do
     user = MedicUser.new(
+      name: "Valid User",
       email: "validuser@example.com",
       password: "securepassword"
     )
