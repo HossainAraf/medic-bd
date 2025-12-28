@@ -27,14 +27,6 @@ class MedicUserTest < ActiveSupport::TestCase
     assert_not user.valid?
   end
 
-  test 'is valid with properly formatted email' do
-    user = MedicUser.new(
-      email: "user@example.com",
-      password: "securepassword"
-    )
-    assert user.invalid? # Alternative: 'assert_not user.valid?''
-  end
-
   # --------------------------
   # Uniqueness Validations
   # --------------------------
@@ -52,4 +44,15 @@ class MedicUserTest < ActiveSupport::TestCase
     assert_includes duplicate_user.errors[:email], "has already been taken"
   end
 
+  # --------------------------
+  # Positive Validations
+  # --------------------------
+  test 'is valid with valid attributes' do
+    user = MedicUser.new(
+      email: "validuser@example.com",
+      password: "securepassword"
+    )
+    assert user.valid?
+  end
+  
 end
