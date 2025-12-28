@@ -1,6 +1,8 @@
 npx stylelint "**/*.{css,scss}" --fix
+RAILS_ENV=production bundle exec rake assets:precompile
 
-
+-------------
+-----------
 #  Check Current Search Path:
 -- Shows what schemas are searched and in what order
 SHOW search_path;
