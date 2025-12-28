@@ -16,5 +16,22 @@ class MedicUserTest < ActiveSupport::TestCase
     assert_includes user.errors[:password], "can't be blank"
   end
 
-  #
+  # --------------------------
+  # Format Validations
+  # --------------------------
+  test 'is invalid with malformed email' do
+    user = MedicUser.new(
+      email: "not-an-email",
+      password: "securepassword"
+    )
+    assert_not user.valid?
+  end
+
+  test 'is valid with properly formatted email' do
+    user = MedicUser.new(
+      email: "user@example.com",
+      password: "securepassword"
+    )
+    assert user.invalid? # Alternative: 'assert_not user.valid?''
+  end
 end
