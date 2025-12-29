@@ -1,0 +1,54 @@
+# app/views/web/doctors/index.html.erb
+
+<h1 class="text-3xl font-bold bg-blue-500 text-white p-4 rounded">Browse Doctors</h1>
+
+<!---- Filter ------>
+<div class="my-4 p-4 border rounded bg-gray-50">
+  <%= form_with url: web_doctors_path, method: get, local: true do %>
+    <!--- Specialization Filter --->
+    <div class="mb-4">
+      <label for="specialization_id" class="block mb-2 font-semibold">Specialization:</label>
+      <select name="specialization_id" id="specialization_id" class="w-full p-2 border rounded">
+        <option value="">All Specializations</option>
+        <% @specializations.each do |spec| %>
+          <option value="<%= spec.id %>" <%= 'selected' if params[:specialization_id].to_i == spec.id %>>
+            <%= spec.name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <!---- District Filter ------>
+    <div class="mb-4">
+      <label for="district_id" class="block mb-2 font-semibold">District:</label>
+      <select name="district_id" id="district_id" class="w-full p-2 border rounded">
+        <option value="">All Districts</option>
+        <% @districts.each do |district| %>
+          <option value="<%= district.id %>" <%= 'selected' if params[:district_id].to_i == district.id %>>
+            <%= district.name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      Filter
+    </button>
+
+    <!---- Doctors list ------>
+    <div class="mt-6">
+      <h2 class="text-2xl font-bold mb-4">Doctors</h2>
+      <% if @doctors.any? %>
+        <ul>
+          <% @doctors.each do |doctor| %>
+            <li class="mb-4 p-4 border rounded bg-white shadow">
+              <strong><%= doctor.name %></strong><br>
+              <span class="text-gray-600">
+                <%= doctor.specialization.name %> - <%= doctor.district.name %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No doctors found matching the selected criteria.</p>
+      <% end %>
