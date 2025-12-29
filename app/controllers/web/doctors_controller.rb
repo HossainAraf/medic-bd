@@ -2,14 +2,27 @@
 
 class Web::DoctorsController < Web::BaseController
   def index
-    @specializations = Specialization.all
+    @specializations = Specialization.order(:name)
+    @districts = District.order(:name)
 
-    select_specialization = Specialization.find_by(id: params[:specialization_id])
+    @doctors = Doctor
+      .includes(
+        :specializations,
+        doctor_schedules: { chamber: :district }
+      )
+      .distinct
 
-    @districs = Doctor.all.distinct.pluck(:district)
+    if params[:specialization_id].present?
+      @doctors = @doctors.joins(:doctor_specializations)
+                        .where(doctor_specializations: {
+                          specialization_id: params[:specialization_id]
+                        })
+    end
 
-    @doctors = Doctor.all
-    @doctors = @doctors.where(specialization_id: @select_specialization.id) if select_specialization
-    @doctors = @doctors.where(district: params[:district_id]) if params[:district_id].present?
+    if params[:district_id].present?
+      @doctors = @doctors.joins(doctor_schedules: { chamber: :district })
+                        .where(districts: { id: params[:district_id] })
+    end
   end
-end
+
+  end

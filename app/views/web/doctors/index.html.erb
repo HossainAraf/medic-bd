@@ -4,7 +4,7 @@
 
 <!---- Filter ------>
 <div class="my-4 p-4 border rounded bg-gray-50">
-  <%= form_with url: web_doctors_path, method: get, local: true do %>
+  <%= form_with url: web_doctors_path, method: :get, local: true do %>
     <!--- Specialization Filter --->
     <div class="mb-4">
       <label for="specialization_id" class="block mb-2 font-semibold">Specialization:</label>
@@ -44,7 +44,7 @@
             <li class="mb-4 p-4 border rounded bg-white shadow">
               <strong><%= doctor.name %></strong><br>
               <span class="text-gray-600">
-                <%= doctor.specialization.name %> - <%= doctor.district.name %>
+                <%= doctor.specializations.map(&:name).join(", ") %> - <%= doctor.doctor_schedules.map { |ds| ds.chamber.district.name }.uniq.join(", ") %>
               </span>
             </li>
           <% end %>
@@ -52,3 +52,6 @@
       <% else %>
         <p>No doctors found matching the selected criteria.</p>
       <% end %>
+    </div>
+  <% end %>
+</div>
