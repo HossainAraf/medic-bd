@@ -728,3 +728,51 @@ Keeps your web controllers isolated from API controllers
 Zeitwerk issue: fixed: 
 Displaying views:
 Corrected after refactoring controllers and views directories location.
+-----------
+-------
+
+## route.rb: What changed (and why)
+✅ namespace :web instead of scope module: 'web'
+
+Now:
+
+URLs become explicit: /web/doctors
+
+Helpers become clear: web_doctors_path
+
+Controllers clearly live in Web::
+This matches:
+
+app/controllers/web/
+app/views/web/
+---------------------
+-------------
+What we intentionally did NOT do (important)
+
+❌ We did NOT:
+
+Add nested routes like /specializations/:id/districts
+
+Duplicate API filtering logic
+
+Add unnecessary controllers
+
+Why?
+
+Because filters belong to query params, not routes.
+
+7️⃣ Mental map (lock this in):
+
+```
+API (JSON)           WEB (HTML)
+-------------------------------
+/api/v1/doctors     /web/doctors
+DoctorsController   Web::DoctorsController
+JSON response       ERB response
+Used by React       Used by browser
+```
+
+Same domain
+Same database
+Different responsibilities
+----------------

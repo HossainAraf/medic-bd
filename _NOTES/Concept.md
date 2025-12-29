@@ -252,3 +252,53 @@ Always check:
 If all four align → Rails is happy.
 ----------------
 ------------
+# Server-side VS Client-side
+
+💡 Without JavaScript, there is no client-side error logic.
+💡 Unless JavaScript exists — browser does not decide anything.
+```
+| Scenario                                      | Where logic runs | Type                  |
+| --------------------------------------------- | ---------------- | --------------------- |
+| DB validation failed                          | Rails            | Server-side           |
+| Record not found                              | Rails            | Server-side           |
+| “No doctors found” message                    | Rails view       | Server-side rendering |
+| Form required field missing (HTML `required`) | Browser          | Client-side           |
+| JS validation                                 | Browser          | Client-side           |
+| React state crash                             | Browser          | Client-side           |
+```
+## Important rule (burn this in memory)
+💡 Rails full-stack flips that:
+
+   “UI logic = server-side by default”
+
+💡 Rails ERB views are still server-side
+
+💡 They run before HTML reaches the browser.
+```
+Even:
+
+<% if %>
+<% else %>
+
+is Ruby, not browser logic.
+----
+So this:
+
+<% if @doctors.any? %>
+
+
+👉 is evaluated before HTML is sent
+```
+
+## Can a Full-stack Rails app have client-side errors?
+✅ YES — but only if you add:
+
+JavaScript
+
+Turbo
+
+Stimulus
+
+React / Vue
+
+Plain JS
