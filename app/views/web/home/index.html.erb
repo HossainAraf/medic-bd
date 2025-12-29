@@ -5,15 +5,11 @@
 <h2>Specializations</h2>
 <ul>
   <% @specializations.each do |spec| %>
-    <li><%= spec.name %></li>
+    <li>
+      <%= link_to spec.name,
+        web_doctors_path(specialization_id: spec.id),
+        class: "text-blue-600 hover:underline"
+      %>
+    </li>
   <% end %>
 </ul>
-
-<% if @doctors.present? %>
-  <h2>Doctors</h2>
-  <ul>
-    <% @doctors.each do |doctor| %>
-      <li><%= doctor.name %></li>
-    <% end %>
-  </ul>
-<% end %>
