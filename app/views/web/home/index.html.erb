@@ -1,15 +1,20 @@
+<!-- app/views/web/home/index.html.erb -->
+<h1>Find Doctors in Bangladesh</h1>
 
-<h1 class= "text-3xl font-bold bg-blue-500 text-white p-4 rounded">Home</h1>
-<%= render 'slides' %>
+<section>
+  <h2>Browse by Specialization</h2>
+  <ul>
+    <% @specializations.each do |s| %>
+      <li><%= link_to s.name, web_doctors_path(specialization_id: s.id) %></li>
+    <% end %>
+  </ul>
+</section>
 
-<h2>Specializations</h2>
-<ul>
-  <% @specializations.each do |spec| %>
-    <li>
-      <%= link_to spec.name,
-        web_doctors_path(specialization_id: spec.id),
-        class: "text-blue-600 hover:underline"
-      %>
-    </li>
-  <% end %>
-</ul>
+<section>
+  <h2>Browse by District</h2>
+  <ul>
+    <% @districts.each do |d| %>
+      <li><%= link_to d.name, web_doctors_path(district_id: d.id) %></li>
+    <% end %>
+  </ul>
+</section>
