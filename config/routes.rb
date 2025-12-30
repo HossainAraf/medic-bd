@@ -49,4 +49,9 @@ Rails.application.routes.draw do
   # HEALTH CHECK
   # --------------------
   get '/health', to: ->(_) { [200, {}, ['OK']] }
+
+  # --------------------
+  # ROOT PATH
+  # --------------------
+  root 'web/home#index'
 end
