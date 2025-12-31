@@ -1,4 +1,4 @@
-**Squash commits when merge testing branch **
+**Squash commits when merge testing branch
 
   Check Current Search Path:
 -- Shows what schemas are searched and in what order
@@ -719,5 +719,9 @@ Keeps your web controllers isolated from API controllers
 
 # ✅ Tailwind configuration
 # ✅ Nav-UI basic
+# ✅ Refactor filtered_doctors(specializations>districts>doctors atrributes with assocoations) logic of doctors_controler to a shared file to Reuse both in Api/BaseController & Web/BaseController.
+# ✅ Test: MedicUser model: ❌ No FK
 # NEXT ACTION:
--  Refactor filtered_doctors(specializations>districts>doctors atrributes with assocoations) logic of doctors_controler to a shared file to Reuse both in Api/BaseController & Web/BaseController.
+Test: 
+- Specialization model:	❌ No FK
+- District model: ❌ No FK
