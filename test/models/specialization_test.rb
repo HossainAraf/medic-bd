@@ -28,4 +28,21 @@ class SpecializationTest < ActiveSupport::TestCase
     specialization = Specialization.create(name: "  Neurology  ")
     assert_equal "Neurology", specialization.name
   end
+
+  # ---------------------
+  # Association Tests
+  # --------------------
+  test 'can be associated with doctors' do
+  specialization = Specialization.create!(name: 'Cardiology')
+  doctor = Doctor.create!(name: 'Dr. Test')
+
+  DoctorSpecialization.create!(
+    doctor: doctor,
+    specialization: specialization
+  )
+
+  assert_includes specialization.doctors, doctor
+end
+
+
 end
