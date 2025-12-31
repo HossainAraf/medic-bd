@@ -20,4 +20,12 @@ class SpecializationTest < ActiveSupport::TestCase
     assert_not duplicate_specialization.valid?
     assert_includes duplicate_specialization.errors[:name], "has already been taken"
   end
+
+  # ---------------------
+  # Whitespace Stripping
+  # --------------------
+  test 'strips leading and trailing whitespace from name' do
+    specialization = Specialization.create(name: "  Neurology  ")
+    assert_equal "Neurology", specialization.name
+  end
 end

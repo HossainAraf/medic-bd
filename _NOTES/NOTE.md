@@ -725,3 +725,5 @@ Keeps your web controllers isolated from API controllers
 Test: 
 - Specialization model:	❌ No FK
 - District model: ❌ No FK
+
+- Update: Specialization model in foroward branch(webcore) as in testing branch.
