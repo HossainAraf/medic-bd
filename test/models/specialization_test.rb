@@ -30,13 +30,13 @@ class SpecializationTest < ActiveSupport::TestCase
   end
 
   # ---------------------
-  # Association Tests
+  # Association Tests (Optional/Unnecessary here)
   # --------------------
   test 'can be associated with doctors' do
-  specialization = Specialization.create!(name: 'Cardiology')
+  specialization = Specialization.create(name: 'Cardiology')
   doctor = Doctor.create!(name: 'Dr. Test', order: 100000, experience: 10, qualification: 'MD', photo_url: 'doctor.jpg', specialty: 'Cardiology')
 
-  DoctorSpecialization.create!(
+  DoctorSpecialization.create(
     doctor: doctor,
     specialization: specialization
   )
