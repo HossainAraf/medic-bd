@@ -15,7 +15,7 @@ class SpecializationTest < ActiveSupport::TestCase
   # --------------------
   test 'is invalid with duplicate name (case insensitive)' do
     Specialization.create!(name: "Cardiology")
-    duplicate_specialization = Specialization.new(name: "Skin")
+    duplicate_specialization = Specialization.new(name: "cardioloGy")
 
     assert_not duplicate_specialization.valid?
     assert_includes duplicate_specialization.errors[:name], "has already been taken"
