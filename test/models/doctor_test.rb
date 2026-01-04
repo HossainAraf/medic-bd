@@ -5,4 +5,4 @@ class DoctorTest < ActiveSupport::TestCase
   #   assert true
   # end
 end
-git push 
+git push
