@@ -323,3 +323,78 @@ def normalize_and_save!(user)
 end
 ```
 ====================
+model:
+  validates :name, presence: true
+test:
+Case 1: create! (bang method ❗):
+```
+  district = District.create!
+  assert_not district.valid?
+```
+* What Rails does internally:
+  - District.create! tries to save immediately
+  - Validation fails (name is blank)
+  - Rails raises an exception: 'ActiveRecord::RecordInvalid'
+  - Test execution stops immediately
+  - Your assertions are never reached
+  E_msg in terminal ActiveRecord::RecordInvalid: Validation failed: Name can't be blank.
+
+  Case 2: create (no bang ✅):
+
+```
+  district = District.create
+  assert_not district.valid?
+```
+What happens here:
+
+- Rails attempts to save
+- Validation fails
+- No exception is raised
+- Object is returned with errors
+- Assertions run normally
+
+✔️ Test passes
+✔️ You can inspect district.errors
+
+Case 3: new (most common for validation tests 🏆):
+
+```
+district = District.new
+assert_not district.valid?
+assert_includes district.errors[:name], "can't be blank"
+```
+Why this is ideal:
+- No DB write
+- No exception
+- Pure validation testing
+- Fast & clean
+
+✔️ Best practice
+
+Why create! exists at all
+
+create! is for situations where:
+
+Invalid data is a bug
+
+You want the app to crash loudly
+
+You are creating required test data
+
+Example (you already used this correctly):
+```
+doctor = Doctor.create!(
+  name: 'Dr. Test',
+  order: 100_000,
+  experience: 10,
+  qualification: 'MD',
+  photo_url: 'doctor.jpg',
+  specialty: 'Cardiology'
+)
+```
+Here:
+
+- If this fails → test setup is broken.
+- Raising is good.
+-----------
+---------

@@ -1,7 +1,13 @@
 require 'test_helper'
 
 class DistrictTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  # ---------------------
+  # Presence Validations
+  # ---------------------
+  test 'is invalid without name' do
+    district = District.new
+    assert_not district.valid?
+    assert_includes district.errors[:name], "can't be blank"
+  end
+
 end
