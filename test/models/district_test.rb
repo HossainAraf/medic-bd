@@ -20,4 +20,14 @@ class DistrictTest < ActiveSupport::TestCase
     assert_not duplicate_district.valid?
     assert_includes duplicate_district.errors[:name], 'has already been taken'
   end
+
+  # ---------------------
+  # Whitespace Stripping
+  # ---------------------
+  test 'strips leading and trailing whitespace from name' do
+    district = District.create!(name: '  Chittagong  ')
+    assert_equal 'Chittagong', district.name
+  end
+
+
 end
