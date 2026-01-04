@@ -723,7 +723,12 @@ Keeps your web controllers isolated from API controllers
 # ✅ Test: MedicUser model: ❌ No FK
 # NEXT ACTION:
 Test: 
-- Specialization model:	❌ No FK
-- District model: ❌ No FK
+-✅ Specialization model:	❌ No FK
+-✅ District model: ❌ No FK
 
 - Update: Specialization model in foroward branch(webcore) as in testing branch.
+---------------
+-------
+## Future plan to enhace testing:
+- we can add a factory-style helper to avoid repetition
+- refactor tests for speed & clarity
