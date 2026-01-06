@@ -26,4 +26,19 @@ class ChamberTest < ActiveSupport::TestCase
     assert_not chamber.valid?
     assert_includes chamber.errors[:district_id], "can't be blank"
   end
+
+  # ---------------------
+  # Valid Case
+  # ---------------------
+  test 'valid with all required fields' do
+    district = District.new(name: 'Dhaka')
+    district.save    # Or create! to ensure it gets an ID (instead of new+save)
+    chamber = Chamber.new(name: 'City Hospital', category: 'Hospital', address: 'Rubir mor', district: district)
+    assert chamber.valid?
+  end
+
+  # ---------------------
+  # Whitespace Stripping
+  # ---------------------
+
 end
