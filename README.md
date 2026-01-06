@@ -197,11 +197,14 @@ Endpoint	                    Method
 👉 Full payload examples are documented in docs/api.md
 
 ⚠️ Common Pitfalls (Solved):<a name="pitfalls"></a>
+Model Rename & Tests
 
-Tailwind not updating?
+- After renaming a model (e.g. chember → chamber), old test files may still be loaded by Rails and cause confusing failures.
+  Always remove or rename obsolete files in test/models.
 
-Use:
-bin/dev
+- Tailwind not updating?
+
+Use: bin/dev to run server instead of rails server
 
 Tailwind is build-time, not runtime.
 
