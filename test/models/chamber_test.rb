@@ -40,5 +40,23 @@ class ChamberTest < ActiveSupport::TestCase
   # ---------------------
   # Whitespace Stripping
   # ---------------------
+  test 'strips whitespace from name' do
+    district = District.new(name: 'Dhaka')
+    district.save
+    chamber = Chamber.create!(name: '  City Hospital  ', category: 'Hospital', address: 'Rubir mor', district: district)
+    chamber.valid?
+    assert_equal 'City Hospital', chamber.name
+  end
 
+  test 'strips whitespace from category' do
+    district = District.create!(name: 'Naogaon')
+    chamber = Chamber.create!(name: 'City Hospital', category: '  Hospital  ', address: 'Rubir mor', district: district)
+    assert_equal 'Hospital', chamber.category
+  end
+
+  test 'strips whitespace from address' do
+    district = District.create(name: 'Chittagong')
+    chamber = Chamber.create(name: 'City Hospital', category: 'Hospital', address: '  Rubir mor  ', district: district)
+    assert_equal 'Rubir mor', chamber.address
+  end
 end
