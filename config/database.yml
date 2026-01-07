@@ -12,6 +12,13 @@ development:
   host: 127.0.0.1
   port: 5432
 
+test:
+  <<: *default
+  database: medic_bd_test
+  user: <%= Rails.application.credentials.dig(:test, :database_user) %>
+  password: <%= Rails.application.credentials.dig(:test, :database_password) %>
+  
+
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>

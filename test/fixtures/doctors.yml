@@ -2,20 +2,8 @@
 
 one:
   name: MyString
-  specification_id: 1
-  display_order: 1
-  degree: MyString
-  designation: MyString
-  chember: MyString
-  time: MyString
-  contact: MyString
+  order: 1
 
 two:
   name: MyString
-  specification_id: 1
-  display_order: 1
-  degree: MyString
-  designation: MyString
-  chember: MyString
-  time: MyString
-  contact: MyString
+  order: 1
