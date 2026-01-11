@@ -1,4 +1,16 @@
-ActiveRecord::Schema[8.1].define(version: 2025_09_09_194233) do
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema[8.1].define(version: 2026_01_11_101612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -17,6 +29,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_09_194233) do
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_districts_on_name", unique: true
   end
 
   create_table "doctor_schedules", force: :cascade do |t|
@@ -45,17 +58,21 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_09_194233) do
     t.string "bangla_name"
     t.datetime "created_at", null: false
     t.text "description"
+    t.integer "display_order", null: false
     t.string "experience", null: false
     t.string "name", null: false
-    t.integer "order", null: false
     t.string "phone"
     t.text "photo_url"
     t.string "qualification", null: false
+    t.string "registration_number"
+    t.string "slug", null: false
     t.text "special_notes"
     t.string "specialty", null: false
     t.datetime "updated_at", null: false
-    t.index ["name", "bangla_name"], name: "index_doctors_on_name_and_bangla_name_unique", unique: true
-    t.check_constraint "\"order\" >= 100000 AND \"order\" <= 9999999", name: "order_range"
+    t.index ["phone"], name: "index_doctors_on_phone", unique: true
+    t.index ["registration_number"], name: "index_doctors_on_registration_number", unique: true
+    t.index ["slug"], name: "index_doctors_on_slug", unique: true
+    t.check_constraint "display_order >= 100000 AND display_order <= 9999999", name: "display_order_range"
   end
 
   create_table "medic_users", force: :cascade do |t|
@@ -75,6 +92,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_09_09_194233) do
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_specializations_on_name", unique: true
   end
 
   add_foreign_key "chambers", "districts"

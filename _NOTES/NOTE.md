@@ -736,7 +736,44 @@ Test:
 DELETE FROM doctors
 WHERE id = 9; 
 ===============
-Correct answer:
-
 Do NOT try to fully solve human identity at DB level:
 because Same name and bangla_name may have diffent doctros and may have same specializations. Same doctor may practicein different chambers of same district or different district.
+-------------------
+for preventing wrong data-entry:
+- Canonicalization (normalization) at model level
+```
+ before_validation :normalize_name
+
+  private
+
+  def normalize_name
+    self.name = name
+      &.strip
+      &.squeeze(" ")
+      &.downcase
+  end
+  ```
+  ------------
+Send Test messege if Doctor.name+Doctor.bangla_name+Specialization same to verify if this is intentional! Not prevented form DB layer, because it may exists in real world.
+---------------------
+  doctors.hone is operationally important
+
+Recommendation
+🟡 Keep nullable for now, but:
+
+Validate format when present
+
+Consider future NOT NULL when business matures
+
+validates :phone,
+  allow_nil: true,
+  format: { with: /\A01\d{9}\z/, message: "invalid BD phone" }
+===========================
+## Adding slug for uniqeness in Doctor
+ before_validation :set_slug, on: :create
+
+  private
+
+  def set_slug
+    self.slug ||= format("dr-bd-%06d", id || (Doctor.maximum(:id).to_i + 1))
+  end
