@@ -43,7 +43,7 @@ class DistrictTest < ActiveSupport::TestCase
     district = District.create!(name: 'Rajshahi')
     chamber = Chamber.create!(name: 'Rajshahi Chamber', address: '456 Rajshahi St', district: district,
                               category: 'Hospital')
-    doctor = Doctor.create!(name: 'Dr. Test', order: 100_000, experience: 10, qualification: 'MD',
+    doctor = Doctor.create!(name: 'Dr. Test', display_order: 100_000, experience: 10, qualification: 'MD',
                             photo_url: 'doctor.jpg', specialty: 'General Medicine', phone: '1234567890')
     DoctorSchedule.create!(chamber: chamber, doctor: doctor, available_day: 'Monday',
                            available_time: '09:00', contact: '1234567890')

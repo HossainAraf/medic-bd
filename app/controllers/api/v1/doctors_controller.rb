@@ -35,10 +35,10 @@ class Api::V1::DoctorsController < ApplicationController
     ), status: :ok
   end
 
-  # FILTER BY DOCTOR'S ORDER
-  # GET /api/v1/doctors/order/:order
-  def filter_by_order
-    doctors = Doctor.where(order: params[:order])
+  # FILTER BY DOCTOR'S DISPLAY ORDER
+  # GET /api/v1/doctors/display_order/:display_order
+  def filter_by_display_order
+    doctors = Doctor.where(display_order: params[:display_order])
     render json: doctors
   end
 
@@ -153,7 +153,7 @@ class Api::V1::DoctorsController < ApplicationController
 
   def doctor_params
     params.require(:doctor).permit(
-      :bangla_name, :name, :specialty, :order,
+      :bangla_name, :name, :specialty, :display_order,
       :qualification, :experience, :phone, :special_notes, :description, :photo_url,
       chambers_attributes: %i[name category address district_id],
       doctor_specializations_attributes: [:specialization_id],

@@ -739,6 +739,7 @@ WHERE id = 9;
 Do NOT try to fully solve human identity at DB level:
 because Same name and bangla_name may have diffent doctros and may have same specializations. Same doctor may practicein different chambers of same district or different district.
 -------------------
+<!-- NEXT:  -->
 for preventing wrong data-entry:
 - Canonicalization (normalization) at model level
 ```
@@ -756,7 +757,7 @@ for preventing wrong data-entry:
   ------------
 Send Test messege if Doctor.name+Doctor.bangla_name+Specialization same to verify if this is intentional! Not prevented form DB layer, because it may exists in real world.
 ---------------------
-  doctors.hone is operationally important
+  doctors.phone is operationally important
 
 Recommendation
 🟡 Keep nullable for now, but:
@@ -769,7 +770,9 @@ validates :phone,
   allow_nil: true,
   format: { with: /\A01\d{9}\z/, message: "invalid BD phone" }
 ===========================
-## Adding slug for uniqeness in Doctor
+## Adding slug for doctors unique identity 
+
+```
  before_validation :set_slug, on: :create
 
   private
@@ -777,3 +780,7 @@ validates :phone,
   def set_slug
     self.slug ||= format("dr-bd-%06d", id || (Doctor.maximum(:id).to_i + 1))
   end
+  ````
+  --------------------
+
+  email, name, role -  null:false

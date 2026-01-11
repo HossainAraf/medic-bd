@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         end
 
         collection do
-          get 'order/:order', to: 'doctors#filter_by_order' # Custome route for filtering doctors by order
+          get 'display_order/:display_order', to: 'doctors#filter_by_display_order' # Custome route for filtering doctors by display_order
         end
         
         #  get 'test_route', to: 'doctors#test_route'
