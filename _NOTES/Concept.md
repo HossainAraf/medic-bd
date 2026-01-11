@@ -221,3 +221,9 @@ Filter via EXISTS
 Precompute availability
 ---------------
 ----------
+Database        = Truth
+schema.rb       = Snapshot of truth
+migration files = History (optional after truth exists)
+
+Rails runs on truth, not history.
+================================
