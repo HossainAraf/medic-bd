@@ -1,6 +1,7 @@
 # require_dependency 'strip_whitespace'
 
 class Doctor < ApplicationRecord
+  before_validation :set_slug, on: :create
   include ::StripWhitespace
 
   # Associations
@@ -39,4 +40,8 @@ class Doctor < ApplicationRecord
   def normalize_order
     self.order = order.to_i if order.present? # Converts to integer to strip leading zeros
   end
+
+  def set_slug
+    self.slug ||= format("dr-bd-%06d", id || Doctor.maximum(:id).to_i + 1)
+  
 end
