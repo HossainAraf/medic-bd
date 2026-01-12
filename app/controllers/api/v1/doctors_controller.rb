@@ -42,7 +42,7 @@ class Api::V1::DoctorsController < ApplicationController
     render json: doctors
   end
 
-  # GET /api/v1/doctors/by_specialization_query
+  # GET /api/v1/doctors/by_specialization_query?specialization_id=<specialization_id>&district_id=<district_id>
   def by_specialization_query
     doctors = Doctors::FilterQuery.new(
       specialization_id: params[:specialization_id],

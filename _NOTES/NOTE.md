@@ -770,6 +770,7 @@ validates :phone,
   allow_nil: true,
   format: { with: /\A01\d{9}\z/, message: "invalid BD phone" }
 ===========================
+
 ## Adding slug for doctors unique identity 
 
 ```
@@ -784,3 +785,9 @@ validates :phone,
   --------------------
 
   email, name, role -  null:false
+
+# ================
+** ?? Same nested entity post can be added:
+POST: /doctors
+(slug is available)
+# ================
