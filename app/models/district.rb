@@ -4,5 +4,6 @@ class District < ApplicationRecord
   has_many :doctor_schedules, through: :chambers
 
   include ::StripWhitespace
+
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 end

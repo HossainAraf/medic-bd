@@ -32,7 +32,7 @@ class ChamberTest < ActiveSupport::TestCase
   # ---------------------
   test 'valid with all required fields' do
     district = District.new(name: 'Dhaka')
-    district.save    # Or create! to ensure it gets an ID (instead of new+save)
+    district.save # Or create! to ensure it gets an ID (instead of new+save)
     chamber = Chamber.new(name: 'City Hospital', category: 'Hospital', address: 'Rubir mor', district: district)
     assert chamber.valid?
   end

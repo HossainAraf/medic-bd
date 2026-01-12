@@ -3,7 +3,7 @@ class Api::V1::ChambersController < ApplicationController
 
   def index
     @chambers = Chamber.includes(:district)
-    
+
     # Retrive contact from associated doctor_schedules
     @chambers = @chambers.joins(:doctor_schedules).select('chambers.*, doctor_schedules.contact AS contact')
 

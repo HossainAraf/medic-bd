@@ -20,9 +20,9 @@ class Doctor < ApplicationRecord
 
   # Validations
   validates :display_order, presence: true,
-                    numericality: { only_integer: true,
-                                    greater_than_or_equal_to: 100_000,
-                                    less_than_or_equal_to: 9_999_999 }
+                            numericality: { only_integer: true,
+                                            greater_than_or_equal_to: 100_000,
+                                            less_than_or_equal_to: 9_999_999 }
   validates :name, presence: true
 
   # Scopes
@@ -42,6 +42,6 @@ class Doctor < ApplicationRecord
   end
 
   def set_slug
-    self.slug ||= format("dr-bd-%06d", id || Doctor.maximum(:id).to_i + 1)
+    self.slug ||= format('dr-bd-%06d', id || (Doctor.maximum(:id).to_i + 1))
   end
 end
