@@ -23,12 +23,11 @@ class DoctorSchedule < ApplicationRecord
     evening: 2
   }
 
-  validates :contact, presence: true
+  validates :contact, presence: true, format: { with: /\A\+?\d{6,15}\z/, message: "must be a valid phone number" }
   validates :available_day, presence: true
   validates :slot, presence: true
   validates :slot, uniqueness: { scope: [:doctor_id, :chamber_id, :available_day],
-                                 message: "Schedule slot already exists for this doctor in the specified chamber on the given day." }
-  
+                                 message: "Schedule slot already exists for this doctor in the specified chamber on the given day.", case_sensitive: false }
 
 
   private
