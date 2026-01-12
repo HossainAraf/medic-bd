@@ -2,12 +2,10 @@ class DoctorSchedule < ApplicationRecord
   belongs_to :doctor
   belongs_to :chamber, optional: true # Avoid validation error during nested attributes processing
   before_save :ensure_chamber
-  # validates :available_day, presence: true
-  # validates :available_time, presence: true
+
   include ::StripWhitespace
 
   accepts_nested_attributes_for :chamber
-  before_save :ensure_chamber
 
   enum available_day: {
     sunday: 0,
@@ -26,6 +24,11 @@ class DoctorSchedule < ApplicationRecord
   }
 
   validates :contact, presence: true
+  validates :available_day, presence: true
+  validates :slot, presence: true
+  validates :slot, uniqueness: { scope: [:doctor_id, :chamber_id, :available_day],
+                                 message: "Schedule slot already exists for this doctor in the specified chamber on the given day." }
+  
 
 
   private
