@@ -36,6 +36,6 @@ class DoctorSchedule < ApplicationRecord
   def ensure_chamber
     return unless chamber.blank? && chamber_attributes.present?
 
-    self.chamber = Chamber.create!(chamber_attributes)
+    self.chamber || Chamber.new(chamber_attributes)
   end
 end
