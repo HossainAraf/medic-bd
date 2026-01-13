@@ -774,13 +774,13 @@ validates :phone,
 ## Adding slug for doctors unique identity 
 
 ```
- before_validation :set_slug, on: :create
+before_validation :set_slug, on: :create
 
-  private
+private
 
-  def set_slug
-    self.slug ||= format("dr-bd-%06d", id || (Doctor.maximum(:id).to_i + 1))
-  end
+def set_slug
+self.slug ||= format("dr-bd-%06d", id || (Doctor.maximum(:id).to_i + 1))
+end
   ````
   --------------------
 
@@ -791,3 +791,17 @@ validates :phone,
 POST: /doctors
 (slug is available)
 # ================
+**model-level referential protection** 
+- dependent: :restrict_with_error 
+Why restrict_with_error instead of others?:
+
+```
+| Option                     | Behavior                         |
+| -------------------------- | -------------------------------- |
+| `:destroy`                 | Cascades delete (dangerous)      |
+| `:delete_all`              | Skips callbacks (very dangerous) |
+| `:nullify`                 | Breaks integrity                 |
+| `:restrict_with_exception` | Raises exception                 |
+| `:restrict_with_error`     | Safe + user-friendly             |
+```
+=========================
