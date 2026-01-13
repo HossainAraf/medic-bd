@@ -4,8 +4,6 @@ class DoctorSchedule < ApplicationRecord
 
   include ::StripWhitespace
 
-  accepts_nested_attributes_for :chamber, reject_if: :all_blank
-
   enum available_day: {
     sunday: 0,
     monday: 1,
@@ -22,26 +20,24 @@ class DoctorSchedule < ApplicationRecord
     evening: 2
   }
 
-  validates :contact, presence: true, format: { with: /\A\+?\d{6,15}\z/, message: "must be a valid phone number" }
+  validates :contact,
+            presence: true,
+            format: { with: /\A\+?\d{6,15}\z/, message: "must be a valid phone number" }
+
   validates :available_day, :slot, :start_time, :end_time, presence: true
-  validates :slot, uniqueness: { scope: [:doctor_id, :chamber_id, :available_day],
-                                 message: "Schedule slot already exists for this doctor in the specified chamber on the given day.", case_sensitive: false }
 
-  before_validation :ensure_chamber
+  validate :end_time_after_start_time
 
-  def end_time_after_start_time
-    return if end_time.blank? || start_time.blank?
-
-    if end_time <= start_time
-      errors.add(:end_time, "must be after the start time")
-    end
-  end
+  validates :slot, uniqueness: {
+    scope: [:doctor_id, :chamber_id, :available_day],
+    message: "Schedule slot already exists for this doctor in the specified chamber on the given day."
+  }
 
   private
 
-  def ensure_chamber
-    return unless chamber.blank? && chamber_attributes.present?
+  def end_time_after_start_time
+    return if start_time.blank? || end_time.blank?
 
-    self.chamber || Chamber.new(chamber_attributes)
+    errors.add(:end_time, "must be after start time") if end_time <= start_time
   end
 end
