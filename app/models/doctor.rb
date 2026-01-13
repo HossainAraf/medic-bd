@@ -13,7 +13,6 @@ class Doctor < ApplicationRecord
   # Nested Attributes
   accepts_nested_attributes_for :chambers
   accepts_nested_attributes_for :doctor_specializations
-  accepts_nested_attributes_for :doctor_schedules, allow_destroy: true
 
   # Callbacks
   before_save :normalize_display_order

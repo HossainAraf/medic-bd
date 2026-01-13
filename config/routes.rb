@@ -23,8 +23,11 @@ Rails.application.routes.draw do
         collection do
           get 'display_order/:display_order', to: 'doctors#filter_by_display_order' # Custome route for filtering doctors by display_order
         end
-        
-        #  get 'test_route', to: 'doctors#test_route'
+        # Doctor Schedules
+        resources :doctors, only: [] do
+          resources :doctor_schedules, only: [:index, :create]
+        end
+        resources :doctor_schedules, only: [:show, :update, :destroy]
       end
     end  
   end

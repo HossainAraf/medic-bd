@@ -1,6 +1,6 @@
 class DoctorSchedule < ApplicationRecord
   belongs_to :doctor
-  belongs_to :chamber, optional: true # Avoid validation error during nested attributes processing
+  belongs_to :chamber
 
   include ::StripWhitespace
 
@@ -23,10 +23,19 @@ class DoctorSchedule < ApplicationRecord
   }
 
   validates :contact, presence: true, format: { with: /\A\+?\d{6,15}\z/, message: "must be a valid phone number" }
-  validates :available_day, presence: true
-  validates :slot, presence: true
+  validates :available_day, :slot, :start_time, :end_time, presence: true
   validates :slot, uniqueness: { scope: [:doctor_id, :chamber_id, :available_day],
                                  message: "Schedule slot already exists for this doctor in the specified chamber on the given day.", case_sensitive: false }
+
+  before_validation :ensure_chamber
+
+  def end_time_after_start_time
+    return if end_time.blank? || start_time.blank?
+
+    if end_time <= start_time
+      errors.add(:end_time, "must be after the start time")
+    end
+  end
 
   private
 
