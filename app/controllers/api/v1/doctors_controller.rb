@@ -92,7 +92,7 @@ class Api::V1::DoctorsController < ApplicationController
   # UPDATE /api/v1/doctors/:id
   def update
     ActiveRecord::Base.transaction do
-      processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
+      preprocess_schedules(doctor_params[:doctor_schedules_attributes])
 
       # Handle doctor_specializations separately to prevent duplicate specialization assignments
       if doctor_params[:doctor_specializations_attributes].present?
@@ -107,8 +107,8 @@ class Api::V1::DoctorsController < ApplicationController
       # Update doctor attributes
       if @doctor.update(doctor_params.except(:doctor_schedules_attributes, :doctor_specializations_attributes))
         # Update doctor schedules
-        @doctor.doctor_schedules.destroy_all
-        @doctor.doctor_schedules.create!(processed_schedules)
+        # @doctor.doctor_schedules.destroy_all
+        # @doctor.doctor_schedules.create!(processed_schedules)
         render json: @doctor.as_json(
           include: {
             chambers: { only: %i[id name category address district_id] },
@@ -130,35 +130,11 @@ class Api::V1::DoctorsController < ApplicationController
     @doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find(params[:id])
   end
 
-  def preprocess_schedules(schedules_attributes)
-    schedules_attributes.map do |schedule|
-      if schedule[:chamber_attributes].present?
-        chamber_attributes = schedule.delete(:chamber_attributes)
-
-        # Find existing chamber or create a new one
-        existing_chamber = Chamber.find_or_create_by!(
-          name: chamber_attributes[:name],
-          district_id: chamber_attributes[:district_id]
-        ) do |chamber|
-          chamber.category = chamber_attributes[:category]
-          chamber.address = chamber_attributes[:address]
-        end
-
-        # Replace chamber_attributes with chamber_id
-        schedule[:chamber_id] = existing_chamber.id
-      end
-      schedule
-    end
-  end
-
   def doctor_params
     params.require(:doctor).permit(
       :bangla_name, :name, :specialty, :display_order,
-      :qualification, :experience, :phone, :special_notes, :description, :photo_url,
-      chambers_attributes: %i[name category address district_id],
-      doctor_specializations_attributes: [:specialization_id],
-      doctor_schedules_attributes: [:available_day, :available_time,
-                                    :contact, { chamber_attributes: %i[name category address district_id] }]
+      :qualification, :experience, :phone,
+      :special_notes, :description, :photo_url
     )
   end
 end
