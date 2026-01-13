@@ -7,7 +7,7 @@ class Doctor < ApplicationRecord
   # Associations
   has_many :doctor_specializations
   has_many :specializations, through: :doctor_specializations
-  has_many :doctor_schedules
+  has_many :doctor_schedules, dependent: :restrict_with_error
   has_many :chambers, through: :doctor_schedules
 
   # Nested Attributes

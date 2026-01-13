@@ -66,12 +66,12 @@ class Api::V1::DoctorsController < ApplicationController
   # POST /api/v1/doctors
   def create
     doctor = Doctor.new(doctor_params)
-      if doctor.save
-        render json: doctor, status: :created
-        
-      else
-        render json: { errors: doctor.errors.full_messages }, status: :unprocessable_entity
-      end
+    if doctor.save
+      render json: doctor, status: :created
+
+    else
+      render json: { errors: doctor.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   # UPDATE /api/v1/doctors/:id
@@ -86,7 +86,7 @@ class Api::V1::DoctorsController < ApplicationController
   private
 
   def set_doctor
-    @doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find(params[:id])
+    @doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find_by(slug: params[:id])
   end
 
   def doctor_params
@@ -94,6 +94,6 @@ class Api::V1::DoctorsController < ApplicationController
       :bangla_name, :name, :specialty, :display_order,
       :qualification, :experience, :phone,
       :special_notes, :description, :photo_url
-    )
+    ) # Must NOT contain slug or id
   end
 end
