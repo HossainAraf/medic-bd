@@ -1,4 +1,6 @@
 class DoctorSchedulesController < ApplicationController
+  before_action :authorize_request, only: [:create, :update, :destroy]
+  before_action :authorize_admin, only: [:create, :update, :destroy]
   before_action :set_doctor, only: [:index, :create]
   before_action :set_schedule, only: [:show, :update, :destroy]
 
