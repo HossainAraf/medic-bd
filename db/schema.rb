@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_12_070944) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_12_082750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,6 +43,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_070944) do
     t.time "start_time"
     t.datetime "updated_at", null: false
     t.index ["chamber_id"], name: "index_doctor_schedules_on_chamber_id"
+    t.index ["doctor_id", "chamber_id", "available_day", "slot"], name: "uniq_doctor_chamber_day_slot", unique: true
     t.index ["doctor_id"], name: "index_doctor_schedules_on_doctor_id"
   end
 
