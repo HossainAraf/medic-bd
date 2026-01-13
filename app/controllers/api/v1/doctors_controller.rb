@@ -1,6 +1,6 @@
 class Api::V1::DoctorsController < ApplicationController
   # Skip auth for public GET requests
-  skip_before_action :authorize_request, only: %i[index show by_specialization_query filter_by_order]
+  skip_before_action :authorize_request, only: %i[index show by_specialization_query filter_by_display_order]
   # Set doctor for show and update actions
   before_action :set_doctor, only: %i[show update]
   # Ensure these actions are authenticated and user is an admin
@@ -18,7 +18,7 @@ class Api::V1::DoctorsController < ApplicationController
     render json: doctors.as_json(
       include: {
         chambers: { only: %i[id name category address district_id] },
-        doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+        doctor_schedules: { only: %i[id available_day slot start_time end_time contact chamber_id] },
         specializations: { only: %i[id name] }
       }
     ), status: :ok
@@ -29,7 +29,7 @@ class Api::V1::DoctorsController < ApplicationController
     render json: @doctor.as_json(
       include: {
         chambers: { only: %i[id name category address district_id] },
-        doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+        doctor_schedules: { only: %i[id available_day slot start_time end_time contact chamber_id] },
         specializations: { only: %i[id name] }
       }
     ), status: :ok
@@ -57,7 +57,7 @@ class Api::V1::DoctorsController < ApplicationController
     render json: doctors.as_json(
       include: {
         chambers: { only: %i[id name category address district_id] },
-        doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
+        doctor_schedules: { only: %i[id available_day slot start_time end_time contact chamber_id] },
         specializations: { only: %i[id name] }
       }
     ), status: :ok
@@ -65,63 +65,22 @@ class Api::V1::DoctorsController < ApplicationController
 
   # POST /api/v1/doctors
   def create
-    ActiveRecord::Base.transaction do
-      # Preprocess the doctor schedules to handle chamber attributes
-      processed_schedules = preprocess_schedules(doctor_params[:doctor_schedules_attributes])
-
-      # Build the doctor with processed schedules
-      @doctor = Doctor.new(doctor_params.except(:doctor_schedules_attributes))
-      @doctor.doctor_schedules.build(processed_schedules)
-
-      if @doctor.save
-        render json: @doctor.as_json(
-          include: {
-            chambers: { only: %i[id name category address district_id] },
-            doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
-            specializations: { only: %i[id name] }
-          }
-        ), status: :created
+    doctor = Doctor.new(doctor_params)
+      if doctor.save
+        render json: doctor, status: :created
+        
       else
-        render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
+        render json: { errors: doctor.errors.full_messages }, status: :unprocessable_entity
       end
-    end
-  rescue ActiveRecord::RecordInvalid => e
-    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   # UPDATE /api/v1/doctors/:id
   def update
-    ActiveRecord::Base.transaction do
-      preprocess_schedules(doctor_params[:doctor_schedules_attributes])
-
-      # Handle doctor_specializations separately to prevent duplicate specialization assignments
-      if doctor_params[:doctor_specializations_attributes].present?
-        doctor_params[:doctor_specializations_attributes].each do |specialization_param|
-          specialization_id = specialization_param[:specialization_id]
-          next if @doctor.specializations.exists?(id: specialization_id)
-
-          @doctor.doctor_specializations.create!(specialization_id:)
-        end
-      end
-
-      # Update doctor attributes
-      if @doctor.update(doctor_params.except(:doctor_schedules_attributes, :doctor_specializations_attributes))
-        # Update doctor schedules
-        # @doctor.doctor_schedules.destroy_all
-        # @doctor.doctor_schedules.create!(processed_schedules)
-        render json: @doctor.as_json(
-          include: {
-            chambers: { only: %i[id name category address district_id] },
-            doctor_schedules: { only: %i[id available_day available_time contact chamber_id] },
-            specializations: { only: %i[id name] }
-          }
-        ), status: :ok
-      else
-        render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
-      end
+    if @doctor.update(doctor_params)
+      render json: @doctor, status: :ok
+    else
+      render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
     end
-  rescue ActiveRecord::RecordInvalid => e
-    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private
