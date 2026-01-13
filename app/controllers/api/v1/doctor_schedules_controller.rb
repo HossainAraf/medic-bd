@@ -1,4 +1,10 @@
-class DoctorSchedulesController < ApplicationController
+class Api::V1::DoctorSchedulesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotUnique do
+    render json: {
+      error: "Schedule slot already exits for this doctor, chamber and day"
+    }, status: : unprocessable_entity
+  end
+
   before_action :authorize_request, only: [:create, :update, :destroy]
   before_action :authorize_admin, only: [:create, :update, :destroy]
   before_action :set_doctor, only: [:index, :create]
@@ -50,10 +56,11 @@ class DoctorSchedulesController < ApplicationController
   def schedule_params
     params.require(:doctor_schedule).permit(
       :chamber_id,
-      :day_of_week,
+      :available_day,
       :slot,
       :start_time,
-      :end_time
+      :end_time,
+      :contact
     )
   end
 end
