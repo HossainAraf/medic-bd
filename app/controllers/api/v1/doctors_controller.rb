@@ -94,7 +94,7 @@ class Api::V1::DoctorsController < ApplicationController
       :bangla_name, :name, :specialty, :display_order,
       :qualification, :experience, :phone,
       :special_notes, :description, :photo_url,
-      doctor_specializaitons_attributes: [:specialization_id]
+      doctor_specializations_attributes: [:specialization_id]
     ) # Must NOT contain slug or id
   end
 end
