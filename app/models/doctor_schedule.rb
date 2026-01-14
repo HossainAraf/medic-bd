@@ -22,15 +22,15 @@ class DoctorSchedule < ApplicationRecord
 
   validates :contact,
             presence: true,
-            format: { with: /\A\+?\d{6,15}\z/, message: "must be a valid phone number" }
+            format: { with: /\A\+?\d{6,15}\z/, message: 'must be a valid phone number' }
 
   validates :available_day, :slot, :start_time, :end_time, presence: true
 
   validate :end_time_after_start_time
 
   validates :slot, uniqueness: {
-    scope: [:doctor_id, :chamber_id, :available_day],
-    message: "Schedule slot already exists for this doctor in the specified chamber on the given day."
+    scope: %i[doctor_id chamber_id available_day],
+    message: 'Schedule slot already exists for this doctor in the specified chamber on the given day.'
   }
 
   private
@@ -38,6 +38,6 @@ class DoctorSchedule < ApplicationRecord
   def end_time_after_start_time
     return if start_time.blank? || end_time.blank?
 
-    errors.add(:end_time, "must be after start time") if end_time <= start_time
+    errors.add(:end_time, 'must be after start time') if end_time <= start_time
   end
 end

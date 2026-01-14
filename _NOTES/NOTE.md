@@ -811,8 +811,44 @@ Why restrict_with_error instead of others?:
 | Create | `POST /api/v1/doctors/:slug/doctor_schedules` |
 | Show   | `GET /api/v1/doctor_schedules/:id`            |
 | Update | `PATCH /api/v1/doctor_schedules/:id`          |
-| Delete | `DELETE /api/v1/doctor_schedules/:id`         |
-========================
+| Delete | `DELETE /api/v1/doctor_s
+What to lock in mentally (important)
+
+accepts_nested_attributes_for
+→ enables assignment only
+
+validates ..., presence: true
+→ enforces business rules
+
+permit(...) typo
+→ causes intentional silent drop
+
+When all three align, behavior is predictable.
+==================================
+## Why Option 1 wins (comparison):
+```   
+  Option	              Business Friendly	  Speed	      Risk	     Reversible
+  1. Slug idempotency	  ⭐⭐⭐⭐	          ⭐⭐⭐⭐⭐	Low	       ✅
+  2. Admin search flow	⭐⭐⭐⭐⭐	         ⭐⭐	      Very low	 ✅
+  3. Composite identity	⭐	                 ⭐	        High      ❌
+```
+
+Final decision (locked recommendation)
+
+Choose Option 1 now.
+
+Document it as:
+
+“Temporary idempotent doctor creation using slug. Subject to replacement by admin-driven identity resolution.”
+
+That makes the decision:
+
+Conscious
+
+Explicit
+
+Reversible
+===================================
 NEXT (after tested all works fine):
 Hardening (Optional but Recommended) (optimiazation)
 

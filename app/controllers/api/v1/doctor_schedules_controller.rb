@@ -1,23 +1,22 @@
 class Api::V1::DoctorSchedulesController < ApplicationController
   rescue_from ActiveRecord::RecordNotUnique do
     render json: {
-      error: "Schedule slot already exists for this doctor, chamber, and day"
+      error: 'Schedule slot already exists for this doctor, chamber, and day'
     }, status: :unprocessable_entity
   end
 
   before_action :authorize_request, only: %i[create update destroy]
-  before_action :authorize_admin,   only: %i[create update destroy]
+  before_action :authorize_admin, only: %i[create update destroy]
 
-  before_action :set_doctor,   only: %i[index create]
+  before_action :set_doctor, only: %i[index create]
   before_action :set_schedule, only: %i[show update destroy]
 
   # GET /api/v1/doctors/:doctor_id/doctor_schedules
   def index
     render json: @doctor.doctor_schedules.as_json(
       include: {
-        chamber: { only: %i[id name category address district_id] 
-      },
-      only: %[id available_day slot start_time end_time contact chamber_id]
+        chamber: { only: %i[id name category address district_id] },
+        only: %(id available_day slot start_time end_time contact chamber_id)
       }
     )
   end
