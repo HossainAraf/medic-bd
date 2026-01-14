@@ -1,34 +1,34 @@
 Rails.application.routes.draw do
-    # API root welcome
+  # API root welcome
   root to: proc { [200, {}, ['{"message": "Welcome to the API"}']] }, via: :get
+
   # Lightweight health check
   get '/health', to: ->(_) { [200, {}, ['OK']] }
 
   namespace :api do
     namespace :v1 do
       post 'auth/login', to: 'sessions#create'
-      resources :medic_users, except: [:new, :edit]
+
+      resources :medic_users, except: %i[new edit]
       resources :chambers, only: [:index]
       resources :districts
-      resources :specializations, only: [:index, :show, :create] do
-        # Custom route for fetching doctors by specialization
-        get 'doctors', to: 'specializations#doctors'
+
+      resources :specializations, only: %i[index show create] do
+        get 'doctors', on: :member
       end
-      resources :doctors, only: [:index, :show, :create, :destroy, :update]  do
-      # Custom route for filtering doctors by district and specialization
+
+      resources :doctors, param: :slug, only: %i[index show create update destroy] do
         collection do
-          get 'by_specialization_query'
+          get :by_specialization_query
+          get 'display_order/:display_order', to: 'doctors#filter_by_display_order'
         end
 
-        collection do
-          get 'display_order/:display_order', to: 'doctors#filter_by_display_order' # Custome route for filtering doctors by display_order
-        end
-        # Doctor Schedules
-        resources :doctors, only: [] do
-          resources :doctor_schedules, only: [:index, :create]
-        end
-        resources :doctor_schedules, only: [:show, :update, :destroy]
+        # Nested schedules (collection-level)
+        resources :doctor_schedules, only: %i[index create]
       end
-    end  
+
+      # Schedule member-level actions
+      resources :doctor_schedules, only: %i[show update destroy]
+    end
   end
 end
