@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       resources :doctors, param: :slug, only: %i[index show create update destroy] do
         collection do
           get :by_specialization_query
-          get 'display_order/:display_order', to: 'doctors#filter_by_display_order'
+          get 'display_order/:display_order', action: 'filter_by_display_order'
         end
 
         # Nested schedules (collection-level)

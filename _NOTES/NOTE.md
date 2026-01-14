@@ -805,3 +805,24 @@ Why restrict_with_error instead of others?:
 | `:restrict_with_error`     | Safe + user-friendly             |
 ```
 =========================
+| Action | Route                                         |
+| ------ | --------------------------------------------- |
+| List   | `GET /api/v1/doctors/:slug/doctor_schedules`  |
+| Create | `POST /api/v1/doctors/:slug/doctor_schedules` |
+| Show   | `GET /api/v1/doctor_schedules/:id`            |
+| Update | `PATCH /api/v1/doctor_schedules/:id`          |
+| Delete | `DELETE /api/v1/doctor_schedules/:id`         |
+========================
+NEXT (after tested all works fine):
+Hardening (Optional but Recommended) (optimiazation)
+
+Do these only after everything above is stable:
+
+DB CHECK (end_time > start_time)
+
+Time-range overlap prevention (not just slot-based)
+
+Read-only public schedule endpoint
+
+Soft deletes or effective date ranges (future-proofing)
+========================

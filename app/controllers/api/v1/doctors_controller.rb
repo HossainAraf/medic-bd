@@ -93,7 +93,8 @@ class Api::V1::DoctorsController < ApplicationController
     params.require(:doctor).permit(
       :bangla_name, :name, :specialty, :display_order,
       :qualification, :experience, :phone,
-      :special_notes, :description, :photo_url
+      :special_notes, :description, :photo_url,
+      doctor_specializaitons_attributes: [:specialization_id]
     ) # Must NOT contain slug or id
   end
 end
