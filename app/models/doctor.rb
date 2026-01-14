@@ -19,6 +19,7 @@ class Doctor < ApplicationRecord
 
   # Validations
   validates :doctor_specializations, presence: true
+  validates :slug, presence: true, uniqueness: true
 
   validates :display_order, presence: true,
                             numericality: { only_integer: true,
