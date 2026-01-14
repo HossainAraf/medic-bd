@@ -13,7 +13,13 @@ class Api::V1::DoctorSchedulesController < ApplicationController
 
   # GET /api/v1/doctors/:doctor_id/doctor_schedules
   def index
-    render json: @doctor.doctor_schedules.includes(:chamber)
+    render json: @doctor.doctor_schedules.as_json(
+      include: {
+        chamber: { only: %i[id name category address district_id] 
+      },
+      only: %[id available_day slot start_time end_time contact chamber_id]
+      }
+    )
   end
 
   # GET /api/v1/doctor_schedules/:id
