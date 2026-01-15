@@ -8,8 +8,12 @@ class Chamber < ApplicationRecord
   # Include the StripWhitespace module for trimming direct attributes
   include ::StripWhitespace
 
+  # Allowed category values
+  VALID_CATEGORIES = ['Diagnostic', 'Clinic', 'Hospital', 'Private Chamber'].freeze
+
   # Validation for required fields
   validates :name, :category, :address, :district_id, presence: true
+  validates :category, inclusion: { in: VALID_CATEGORIES, message: "%{value} is not a valid category" }
 
   # Callback to strip whitespace from nested attributes
   before_save :strip_nested_attributes_whitespace
