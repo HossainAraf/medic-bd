@@ -43,6 +43,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   # Linter for Ruby code [Rubocop]
   gem 'rubocop', require: false
+  gem 'rubocop-rails'
 end
 
 group :development do

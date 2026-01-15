@@ -1,4 +1,5 @@
 require:
+  - rubocop-rails
   - ./rubocop/cop/rails/rails8_enum_syntax.rb
 
 AllCops:
@@ -65,3 +66,7 @@ Style/HashTransformValues:
 
 Rails/Rails8EnumSyntax:
   Enabled: true
+
+Rails/I18nLocaleTexts:
+  Enabled: false
+
