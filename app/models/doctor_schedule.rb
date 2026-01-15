@@ -20,10 +20,6 @@ class DoctorSchedule < ApplicationRecord
     evening: 2
   }
 
-  validates :contact,
-            presence: true,
-            format: { with: /\A\+?\d{6,15}\z/, message: 'must be a valid phone number' }
-
   validates :available_day, :slot, :start_time, :end_time, presence: true
 
   validate :end_time_after_start_time

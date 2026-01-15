@@ -865,6 +865,80 @@ Explicit
 
 Reversible
 ===================================
+## What default: '' actually does
+
+The default is not for “now”; it’s for failure-proofing the migration itself.
+What default: '' actually does
+add_column :chambers, :contact, :string, null: false, default: ''
+
+
+This guarantees:
+
+Existing rows get ''
+
+Migration never fails
+
+Constraint is enforced immediately
+
+Then you can still enforce correctness at the application level:
+
+validates :contact, presence: true
+
+
+Rails treats '' as blank → validation fails on bad input.
+
+Why we later remove the default (optional but clean)
+
+After data is stable:
+
+change_column_default :chambers, :contact, nil
+
+
+Result:
+
+DB enforces NOT NULL
+
+App enforces presence
+
+No silent empty values going forward
+
+This is the Rails-recommended two-step hardening pattern.
+
+When you can safely skip default: ''
+
+You may skip it only if all are true:
+
+DB is empty
+
+No seeds yet
+
+Single developer
+
+No CI
+
+You accept migration fragility
+
+That’s usually a temporary state, not a guarantee.
+
+Bottom line
+
+Defaults in migrations are about reliability, not data quality.
+
+Even with a “new” database, defensive migrations prevent future breakage.
+Mental model to keep (simple rule)
+
+When adding a column:
+
+Ask: “Can old rows exist without this?”
+
+If yes → default: '' or temporary default
+
+Enforce correctness in model
+
+Tighten DB later if needed
+
+You applied this instinctively — that’s progress, not luck.
+===================================
 NEXT (after tested all works fine):
 Hardening (Optional but Recommended) (optimiazation)
 

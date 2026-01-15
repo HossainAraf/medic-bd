@@ -15,8 +15,8 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   def index
     render json: @doctor.doctor_schedules.as_json(
       include: {
-        chamber: { only: %i[id name category address district_id] },
-        only: %(id available_day slot start_time end_time contact chamber_id)
+        chamber: { only: %i[id name category address contact district_id] },
+        only: %(id available_day slot start_time end_time chamber_id)
       }
     )
   end
@@ -71,7 +71,6 @@ class Api::V1::DoctorSchedulesController < ApplicationController
       :slot,
       :start_time,
       :end_time,
-      :contact
     )
   end
 end
