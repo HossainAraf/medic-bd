@@ -8,7 +8,9 @@ class Chamber < ApplicationRecord
   # Include the StripWhitespace module for trimming direct attributes
   include ::StripWhitespace
 
-  # Allowed category values
+  # Allowed category values that must match the frontend dropdown options
+  # These categories are used for filtering chambers and must not be changed
+  # without coordinating with the frontend application
   VALID_CATEGORIES = ['Diagnostic', 'Clinic', 'Hospital', 'Private Chamber'].freeze
 
   # Validation for required fields
