@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       post 'auth/login', to: 'sessions#create'
 
       resources :medic_users, except: %i[new edit]
-      resources :chambers, only: [:index]
+      resources :chambers, only: %i[index show create update destroy]
       resources :districts
 
       resources :specializations, only: %i[index show create] do
