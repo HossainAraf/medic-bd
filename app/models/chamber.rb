@@ -15,7 +15,10 @@ class Chamber < ApplicationRecord
 
   # Validation for required fields
   validates :name, :category, :address, :district_id, presence: true
-  validates :category, inclusion: { in: VALID_CATEGORIES, message: "%{value} is not a valid category" }
+  validates :category, inclusion: { 
+    in: VALID_CATEGORIES, 
+    message: "%{value} is not a valid category. Must be one of: #{VALID_CATEGORIES.join(', ')}"
+  }
 
   # Callback to strip whitespace from nested attributes
   before_save :strip_nested_attributes_whitespace

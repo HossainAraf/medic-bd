@@ -21,7 +21,8 @@ class ChemberTest < ActiveSupport::TestCase
       district: district
     )
     assert_not chamber.save, "Saved chamber with invalid category"
-    assert_includes chamber.errors[:category], "InvalidCategory is not a valid category"
+    expected_message = "InvalidCategory is not a valid category. Must be one of: #{Chamber::VALID_CATEGORIES.join(', ')}"
+    assert_includes chamber.errors[:category], expected_message
   end
 
   test "should accept all valid categories" do
