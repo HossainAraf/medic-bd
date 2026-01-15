@@ -56,21 +56,24 @@ class Api::V1::DoctorSchedulesController < ApplicationController
 
   private
 
-  def set_doctor
-    @doctor = Doctor.find_by!(slug: params[:doctor_id])
-  end
+ def set_doctor
+  doctor_slug = params[:doctor_slug]
+  @doctor = Doctor.find_by!(slug: doctor_slug)
+end
+
 
   def set_schedule
     @schedule = DoctorSchedule.find(params[:id])
   end
 
   def schedule_params
-    params.require(:doctor_schedule).permit(
-      :chamber_id,
-      :available_day,
-      :slot,
-      :start_time,
-      :end_time,
-    )
-  end
+  params.require(:doctor_schedule).permit(
+    :chamber_id,
+    :available_day,
+    :slot,
+    :start_time,
+    :end_time
+  )
+end
+
 end
