@@ -11,17 +11,4 @@ class Chamber < ApplicationRecord
   # Validation for required fields
   validates :name, :category, :address, :district_id, presence: true
 
-  # Callback to strip whitespace from nested attributes
-  before_save :strip_nested_attributes_whitespace
-
-  private
-
-  # Trims whitespace from all nested attributes
-  def strip_nested_attributes_whitespace
-    doctor_schedules.each do |schedule|
-      schedule.attributes.each do |key, value|
-        schedule[key] = value.strip.gsub(/\s+/, ' ') if value.is_a?(String)
-      end
-    end
-  end
 end

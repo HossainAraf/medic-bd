@@ -4,7 +4,7 @@ class DoctorSchedule < ApplicationRecord
 
   include ::StripWhitespace
 
-  enum available_day: {
+  enum :available_day, {
     sunday: 0,
     monday: 1,
     tuesday: 2,
@@ -14,7 +14,7 @@ class DoctorSchedule < ApplicationRecord
     saturday: 6
   }
 
-  enum slot: {
+  enum :slot, {
     morning: 0,
     afternoon: 1,
     evening: 2

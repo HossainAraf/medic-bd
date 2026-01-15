@@ -53,7 +53,7 @@ const AddDoctorForm = () => {
 <!-- Not a good practice, rather we should us 'find' -->
 -----------------------------
 ----------------
-{
+<!-- {
   "doctor": {
     "name": "Tasnia Habib",
     "bangla_name": "তাসনিয়া হাবিব সিনথি",
@@ -78,36 +78,52 @@ const AddDoctorForm = () => {
       }
     ]
   }
+} -->
+{
+  "doctor": {
+    "name": "12-12Dr. John Smith",
+    "bangla_name": "জন ",
+    "display_order": 100001,
+    "qualification": "MBBS, MD",
+    "experience": "10 years",
+    "specialty": "Cardiology",
+    "special_notes": "Cardiologist",
+    "description": "Expert in heart diseases",
+    "photo_url": "example.com/jhhh87",
+    "doctor_specializations_attributes": [ 
+        { "specialization_id": 1 } 
+        ]
+
+  }
 }
+------
+{
+  "specialization": {
+
+  "name": "Hematology"
+  }
+  
+}
+{
+    "id": 14,
+    "created_at": "2026-01-14T13:23:17.437Z",
+    "name": "Hematology",
+    "updated_at": "2026-01-14T13:23:17.437Z"
+}
+-----------------------------
+-----------------
 -----------------------------
 -----------------
 <!-- example payload for user sign up  format-->
 {
   "medic_user": {
-    "name": "Araf",
-    "email": "araf@example.com",
-    "phone": "017xxxxxxxx",
-    "password": "secret123",
-    "password_confirmation": "secret123",
-    "role": "admin"
+  "email": "Person-3@gmail.com",
+  "name": "Arafat",
+  "password": "",
+  "role": "user"
   }
-}
-----------------------------------
---------------
-<!-- example log in pay load format -->
-{
-  "medic_user": {
-    "email": "<user email>",
-    "password": "<user pass>"
-  }
-}
-------
-{
-  "medic_user": {
-    "email": "arafat.kd@gmail.com>",
-    "password": "123456"
-  }
-}
+  
+---------------------------------
 ------------------------
 --------
 EDITOR="code --wait" bin/rails credentials:edit --environment production
