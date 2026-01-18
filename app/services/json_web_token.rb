@@ -6,7 +6,7 @@ class JsonWebToken
 
   def self.decode(token)
     body = JWT.decode(token, secret)[0]
-    HashWithIndifferentAccess.new(body)
+    ActiveSupport::HashWithIndifferentAccess.new(body)
   rescue StandardError
     nil
   end

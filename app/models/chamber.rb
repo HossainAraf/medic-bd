@@ -9,10 +9,8 @@ class Chamber < ApplicationRecord
   include ::StripWhitespace
 
   # Validation for required fields
-  validates :name, :category, :address, :district_id, presence: true
+  validates :name, :category, :address, presence: true
   validates :contact,
             presence: true,
             format: { with: /\A\+?\d{6,15}\z/, message: 'must be a valid phone number' }
-
-
 end

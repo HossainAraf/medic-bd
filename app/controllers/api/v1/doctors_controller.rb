@@ -70,7 +70,7 @@ class Api::V1::DoctorsController < ApplicationController
       render json: doctor, status: :created
 
     else
-      render json: { errors: doctor.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: doctor.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -79,7 +79,7 @@ class Api::V1::DoctorsController < ApplicationController
     if @doctor.update(doctor_params)
       render json: @doctor, status: :ok
     else
-      render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -90,11 +90,11 @@ class Api::V1::DoctorsController < ApplicationController
   end
 
   def doctor_params
-    params.require(:doctor).permit(
-      :bangla_name, :name, :specialty, :display_order,
-      :qualification, :experience, :phone,
-      :special_notes, :description, :photo_url,
-      doctor_specializations_attributes: [:specialization_id]
+    params.expect(
+      doctor: [:bangla_name, :name, :specialty, :display_order,
+               :qualification, :experience, :phone,
+               :special_notes, :description, :photo_url,
+               { doctor_specializations_attributes: [:specialization_id] }]
     ) # Must NOT contain slug or id
   end
 end

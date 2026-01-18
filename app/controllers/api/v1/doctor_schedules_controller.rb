@@ -26,38 +26,38 @@ class Api::V1::DoctorSchedulesController < ApplicationController
     render json: @schedule
   end
 
- # POST /api/v1/doctors/:doctor_id/doctor_schedules
- # Bulk upsert schedules (create or update per day+slot)
-def create
-  schedules = []
-  payload = schedule_params
+  # POST /api/v1/doctors/:doctor_id/doctor_schedules
+  # Bulk upsert schedules (create or update per day+slot)
+  def create
+    schedules = []
+    payload = schedule_params
 
-  ActiveRecord::Base.transaction do
-    payload[:available_days].each do |day|
-      payload[:slots].each do |slot|
-        time = payload.dig(:times, slot)
-        
-        raise ArgumentError, "Missing times for slot: #{slot}" unless time
+    ActiveRecord::Base.transaction do
+      payload[:available_days].each do |day|
+        payload[:slots].each do |slot|
+          time = payload.dig(:times, slot)
 
-        schedule = DoctorSchedule.find_or_initialize_by(
-          doctor: @doctor,
-          chamber_id: payload[:chamber_id],
-          available_day: day,
-          slot: slot
-        )
+          raise ArgumentError, "Missing times for slot: #{slot}" unless time
 
-        schedule.update!(
-          start_time: time[:start],
-          end_time: time[:end]
-        )
+          schedule = DoctorSchedule.find_or_initialize_by(
+            doctor: @doctor,
+            chamber_id: payload[:chamber_id],
+            available_day: day,
+            slot: slot
+          )
 
-        schedules << schedule
+          schedule.update!(
+            start_time: time[:start],
+            end_time: time[:end]
+          )
+
+          schedules << schedule
+        end
       end
     end
-  end
 
-  render json: schedules, status: :created
-end
+    render json: schedules, status: :created
+  end
 
   # PUT /api/v1/doctor_schedules/:id
   def update
@@ -86,13 +86,12 @@ end
     @schedule = DoctorSchedule.find(params[:id])
   end
 
-def schedule_params
-  params.expect(
-    doctor_schedule: [
-      :chamber_id,
-      { available_days: [], slots: [], times: {} }
-    ]
-  )
-end
-
+  def schedule_params
+    params.expect(
+      doctor_schedule: [
+        :chamber_id,
+        { available_days: [], slots: [], times: {} }
+      ]
+    )
+  end
 end

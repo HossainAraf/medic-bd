@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 module RuboCop
   module Cop
     module Rails
       class Rails8EnumSyntax < Base
         extend AutoCorrector
 
-        MSG = 'Rails 8 requires enum to be called as `enum :name, {...}`'
+        MSG = 'Rails 8 requires enum to be called as `enum :name, {...}`'.freeze
 
         def on_send(node)
           return unless node.method_name == :enum

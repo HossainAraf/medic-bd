@@ -50,6 +50,6 @@ class ApplicationController < ActionController::API
   end
 
   def log_debug(message)
-    puts "DEBUG: #{message}"
+    Rails.logger.debug { "DEBUG: #{message}" }
   end
 end
