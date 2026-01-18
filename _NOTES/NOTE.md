@@ -963,6 +963,41 @@ Tighten DB later if needed
 
 You applied this instinctively — that’s progress, not luck.
 ==================================
+Here’s a clear table for your API design regarding **doctors, chambers, and schedules**, showing which HTTP verb to use and why:
+
+| Resource / Action           | HTTP Verb | Endpoint Example                                     | Reason / Behavior                                                                                     |
+| --------------------------- | --------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Doctor list**             | GET       | `/api/v1/doctors`                                    | Fetch all doctors. Read-only.                                                                         |
+| **Doctor detail**           | GET       | `/api/v1/doctors/:slug`                              | Fetch a single doctor by slug.                                                                        |
+| **Create doctor**           | POST      | `/api/v1/doctors`                                    | Create a new doctor. Full data required.                                                              |
+| **Update doctor**           | PATCH     | `/api/v1/doctors/:slug`                              | Partial updates (name, specializations, etc.). Use PATCH because you usually update only some fields. |
+| **Replace doctor (rare)**   | PUT       | `/api/v1/doctors/:slug`                              | Full replacement of the doctor resource. Rarely used.                                                 |
+| **Delete doctor**           | DELETE    | `/api/v1/doctors/:slug`                              | Remove doctor.                                                                                        |
+| **Chamber list**            | GET       | `/api/v1/chambers`                                   | Fetch all chambers, optionally filter by district/category.                                           |
+| **Chamber detail**          | GET       | `/api/v1/chambers/:id`                               | Fetch a single chamber.                                                                               |
+| **Create chamber**          | POST      | `/api/v1/chambers`                                   | Create new chamber. Full data needed (name, contact, category, etc.).                                 |
+| **Update chamber**          | PATCH     | `/api/v1/chambers/:id`                               | Partial update (contact, category, etc.). PATCH is safer; only changed fields are sent.               |
+| **Replace chamber**         | PUT       | `/api/v1/chambers/:id`                               | Rarely used; full chamber object required.                                                            |
+| **Delete chamber**          | DELETE    | `/api/v1/chambers/:id`                               | Remove chamber.                                                                                       |
+| **Doctor schedules (list)** | GET       | `/api/v1/doctors/:slug/doctor_schedules`             | Fetch all schedules for a doctor.                                                                     |
+| **Create schedules (bulk)** | POST      | `/api/v1/doctors/:slug/doctor_schedules`             | Create one or multiple schedules. Must include doctor_id, chamber_id, days, slots, times.             |
+| **Update schedules (bulk)** | PATCH     | `/api/v1/doctors/:slug/doctor_schedules/bulk_update` | Partial update: only changed schedules are updated; others remain. PATCH is correct.                  |
+| **Update single schedule**  | PATCH     | `/api/v1/doctor_schedules/:id`                       | Partial update of a schedule (time, day, slot).                                                       |
+| **Replace single schedule** | PUT       | `/api/v1/doctor_schedules/:id`                       | Rare; would replace all schedule attributes.                                                          |
+| **Delete single schedule**  | DELETE    | `/api/v1/doctor_schedules/:id`                       | Remove a schedule entry.                                                                              |
+
+**Key rules to remember:**
+
+1. **PATCH** → partial updates, only send fields that change.
+2. **PUT** → full replacement, all fields required. Rarely used in our API.
+3. **POST** → create new resource(s).
+4. **DELETE** → remove resource.
+
+This aligns well with REST semantics and avoids accidental overwrites or deletions.
+
+---
+
+If you want, I can **also draft the bulk update PATCH method skeleton** for schedules that **skips unchanged schedules and returns a clear JSON message for changed vs unchanged**, which you struggled with before. This will make it production-ready. Do you want me to do that next?
 
 
 ===================================
