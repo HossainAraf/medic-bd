@@ -74,20 +74,25 @@ class Api::V1::DoctorsController < ApplicationController
     end
   end
 
-  # UPDATE /api/v1/doctors/:id
-  def update
-    if @doctor.update(doctor_params)
-      render json: @doctor, status: :ok
-    else
-      render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_content
-    end
+  # PATCH /api/v1/doctors/:slug
+def update
+  # Prevent changing the slug
+  doctor_params_without_slug = doctor_params.except(:slug)
+
+  if @doctor.update(doctor_params_without_slug)
+    render json: @doctor, status: :ok
+  else
+    render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_entity
   end
+end
+
 
   private
 
-  def set_doctor
-    @doctor = Doctor.includes(:chambers, :doctor_schedules, :specializations).find_by(slug: params[:id])
-  end
+def set_doctor
+  @doctor = Doctor.find_by(slug: params[:slug])
+  render json: { error: 'Doctor not found' }, status: :not_found unless @doctor
+end
 
   def doctor_params
     params.expect(
