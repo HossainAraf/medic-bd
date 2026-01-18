@@ -35,6 +35,7 @@ class Api::V1::ChambersController < ApplicationController
   
   def set_chamber
     @chamber = Chamber.find_by(id: params[:id])
+    return if @chamber # If chamber is found, exit the method OR use find_by! to raise exception
     render json: { error: 'Chamber not found' }, status: :not_found unless @chamber
   end
 

@@ -2,11 +2,10 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   rescue_from ActiveRecord::RecordNotUnique do
     render json: {
       error: 'Schedule slot already exists for this doctor, chamber, and day'
-    }, status: :unprocessable_content
+    }, status: :unprocessable_entity # 422
   end
 
-  before_action :authorize_request, only: %i[create update destroy]
-  before_action :authorize_admin, only: %i[create update destroy]
+  before_action :authorize_admin, only: %i[create bulk_update destroy]
 
   before_action :set_doctor, only: %i[index create bulk_update]
   before_action :set_schedule, only: %i[show update destroy]
@@ -118,11 +117,12 @@ def bulk_update
     end
   end
 
+  if schedules.empty?
+  render json: { message: 'No schedules were changed' }, status: :ok
+else
   render json: schedules, status: :ok
-rescue ActiveRecord::RecordInvalid => e
-  render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
-rescue ArgumentError => e
-  render json: { error: e.message }, status: :unprocessable_entity
+end
+
 end
 
 
@@ -135,8 +135,8 @@ end
   private
 
   def set_doctor
-    doctor_slug = params[:doctor_slug]
-    @doctor = Doctor.find_by!(slug: doctor_slug)
+    slug = params[:doctor_slug] || params[:slug]
+    @doctor = Doctor.find_by!(slug: slug)
   end
 
   def set_schedule

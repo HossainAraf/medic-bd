@@ -17,13 +17,13 @@ Rails.application.routes.draw do
         get 'doctors', on: :member
       end
 
-      resources :doctors, param: :slug, only: %i[index show create update destroy] do
+      resources :doctors, param: :slug do
         collection do
           get :by_specialization_query
           get 'display_order/:display_order', action: 'filter_by_display_order'
         end
 
-        # Nested schedules (collection-level)
+        # Nested schedules 
         resources :doctor_schedules, only: %i[index create] do
           collection do
             patch :bulk_update

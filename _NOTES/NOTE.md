@@ -1000,6 +1000,28 @@ This aligns well with REST semantics and avoids accidental overwrites or deletio
 Pattern	Needs return?
 find, find_by!	❌ No
 find_by + render	✅ Yes
+==============================
+⚠️ Architectural note (important, but optional now)
+
+You are rescuing:
+
+ActiveRecord::RecordNotUnique
+
+
+This is fine for now, but best practice is:
+
+Move uniqueness constraint to model validation
+
+Let RecordInvalid handle it
+
+Example (future):
+
+validates :slot, uniqueness: {
+  scope: %i[doctor_id chamber_id available_day]
+}
+
+
+Then delete the RecordNotUnique rescue entirely.
 ===================================
 NEXT (after tested all works fine):
 Hardening (Optional but Recommended) (optimiazation)
