@@ -36,17 +36,17 @@ class ApplicationController < ActionController::API
     nil
   end
 
-rescue_from ActiveRecord::RecordNotFound do |e|
+  rescue_from ActiveRecord::RecordNotFound do |e|
     render json: { error: e.message }, status: :not_found
   end
 
   rescue_from ActiveRecord::RecordInvalid do |e|
     render json: { errors: e.record.errors.full_messages },
-           status: :unprocessable_entity
+           status: :unprocessable_content
   end
 
   rescue_from ArgumentError do |e|
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   def extract_token_from_header

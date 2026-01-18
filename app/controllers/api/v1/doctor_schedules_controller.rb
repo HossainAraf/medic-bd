@@ -2,7 +2,7 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   rescue_from ActiveRecord::RecordNotUnique do
     render json: {
       error: 'Schedule slot already exists for this doctor, chamber, and day'
-    }, status: :unprocessable_entity # 422
+    }, status: :unprocessable_content # 422
   end
 
   before_action :authorize_admin, only: %i[create bulk_update destroy]
@@ -69,62 +69,60 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   end
 
   # PATCH /api/v1/doctors/:doctor_slug/doctor_schedules/bulk_update
-def bulk_update
-  payload = params[:doctor_schedule]
+  def bulk_update
+    payload = params[:doctor_schedule]
 
-  unless payload
-    return render json: {
-      error: "Missing required key 'doctor_schedule' in request body"
-    }, status: :unprocessable_entity
-  end
-
-  schedules = []
-
-  ActiveRecord::Base.transaction do
-    available_days = payload[:available_days] || []
-    slots = payload[:slots] || []
-    times = payload[:times] || {}
-
-    if available_days.empty? || slots.empty? || times.empty?
-      raise ArgumentError, "available_days, slots, and times must be provided"
+    unless payload
+      return render json: {
+        error: "Missing required key 'doctor_schedule' in request body"
+      }, status: :unprocessable_content
     end
 
-    available_days.each do |day|
-      slots.each do |slot|
-        time = times[slot.to_s] || times[slot.to_sym]
-        raise ArgumentError, "Missing times for slot: #{slot}" unless time
+    schedules = []
 
-        schedule = DoctorSchedule.find_or_initialize_by(
-          doctor: @doctor,
-          chamber_id: payload[:chamber_id],
-          available_day: day,
-          slot: slot
-        )
+    ActiveRecord::Base.transaction do
+      available_days = payload[:available_days] || []
+      slots = payload[:slots] || []
+      times = payload[:times] || {}
 
-        schedule.assign_attributes(
-          start_time: time[:start],
-          end_time: time[:end]
-        )
+      if available_days.empty? || slots.empty? || times.empty?
+        raise ArgumentError, 'available_days, slots, and times must be provided'
+      end
 
-        if schedule.persisted? && !schedule.changed?
-          # skip unchanged schedules
-          next
+      available_days.each do |day|
+        slots.each do |slot|
+          time = times[slot.to_s] || times[slot.to_sym]
+          raise ArgumentError, "Missing times for slot: #{slot}" unless time
+
+          schedule = DoctorSchedule.find_or_initialize_by(
+            doctor: @doctor,
+            chamber_id: payload[:chamber_id],
+            available_day: day,
+            slot: slot
+          )
+
+          schedule.assign_attributes(
+            start_time: time[:start],
+            end_time: time[:end]
+          )
+
+          if schedule.persisted? && !schedule.changed?
+            # skip unchanged schedules
+            next
+          end
+
+          schedule.save!
+          schedules << schedule
         end
-
-        schedule.save!
-        schedules << schedule
       end
     end
+
+    if schedules.empty?
+      render json: { message: 'No schedules were changed' }, status: :ok
+    else
+      render json: schedules, status: :ok
+    end
   end
-
-  if schedules.empty?
-  render json: { message: 'No schedules were changed' }, status: :ok
-else
-  render json: schedules, status: :ok
-end
-
-end
-
 
   # DELETE /api/v1/doctor_schedules/:id
   def destroy
@@ -153,13 +151,13 @@ end
   end
 end
 {
-  "doctor_schedule": {
-    "chamber_id": 2,
-    "available_days": ["sunday", "monday"],
-    "slots": ["morning", "evening"],
-    "times": {
-      "morning": {"start": "09:00", "end": "09:30"},
-      "evening": {"start": "17:00", "end": "21:00"}
+  doctor_schedule: {
+    chamber_id: 2,
+    available_days: %w[sunday monday],
+    slots: %w[morning evening],
+    times: {
+      morning: { start: '09:00', end: '09:30' },
+      evening: { start: '17:00', end: '21:00' }
     }
   }
 }

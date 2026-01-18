@@ -22,25 +22,25 @@ class Api::V1::ChambersController < ApplicationController
       render json: @chamber.errors, status: :unprocessable_content
     end
   end
- 
+
   def update
     if @chamber.update(chamber_params)
       render json: @chamber, status: :ok
     else
-      render json: { errors: @chamber.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @chamber.errors.full_messages }, status: :unprocessable_content
     end
   end
 
   private
-  
+
   def set_chamber
     @chamber = Chamber.find_by(id: params[:id])
     return if @chamber # If chamber is found, exit the method OR use find_by! to raise exception
+
     render json: { error: 'Chamber not found' }, status: :not_found unless @chamber
   end
 
   def chamber_params
     params.expect(chamber: %i[name district_id address category contact])
   end
-
 end
