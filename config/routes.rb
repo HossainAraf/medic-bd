@@ -24,11 +24,12 @@ Rails.application.routes.draw do
         end
 
         # Nested schedules (collection-level)
-        resources :doctor_schedules, only: %i[index create]
+        resources :doctor_schedules, only: %i[index create] do
+          collection do
+            patch :bulk_update
+          end
+        end
       end
-
-      # Schedule member-level actions
-      resources :doctor_schedules, only: %i[show update destroy]
     end
   end
 end

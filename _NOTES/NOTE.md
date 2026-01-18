@@ -136,6 +136,18 @@ const AddDoctorForm = () => {
   }
 }
 ---------------------------------
+http://localhost:3000/api/v1/doctors/dr-bd-000001/doctor_schedules/bulk_update
+{
+  "doctor_schedule": {
+    "chamber_id": 2,
+    "available_days": ["sunday", "monday"],
+    "slots": ["morning", "evening"],
+    "times": {
+      "morning": {"start": "07:00", "end": "09:30"},
+      "evening": {"start": "17:00", "end": "21:00"}
+    }
+  }
+}
 ------------------------
 --------
 EDITOR="code --wait" bin/rails credentials:edit --environment production
@@ -950,6 +962,9 @@ Enforce correctness in model
 Tighten DB later if needed
 
 You applied this instinctively — that’s progress, not luck.
+==================================
+
+
 ===================================
 NEXT (after tested all works fine):
 Hardening (Optional but Recommended) (optimiazation)
