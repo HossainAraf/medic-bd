@@ -995,11 +995,11 @@ Here’s a clear table for your API design regarding **doctors, chambers, and sc
 
 This aligns well with REST semantics and avoids accidental overwrites or deletions.
 
----
-
-If you want, I can **also draft the bulk update PATCH method skeleton** for schedules that **skips unchanged schedules and returns a clear JSON message for changed vs unchanged**, which you struggled with before. This will make it production-ready. Do you want me to do that next?
-
-
+==============================
+🔑 Rule (memorize this)
+Pattern	Needs return?
+find, find_by!	❌ No
+find_by + render	✅ Yes
 ===================================
 NEXT (after tested all works fine):
 Hardening (Optional but Recommended) (optimiazation)

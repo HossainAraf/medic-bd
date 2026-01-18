@@ -1,5 +1,6 @@
 class Api::V1::ChambersController < ApplicationController
   skip_before_action :authorize_request, only: %i[index]
+  before_action :set_chamber, only: %i[update]
 
   def index
     chambers = Chamber.includes(:district)
@@ -21,10 +22,24 @@ class Api::V1::ChambersController < ApplicationController
       render json: @chamber.errors, status: :unprocessable_content
     end
   end
+ 
+  def update
+    if @chamber.update(chamber_params)
+      render json: @chamber, status: :ok
+    else
+      render json: { errors: @chamber.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   private
+  
+  def set_chamber
+    @chamber = Chamber.find_by(id: params[:id])
+    render json: { error: 'Chamber not found' }, status: :not_found unless @chamber
+  end
 
   def chamber_params
     params.expect(chamber: %i[name district_id address category contact])
   end
+
 end
