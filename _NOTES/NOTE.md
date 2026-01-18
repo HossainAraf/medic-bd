@@ -122,7 +122,19 @@ const AddDoctorForm = () => {
   "password": "",
   "role": "user"
   }
-  
+  --------------
+  {
+  "doctor_schedule": {
+    "chamber_id": 2,
+    "available_days": ["sunday","monday", "tuesday", "wednesday"],
+    "slots": ["morning", "afternoon", "evening"],
+    "times": {
+      "morning": { "start": "07:00", "end": "09:30" },
+      "evening": { "start": "17:00", "end": "20:00" },
+      "afternoon": {"start": "15:00", "end": "17:30"}
+    }
+  }
+}
 ---------------------------------
 ------------------------
 --------
