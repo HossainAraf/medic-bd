@@ -2,7 +2,7 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   rescue_from ActiveRecord::RecordNotUnique do
     render json: {
       error: 'Schedule slot already exists for this doctor, chamber, and day'
-    }, status: :unprocessable_entity
+    }, status: :unprocessable_content
   end
 
   before_action :authorize_request, only: %i[create update destroy]
@@ -28,14 +28,27 @@ class Api::V1::DoctorSchedulesController < ApplicationController
 
   # POST /api/v1/doctors/:doctor_id/doctor_schedules
   def create
-    schedule = @doctor.doctor_schedules.new(schedule_params)
+    schedules = []
 
-    if schedule.save
-      render json: schedule, status: :created
-    else
-      render json: { errors: schedule.errors.full_messages },
-             status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      params[:doctor_schedule][:available_days].each do |day|
+        params[:doctor_schedule][:slots].each do |slot|
+          time = params[:doctor_schedule][:times][slot]
+
+          schedules << @doctor.doctor_schedules.create!(
+            chamber_id: params[:doctor_schedule][:chamber_id],
+            available_day: day,
+            slot: slot,
+            start_time: time[:start],
+            end_time: time[:end]
+          )
+        end
+      end
     end
+
+    render json: schedules, status: :created
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   # PUT /api/v1/doctor_schedules/:id
@@ -44,7 +57,7 @@ class Api::V1::DoctorSchedulesController < ApplicationController
       render json: @schedule
     else
       render json: { errors: @schedule.errors.full_messages },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     end
   end
 
@@ -56,24 +69,22 @@ class Api::V1::DoctorSchedulesController < ApplicationController
 
   private
 
- def set_doctor
-  doctor_slug = params[:doctor_slug]
-  @doctor = Doctor.find_by!(slug: doctor_slug)
-end
-
+  def set_doctor
+    doctor_slug = params[:doctor_slug]
+    @doctor = Doctor.find_by!(slug: doctor_slug)
+  end
 
   def set_schedule
     @schedule = DoctorSchedule.find(params[:id])
   end
 
   def schedule_params
-  params.require(:doctor_schedule).permit(
-    :chamber_id,
-    :available_day,
-    :slot,
-    :start_time,
-    :end_time
-  )
-end
-
+    params.expect(
+      doctor_schedule: %i[chamber_id
+                          available_day
+                          slot
+                          start_time
+                          end_time]
+    )
+  end
 end
