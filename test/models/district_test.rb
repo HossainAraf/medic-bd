@@ -34,7 +34,8 @@ class DistrictTest < ActiveSupport::TestCase
   # ---------------------
   test 'can be associated with chambers' do
     district = District.create!(name: 'Sylhet')
-    chamber = Chamber.create!(name: 'Sylhet Chamber', address: '123 Sylhet St', district: district, category: 'Clinic', contact: '0123456789')
+    chamber = Chamber.create!(name: 'Sylhet Chamber', address: '123 Sylhet St', district: district, category: 'Clinic',
+                              contact: '0123456789')
 
     assert_includes district.chambers, chamber
   end
@@ -45,8 +46,8 @@ class DistrictTest < ActiveSupport::TestCase
                               category: 'Hospital', contact: '0987654321')
     doctor = Doctor.create!(name: 'Dr. Test', display_order: 100_000, experience: 10, qualification: 'MD',
                             photo_url: 'doctor.jpg', specialty: 'General Medicine', phone: '1234567890')
-    DoctorSchedule.create!(chamber: chamber, doctor: doctor, available_day: 'monday', slot: 'morning', start_time: '09:00', end_time: '12:00'
-                        )
+    DoctorSchedule.create!(chamber: chamber, doctor: doctor, available_day: 'monday', slot: 'morning',
+                           start_time: '09:00', end_time: '12:00')
 
     assert_includes district.doctors, doctor
   end

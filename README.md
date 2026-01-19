@@ -243,6 +243,6 @@ MIT License — see root/LICENSE.md
 
 🙏 Acknowledgments<a name="acknowledgements"></a>
 
--Family support
--Microverse
- — structure, standards, and discipline
+- Family support
+- Microverse
+  — structure, standards, and discipline

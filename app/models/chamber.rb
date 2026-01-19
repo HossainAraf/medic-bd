@@ -13,5 +13,4 @@ class Chamber < ApplicationRecord
   validates :contact,
             presence: true,
             format: { with: /\A\+?\d{6,15}\z/, message: 'must be a valid phone number' }
-  validates :district_id, presence: true
 end

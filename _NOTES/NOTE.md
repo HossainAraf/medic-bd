@@ -1219,7 +1219,10 @@ test it
 
 You did exactly that here.
 ======================================
-NEXT (after tested all works fine):
+“Bulk schedule update via PATCH — accepted for v1”
+
+“Unchanged schedule detection — postponed to v2”
+
 Hardening (Optional but Recommended) (optimiazation)
 
 Do these only after everything above is stable:

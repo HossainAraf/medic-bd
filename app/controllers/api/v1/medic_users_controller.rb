@@ -16,7 +16,7 @@ class Api::V1::MedicUsersController < ApplicationController
       response.headers['Cache_Control'] = 'no-store' # prevent caching of sensitive data
       response.headers['Pragma'] = 'no-cache' # for older browsers
     else
-      render json: { errors: user.errors.full_messages }, status:  :unprocessable_entity
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_content
     end
   end
 

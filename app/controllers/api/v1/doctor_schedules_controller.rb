@@ -2,7 +2,7 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   rescue_from ActiveRecord::RecordNotUnique do
     render json: {
       error: 'Schedule slot already exists for this doctor, chamber, and day'
-    }, status:  :unprocessable_entity # 422
+    }, status:  :unprocessable_content # 422
   end
 
   before_action :authorize_admin, only: %i[create bulk_update destroy]
@@ -64,7 +64,7 @@ class Api::V1::DoctorSchedulesController < ApplicationController
       render json: @schedule
     else
       render json: { errors: @schedule.errors.full_messages },
-             status:  :unprocessable_entity
+             status: :unprocessable_content
     end
   end
 
@@ -75,7 +75,7 @@ class Api::V1::DoctorSchedulesController < ApplicationController
     unless payload
       return render json: {
         error: "Missing required key 'doctor_schedule' in request body"
-      }, status:  :unprocessable_entity
+      }, status:  :unprocessable_content
     end
 
     schedules = []

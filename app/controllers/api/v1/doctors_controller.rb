@@ -69,7 +69,7 @@ class Api::V1::DoctorsController < ApplicationController
       render json: doctor, status: :created
 
     else
-      render json: { errors: doctor.errors.full_messages }, status:  :unprocessable_entity
+      render json: { errors: doctor.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -81,7 +81,7 @@ class Api::V1::DoctorsController < ApplicationController
     if @doctor.update(doctor_params_without_slug)
       render json: @doctor, status: :ok
     else
-      render json: { errors: @doctor.errors.full_messages }, status:  :unprocessable_entity
+      render json: { errors: @doctor.errors.full_messages }, status: :unprocessable_content
     end
   end
 
