@@ -21,6 +21,8 @@ class Doctor < ApplicationRecord
   end
 
   def finalize_slug
-    update_column(:slug, format('dr-bd-%06d', id))
+    return if slug.present? && !slug.start_with?('tmp-')
+
+    update!(slug: format('dr-bd-%06d', id))
   end
 end
