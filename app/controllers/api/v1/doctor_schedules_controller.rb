@@ -10,12 +10,12 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   before_action :set_doctor, only: %i[index create bulk_update]
   before_action :set_schedule, only: %i[show update destroy]
 
-  # GET /api/v1/doctors/:doctor_id/doctor_schedules
+  # GET /api/v1/doctors/:doctor_slug/doctor_schedules
   def index
     render json: @doctor.doctor_schedules.as_json(
+      only: %i[id available_day slot start_time end_time chamber_id],
       include: {
-        chamber: { only: %i[id name category address contact district_id] },
-        only: %(id available_day slot start_time end_time chamber_id)
+        chamber: { only: %i[id name category address contact district_id] }
       }
     )
   end
