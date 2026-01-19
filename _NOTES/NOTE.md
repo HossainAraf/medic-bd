@@ -48,6 +48,49 @@ const AddDoctorForm = () => {
     { id: 4, name: 'Private Chamber' },
   ];
 --------------------------------------------
+POST chambers:
+http://127.0.0.1:3000/api/v1/chambers
+{
+  "chamber": {
+  "address": "Kazir mor, Naogaon",
+  "category": "Diagnostic Center",
+  "district_id": 3,
+  "name": "Lab Aid Ltd.",
+  "contact": "+88018753894757"
+  }
+}
+---
+PUT & PATCH chambers:
+http://127.0.0.1:3000/api/v1/chambers/23
+
+{
+  "chamber": {
+  "address": "Kazir mor, Naogaon          ",
+  "category": " Diagnostic Center    ",
+  "district_id": 3,
+  "name": "Lab Aid Ltd.",
+  "contact": "+88018753894656"
+  }
+}
+----
+GET districts:
+http://127.0.0.1:3000/api/v1/districts
+-----------
+POST doctor_schedules:
+http://localhost:3000/api/v1/doctors/:slug/doctor_schedules
+
+ {
+  "doctor_schedule": {
+    "chamber_id": 3,
+    "available_days": ["friday", "tuesday", "wednesday"],
+    "slots": ["morning", "afternoon", "evening"],
+    "times": {
+      "morning": { "start": "06:00", "end": "09:00" },
+      "afternoon": {"start": "15:00", "end": "17:00"},
+       "evening": { "start": "17:00", "end": "21:00" }
+    }
+  }
+}
 # find_or_create_by! or similar methods for lookups to avoid duplicates.
 <!-- POST: api/v1/doctors -->
 <!-- Not a good practice, rather we should us 'find' -->

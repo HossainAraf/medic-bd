@@ -42,11 +42,11 @@ class ApplicationController < ActionController::API
 
   rescue_from ActiveRecord::RecordInvalid do |e|
     render json: { errors: e.record.errors.full_messages },
-           status: :unprocessable_content
+           status:  :unprocessable_entity
   end
 
   rescue_from ArgumentError do |e|
-    render json: { error: e.message }, status: :unprocessable_content
+    render json: { error: e.message }, status:  :unprocessable_entity
   end
 
   def extract_token_from_header

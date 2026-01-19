@@ -9,7 +9,7 @@ class Api::V1::UserFeedbacksController < ApplicationController
     if user_feedback.save
       render json: user_feedback, status: :created
     else
-      render json: user_feedback.errors, status: :unprocessable_content
+      render json: user_feedback.errors, status:  :unprocessable_entity
     end
   end
 
@@ -19,7 +19,7 @@ class Api::V1::UserFeedbacksController < ApplicationController
       if user_feedback.update(user_feedback_params)
         render json: user_feedback, status: :ok # Respond with the updated feedback data
       else
-        render json: { error: 'Failed to update feedback' }, status: :unprocessable_content
+        render json: { error: 'Failed to update feedback' }, status:  :unprocessable_entity
       end
     else
       render json: { error: 'User feedback not found' }, status: :not_found

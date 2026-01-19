@@ -37,7 +37,7 @@ class Api::V1::SpecializationsController < ApplicationController
     if specialization.save
       render json: specialization, status: :created
     else
-      render json: specialization.errors, status: :unprocessable_content
+      render json: specialization.errors, status:  :unprocessable_entity
     end
   end
 

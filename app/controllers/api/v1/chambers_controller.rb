@@ -19,7 +19,7 @@ class Api::V1::ChambersController < ApplicationController
     if @chamber.save
       render json: @chamber, status: :created
     else
-      render json: @chamber.errors, status: :unprocessable_content
+      render json: @chamber.errors, status:  :unprocessable_entity
     end
   end
 
@@ -27,7 +27,7 @@ class Api::V1::ChambersController < ApplicationController
     if @chamber.update(chamber_params)
       render json: @chamber, status: :ok
     else
-      render json: { errors: @chamber.errors.full_messages }, status: :unprocessable_content
+      render json: { errors: @chamber.errors.full_messages }, status:  :unprocessable_entity
     end
   end
 
