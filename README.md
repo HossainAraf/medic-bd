@@ -1,98 +1,248 @@
-# README
+# MedicBD — Hybrid Rails (API + Full-Stack)
+
+<a name="readme-top"></a>
+
+<div align="center">
+
+  <br/>
+
+</div>
+
+# 📗 Table of Contents
+
+- [📖 About the Project](#about-project)
+
+  - [🛠 Built With](#built-with)
+    - [Key Features](#key-features)
+    - [Project Evaluation](#project-evaluation)
+    - [Architecture Overview](#architecture-overview)
+- [💻 Getting Started](#getting-started)
+  - [Setup](#setup)
+  - [Branching-Strategy](#branching-strategy)
+- [API-endpoints](#api-endpoints)
+- [Pitfalls:Solved](#pitfalls)
+- [🔭 Future Features](#future-features)
+- [👥 Authors](#authors)
+- [📝 License](#license)
+- [🙏 Acknowledgements](#acknowledgements)
+  
+ ## About the project<a name="about-project"></a>
+MedicBD is a hybrid Ruby on Rails application that started as an API-only backend and is now evolving into a full-stack Rails app using Hotwire & Tailwind.
+
+# The project demonstrates:
+
+- Clean API design with JWT authentication
+
+- A safe transition from API-only → full-stack Rails
+
+- Clear separation between API and Web layers
+
+- Modern Rails 7 tooling (Hotwire, Tailwind, Importmap)
+
+## 🛠 Built With:<a name="built-with"></a>
+- Ruby on Rails
+- PostgreSQl
+
+# ✨ Key Features<a name="key-features"></a>
+
+**API (v1)-**
+
+- Doctors, Specializations, Chambers, Districts
+
+- Filter doctors by specialization & district
+
+- JWT-based authentication
+
+- Designed for React / mobile clients
+
+**Web (Full-Stack Rails)-**
+
+- Server-rendered HTML (ERB)
+
+- Hotwire (Turbo + Stimulus)
+
+- Tailwind CSS
+
+- Session-based authentication (planned)
+
+## 📜 Project Evolution<a name="project-evaluation"></a>
+
+This project was intentionally developed in phases:
+
+### Phase 1 — API-Only Rails (v1)
+- Rails API-only mode
+- JWT authentication
+- JSON endpoints for doctors, chambers, districts, and feedback
+- Designed to support React and mobile clients
+- Stable and production-ready
+
+A snapshot of this stage is preserved in the `v1.0-api` branch.
+
+### Phase 2 — Hybrid Rails (Current)
+- Transitioned to full-stack Rails
+- Introduced Web controllers alongside API controllers
+- Added Hotwire (Turbo + Stimulus)
+- Tailwind CSS for UI
+- API v1 remains unchanged
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+🧱 Architecture Overview<a name="architecture-overview"></a>
+
+Controller Separation (Core Design)
+
+```text
+ApplicationController < ActionController::Base
+└── Web::BaseController
+    ├── Web::HomeController
+    └── Web::DoctorsController
+
+Api::BaseController < ActionController::API
+└── Api::V1::DoctorsController
+
+Api::BaseController < ActionController::API </br>
+└── Api::V1::DoctorsController # JSON / JWT
 
 
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-<!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
-<!-- Fronend form -->
-const AddDoctorForm = () => {
-  const categories = [
-    { id: 1, name: 'Diagnostic' },
-    { id: 2, name: 'Clinic' },
-    { id: 3, name: 'Hospital' },
-    { id: 4, name: 'Private Chamber' },
-  ];
---------------------------------------------
-
-<!-- POST: api/v1/doctors -->
-<!-- Not a good practice, rather we should us 'find' -->
-{
-  "doctor": {
-    "name": "Tasnia Habib",
-    "bangla_name": "তাসনিয়া হাবিব সিনথি",
-    "specialty": "স্কেলিং, ফিলিং, রুট ক্যানেল, দাঁত বাঁধাই ও অন্যান্য",
-    "qualification": "BDS, MPhil, PHD",
-    "experience": "সহকারী অধ্যাপক, উদয়ন ডেন্টাল কলেজ, রাজশাহী",
-    "order": 1800005,
-    "photo_url": "",
-    "special_notes": "প্রতি মাসের ১ম ও শেষ শুক্রবার ফ্রি চিকিৎসা সেবা দেয়া হয়",
-    "description": "",
-    "doctor_schedules_attributes": [
-      {
-        "available_day": "প্রতিদিন",
-        "available_time": "বিকাল ৪ টা থেকে রাত ৮ টা",
-        "contact": "01728-174202",
-        "chamber_attributes": {
-          "name": "শুভ ক্লিনিক",
-          "category": "Clinic",
-          "address": "চক এনায়েত, দয়ালের মোড়, নওগাঁ",
-          "district_id": 1
-        }
-      }
-    ]
-  }
-}
------------------------------
------------------
-<!-- example payload for user 'sign up'  format-->
-POST: 
-route: /api/v1/medic_users
-Content-Type: application/json
-Accept: application/json (optional)
-
-{
-  "medic_user": {
-    "name": "Araf",
-    "email": "araf@example.com",
-    "phone": "017xxxxxxxx",
-    "password": "secret123",
-    "password_confirmation": "secret123",
-    "role": "admin"
-  }
-}
+### Why This Matters
 ----------------------------------
---------------
-<!-- example 'Log In' pay load format -->
-POST
-route: /api/v1/auth/login
-Content-Type: application/json
-Accept: application/json (optional)
+Concern	    API	        Web
+-----       -------    ---------------
+State	    Stateless	Stateful
+Auth	    JWT        	Session + Cookies
+CSRF	    Not needed	Required
+Views	    ❌	        ✅
+```
+#### This separation keeps:
 
-{
-  "medic_user": {
-    "email": "<user email>",
-    "password": "<user pass>"
-  }
-}
-------------------------
---------
+-    API backward-compatible
+
+-    Web layer free to evolve
+
+-    Zero cross-contamination of concerns
+
+🚀 Getting Started<a name="getting-started"></a> </br>
+
+Ruby & Node check:
+```
+ruby --version
+node --version
+```
+Install dependencies:
+```
+bundle install
+npm install
+```
+Database setup: <a name="setup"></a>
+```
+rails db:create
+rails db:migrate
+rails db:fixtures:load
+```
+
+For specific environments:
+```
+RAILS_ENV=test rails db:create
+RAILS_ENV=production rails db:migrate
+```
+▶️ Running the App
+Development (Full-Stack)
+```
+bin/dev
+```
+**Important-
+bin/dev runs Rails and the Tailwind build watcher.
+rails s alone will NOT compile CSS.
+
+API-only branches:
+```
+rails s
+```
+🧪 Running Tests:
+```
+rails test
+```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+🌿 Branching Strategy<a name="branching-strategy"></a>
+```
+Branch	                Purpose
+dev	                    development branch
+v1.0-api    	        Stable API-only snapshot
+fullstack             	Hotwire + Tailwind work
+main 	                Production-ready code
+```
+This allows:
+
+-Safe experimentation
+-API stability
+-Clear evolution history
+
+🔌 API Endpoints (v1): <a name="api-endpoints"></a>
+
+Base URL:
+
+http://127.0.0.1:3000/api/v1
+
+Examples:
+```
+Endpoint	                    Method
+/auth/login                     POST
+/specializations	            GET
+/doctors	                    GET/POST
+/doctors/:id	                GET
+/doctors/filtered_doctors	    GET
+/chambers	                    GET
+/districts	                    GET
+```
+👉 Full payload examples are documented in docs/api.md
+
+⚠️ Common Pitfalls (Solved):<a name="pitfalls"></a>
+
+Tailwind not updating?
+
+Use:
+bin/dev
+
+Tailwind is build-time, not runtime.
+
+JWT auth removed from ApplicationController?
+
+Correct.
+
+API auth belongs in Api::BaseController
+
+Web uses sessions + CSRF
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+🔭 Future Roadmap<a name="future-features"></a>
+
+-Shared service object for filtered_doctors
+
+-Turbo-powered filters
+
+-Stimulus carousel for doctor sliders
+
+-Appointment booking (full-stack)
+
+🧠 What This Project Demonstrates
+
+✔ Rails controller inheritance mastery
+✔ JWT vs session authentication knowledge
+✔ Safe refactoring mindset
+✔ Hotwire done intentionally, not blindly
+✔ Production-quality thinking
+
+👥 Authors:<a name="authors"></a>
+
+**Md Arafat Hossain**
+
+- GitHub: <a href="https://github.com/HossainAraf">HossainAraf </a>
+- LinkedIn: <a href="https://linkedin.com/in/md-arafat-hossain-111403275"> Md. Arafat Hossain </a>
+
+📄 License<a name="license"></a>
+MIT License — see root/LICENSE.md
+
+🙏 Acknowledgments<a name="acknowledgements"></a>
+
+-Family support
+-Microverse
+ — structure, standards, and discipline
