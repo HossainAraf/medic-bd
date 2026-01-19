@@ -79,7 +79,6 @@ class Api::V1::DoctorSchedulesController < ApplicationController
     end
   end
 
-
   # DELETE /api/v1/doctor_schedules/:id
   def destroy
     @schedule.destroy

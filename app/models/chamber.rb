@@ -1,6 +1,6 @@
 class Chamber < ApplicationRecord
   belongs_to :district
-  has_many :doctor_schedules
+  has_many :doctor_schedules, dependent: :destroy
   has_many :doctors, through: :doctor_schedules
 
   accepts_nested_attributes_for :doctor_schedules

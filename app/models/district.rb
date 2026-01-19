@@ -1,5 +1,5 @@
 class District < ApplicationRecord
-  has_many :chambers
+  has_many :chambers, dependent: :destroy
   has_many :doctors, through: :chambers
   has_many :doctor_schedules, through: :chambers
 

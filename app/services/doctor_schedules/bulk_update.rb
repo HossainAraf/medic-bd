@@ -7,7 +7,7 @@ module DoctorSchedules
 
     def initialize(params)
       @payload = params[:doctor_schedule]
-      @errors  = []
+      @errors = []
     end
 
     def call
@@ -35,7 +35,7 @@ module DoctorSchedules
       end
     end
 
-    def process_item(item)
+    def process_item(_item)
       # create/update logic here
     rescue ActiveRecord::RecordInvalid => e
       errors << e.record.errors.full_messages
