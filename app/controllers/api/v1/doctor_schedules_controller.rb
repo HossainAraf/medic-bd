@@ -70,59 +70,15 @@ class Api::V1::DoctorSchedulesController < ApplicationController
 
   # PATCH /api/v1/doctors/:doctor_slug/doctor_schedules/bulk_update
   def bulk_update
-    payload = params[:doctor_schedule]
+    result = DoctorSchedules::BulkUpdate.call(params)
 
-    unless payload
-      return render json: {
-        error: "Missing required key 'doctor_schedule' in request body"
-      }, status:  :unprocessable_content
-    end
-
-    schedules = []
-
-    ActiveRecord::Base.transaction do
-      available_days = payload[:available_days] || []
-      slots = payload[:slots] || []
-      times = payload[:times] || {}
-
-      if available_days.empty? || slots.empty? || times.empty?
-        raise ArgumentError, 'available_days, slots, and times must be provided'
-      end
-
-      available_days.each do |day|
-        slots.each do |slot|
-          time = times[slot.to_s] || times[slot.to_sym]
-          raise ArgumentError, "Missing times for slot: #{slot}" unless time
-
-          schedule = DoctorSchedule.find_or_initialize_by(
-            doctor: @doctor,
-            chamber_id: payload[:chamber_id],
-            available_day: day,
-            slot: slot
-          )
-
-          schedule.assign_attributes(
-            start_time: time[:start],
-            end_time: time[:end]
-          )
-
-          if schedule.persisted? && !schedule.changed?
-            # skip unchanged schedules
-            next
-          end
-
-          schedule.save!
-          schedules << schedule
-        end
-      end
-    end
-
-    if schedules.empty?
-      render json: { message: 'No schedules were changed' }, status: :ok
+    if result.success?
+      render json: result.data, status: :ok
     else
-      render json: schedules, status: :ok
+      render json: { errors: result.errors }, status: :unprocessable_content
     end
   end
+
 
   # DELETE /api/v1/doctor_schedules/:id
   def destroy

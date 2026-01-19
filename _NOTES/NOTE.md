@@ -40,13 +40,13 @@ git push --force-with-lease origin <branch_name>
 
 <!-- *** Case sensative category:Frontend form has this dropdown, so no worry if entry data using form. Otherwise must remember not to use other categories eg: 'diagnostics'  would create a new category and conflict/miss when filter-->
 <!-- Fronend form -->
-const AddDoctorForm = () => {
+<!-- const AddDoctorForm = () => {
   const categories = [
     { id: 1, name: 'Diagnostic' },
     { id: 2, name: 'Clinic' },
     { id: 3, name: 'Hospital' },
     { id: 4, name: 'Private Chamber' },
-  ];
+  ]; -->
 --------------------------------------------
 POST chambers:
 http://127.0.0.1:3000/api/v1/chambers
