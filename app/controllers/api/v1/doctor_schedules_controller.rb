@@ -70,12 +70,12 @@ class Api::V1::DoctorSchedulesController < ApplicationController
 
   # PATCH /api/v1/doctors/:doctor_slug/doctor_schedules/bulk_update
   def bulk_update
-    result = DoctorSchedules::BulkUpdate.call(params)
+    result = DoctorSchedules::BulkUpdate.new(schedules_params, @doctor).call
 
-    if result.success?
-      render json: result.data, status: :ok
+    if result.success
+      render json: { message: 'Updated successfully', data: result.data }, status: :ok
     else
-      render json: { errors: result.errors }, status: :unprocessable_content
+      render json: { message: 'Update failed', errors: result.errors }, status: :unprocessable_content
     end
   end
 
@@ -96,23 +96,14 @@ class Api::V1::DoctorSchedulesController < ApplicationController
     @schedule = DoctorSchedule.find(params[:id])
   end
 
-  def schedule_params
+  def schedules_params
     params.expect(
       doctor_schedule: [
         :chamber_id,
-        { available_days: [], slots: [], times: {} }
+        { available_days: [],
+          slots: [],
+          times: {} }
       ]
     )
   end
 end
-{
-  doctor_schedule: {
-    chamber_id: 2,
-    available_days: %w[sunday monday],
-    slots: %w[morning evening],
-    times: {
-      morning: { start: '09:00', end: '09:30' },
-      evening: { start: '17:00', end: '21:00' }
-    }
-  }
-}
