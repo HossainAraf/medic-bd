@@ -96,6 +96,8 @@ http://localhost:3000/api/v1/doctors/:doctor_slug/doctor_schedules
 GET :
 http://localhost:3000/api/v1/doctors/:doctor_slug/doctor_schedules
 ........
+http://localhost:3000/api/v1/doctors/dr-bd-000001/doctor_schedules/bulk_update
+...............................
 POST doctors:
 http://localhost:3000/api/v1/doctors
  {
@@ -1218,6 +1220,21 @@ constrain it
 test it
 
 You did exactly that here.
+===========================
+ ## dependent: : ~ (in model: HasManyOrHasOneDependent: Specify a :dependent option.)
+3️⃣ Why :destroy and not :delete_all?
+Option	Use case
+:destroy	Default choice – runs callbacks, validations
+:delete_all	Fast, skips callbacks (dangerous for business logic)
+:nullify	When child can exist without parent
+:restrict_with_error	When deletion must be blocked
+
+For a medical domain:
+
+Data consistency > speed
+
+So :destroy is the correct choice
+======================================
 ======================================
 “Bulk schedule update via PATCH — accepted for v1”
 
