@@ -138,47 +138,87 @@ API backward-compatibility
 
 Web layer evolution without cross-contamination
 
+markdown
+
 🚀 Getting Started <a name="getting-started"></a>
 
 Check Ruby & Node:
 
+```bash
 ruby --version
 node --version
-
-
+```
 Install dependencies:
-
+bash
+```
 bundle install
 npm install
-
+```
 Database Setup <a name="setup"></a>
+
+Create the database:
+bash
+```
 rails db:create
+```
+Schema setup for multiple APIs in a common DB
+
+When running multiple APIs on the same Postgres database, use separate schemas to isolate each API’s tables. For example:
+bash
+```
+psql $DATABASE_URL -c "CREATE SCHEMA medicbd;"
+psql $DATABASE_URL -c "CREATE SCHEMA another_api;"
+psql $DATABASE_URL -c "CREATE SCHEMA reporting_api;"
+```
+Then configure each API’s config/database.yml with its own schema_search_path:
+yaml
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+  schema_search_path: medicbd
+
+yaml
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+  schema_search_path: another_api
+
+This way, all APIs share the same DB instance but keep their tables isolated in separate schemas.
+
+Run migrations for each API:
+bash
+```
 rails db:migrate
 rails db:fixtures:load
-
+```
 
 For specific environments:
-
+bash
+```
 RAILS_ENV=test rails db:create
 RAILS_ENV=production rails db:migrate
+```
 
 Running the App
 
 Development (Full-Stack)
-
+```
 bin/dev
-
+```
 
 Important: bin/dev runs Rails + Tailwind watcher.
 rails s alone will not compile CSS.
 
 API-only branches
-
+```
 rails s
-
+```
 Running Tests
+```
 rails test
-
+```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 🌿 Branching Strategy <a name="branching-strategy"></a>
 Branch	Purpose
