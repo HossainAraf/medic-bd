@@ -1,3 +1,46 @@
+One rule you must follow
+
+When using schema isolation:
+
+✅ Always create the schema before migrations
+CREATE SCHEMA IF NOT EXISTS medicbd;
+
+
+Then run:
+
+RAILS_ENV=production rails db:migrate
+
+
+Rails will not auto-create custom schemas.
+=====================================
+What you must do (minimal)
+fly deploy
+
+
+That’s it.
+
+If you want to be explicit:
+
+fly deploy --remote-only
+
+How to confirm which version is running
+fly releases
+
+
+or
+
+fly status
+
+
+If the release timestamp didn’t change → no deployment occurred.
+
+Important clarification (compared to Render)
+Platform	Auto deploy on git push
+Render	✅ Yes
+Fly.io	❌ No (manual deploy)
+
+This difference alone causes most Fly confusion for Rails devs coming from Render.
+================================
 #  Check Current Search Path:
 -- Shows what schemas are searched and in what order
 SHOW search_path;

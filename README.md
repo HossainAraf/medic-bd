@@ -3,35 +3,23 @@ MedicBD — Hybrid Rails (API + Full-Stack)
 <a name="readme-top"></a>
 
 <div align="center"> <br/> </div>
-📗 Table of Contents
+# 📗 Table of Contents
+- 📖 [About the Project](#about-project)
+- 🔗 [Live Links](#live-links)
+- 🛠 [Built With](#built-with)
+- ✨ [Key Features](#key-features)
+- 📜 [Project Evolution](#project-evolution)
+- 🧱 [Architecture Overview](#architecture-overview)
+- 💻 [Getting Started](#getting-started)
+  - ⚙️ [Setup](#setup)
+  - 🌿 [Branching Strategy](#branching-strategy)
+  - 🔌 [API Endpoints](#api-endpoints)
+- ⚠️ [Common Pitfalls (Solved)](#pitfalls)
+- 🔭 [Future Roadmap](#future-features)
+- 👥 [Authors](#authors)
+- 📝 [License](#license)
+- 🙏 [Acknowledgements](#acknowledgements)
 
-📖 About the Project
-
-🛠 Built With
-
-Key Features
-
-Project Evolution
-
-Architecture Overview
-
-💻 Getting Started
-
-Setup
-
-Branching Strategy
-
-API Endpoints
-
-⚠️ Common Pitfalls (Solved)
-
-🔭 Future Roadmap
-
-👥 Authors
-
-📝 License
-
-🙏 Acknowledgements
 
 About the Project <a name="about-project"></a>
 
@@ -48,6 +36,12 @@ Safe transition from API-only → full-stack Rails
 Modern Rails 7 tooling: Hotwire, Tailwind, Importmap
 
 Production-ready thinking and maintainable architecture
+
+🔗 Live Links:<a name="about-project"></a>
+
+ - <a href="https://medic-bd-api.onrender.com/">Render</a>
+ - <a href="https://medic-bd-api-late-cherry-5634.fly.dev/">Fly</a>
+
 
 🛠 Built With <a name="built-with"></a>
 
@@ -243,14 +237,13 @@ Hotwire implemented intentionally
 
 Production-quality thinking
 
-👥 Authors <a name="authors"></a>
 
-Md Arafat Hossain
+👥 Authors:<a name="authors"></a>
 
-GitHub: HossainAraf
+**Md Arafat Hossain**
 
-LinkedIn: Md. Arafat Hossain
-
+- GitHub: <a href="https://github.com/HossainAraf">HossainAraf </a>
+- LinkedIn: <a href="https://linkedin.com/in/md-arafat-hossain-111403275"> Md. Arafat Hossain </a>
 📄 License <a name="license"></a>
 
 MIT License — see LICENSE.md
