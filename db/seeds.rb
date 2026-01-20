@@ -1,4 +1,4 @@
-District.find_or_create_by!(name: "Naogaon") do |d|
+Specialization.find_or_create_by!(name:"") do |d|
   d.created_at = Time.now
   d.updated_at = Time.now
 end
@@ -6,15 +6,15 @@ end
 
 puts "=== RUNNING SEEDS FROM medic-bd-api ==="
 
-district = District.third
-raise "No districts found" unless district
+# district = District.third
+# raise "No districts found" unless district
 
-Chamber.find_or_create_by!(
-  name: "Holipath",
-  district_id: district.id
-) do |c|
-  c.address  = "Rubir mor, Naogaon"
-  c.category = "Clinic"
-end
+# Chamber.find_or_create_by!(
+#   name: "Holipath",
+#   district_id: district.id
+# ) do |c|
+#   c.address  = "Rubir mor, Naogaon"
+#   c.category = "Clinic"
+# end
 
-puts "=== SEEDS COMPLETED ==="
+# puts "=== SEEDS COMPLETED ==="
