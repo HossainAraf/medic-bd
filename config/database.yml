@@ -22,5 +22,5 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
-  schema_search_path: medicbd
+  schema_search_path: medicbd, public
   
