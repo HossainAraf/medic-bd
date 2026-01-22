@@ -1,8 +1,10 @@
 ActiveRecord::Schema[8.1].define(version: 2026_01_15_142407) do
+  create_schema "medicbd"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "chambers", force: :cascade do |t|
+  create_table "medicbd.chambers", force: :cascade do |t|
     t.string "address"
     t.string "category"
     t.string "contact", default: "", null: false
@@ -14,14 +16,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_142407) do
     t.index ["name", "district_id"], name: "index_chambers_on_name_and_district_id", unique: true
   end
 
-  create_table "districts", force: :cascade do |t|
+  create_table "medicbd.districts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_districts_on_name", unique: true
   end
 
-  create_table "doctor_schedules", force: :cascade do |t|
+  create_table "medicbd.doctor_schedules", force: :cascade do |t|
     t.integer "available_day", null: false
     t.bigint "chamber_id", null: false
     t.datetime "created_at", null: false
@@ -35,7 +37,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_142407) do
     t.index ["doctor_id"], name: "index_doctor_schedules_on_doctor_id"
   end
 
-  create_table "doctor_specializations", force: :cascade do |t|
+  create_table "medicbd.doctor_specializations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "doctor_id", null: false
     t.bigint "specialization_id", null: false
@@ -45,7 +47,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_142407) do
     t.index ["specialization_id"], name: "index_doctor_specializations_on_specialization_id"
   end
 
-  create_table "doctors", force: :cascade do |t|
+  create_table "medicbd.doctors", force: :cascade do |t|
     t.string "bangla_name"
     t.datetime "created_at", null: false
     t.text "description"
@@ -66,7 +68,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_142407) do
     t.check_constraint "display_order >= 100000 AND display_order <= 9999999", name: "display_order_range"
   end
 
-  create_table "medic_users", force: :cascade do |t|
+  create_table "medicbd.medic_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "created_by"
     t.string "email"
@@ -79,16 +81,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_142407) do
     t.index ["email"], name: "index_medic_users_on_email", unique: true
   end
 
-  create_table "specializations", force: :cascade do |t|
+  create_table "medicbd.specializations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_specializations_on_name", unique: true
   end
 
-  add_foreign_key "chambers", "districts"
-  add_foreign_key "doctor_schedules", "chambers"
-  add_foreign_key "doctor_schedules", "doctors"
-  add_foreign_key "doctor_specializations", "doctors"
-  add_foreign_key "doctor_specializations", "specializations"
+  add_foreign_key "medicbd.chambers", "medicbd.districts"
+  add_foreign_key "medicbd.doctor_schedules", "medicbd.chambers"
+  add_foreign_key "medicbd.doctor_schedules", "medicbd.doctors"
+  add_foreign_key "medicbd.doctor_specializations", "medicbd.doctors"
+  add_foreign_key "medicbd.doctor_specializations", "medicbd.specializations"
+
 end

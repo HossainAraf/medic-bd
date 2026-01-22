@@ -290,7 +290,8 @@ private
 # Rails + PostgreSQL Notes
 
 ## Table Name Prefix
-- `self.table_name_prefix = 'md_'` in `ApplicationRecord` applies only to models that inherit from it.
+<!-- - `self.table_name_prefix = 'md_'` in `ApplicationRecord` applies only to models that inherit from it. --> (Removed and implemented schema_path)
+
 - Existing migrations are unaffected; only new models will get prefixed tables.
 - Explicit `self.table_name` overrides the prefix.
 - Best practice: use prefix only for user/auth tables (e.g., `medic_users`).
@@ -1278,6 +1279,14 @@ Data consistency > speed
 
 So :destroy is the correct choice
 ======================================
+Decision Table (very important)
+Situation	Where to start testing
+New model	Model test
+New validation	Model test
+New association	Model test
+API endpoint	Request test
+Refactor controller	Request test
+UI flow	System test (rare)
 ======================================
 “Bulk schedule update via PATCH — accepted for v1”
 

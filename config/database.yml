@@ -11,16 +11,17 @@ development:
   password: <%= Rails.application.credentials.dig(:development, :database_password) %>
   host: 127.0.0.1
   port: 5432
+  schema_search_path: medicbd, public
 
 test:
   <<: *default
   database: medic_bd_test
   user: <%= Rails.application.credentials.dig(:test, :database_user) %>
   password: <%= Rails.application.credentials.dig(:test, :database_password) %>
+  schema_search_path: medicbd, public
   
 
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
   schema_search_path: medicbd, public
-  
