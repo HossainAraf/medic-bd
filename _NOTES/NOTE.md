@@ -151,12 +151,12 @@ POST doctors:
 http://localhost:3000/api/v1/doctors
  {
   "doctor": {
-    "name": "Pijush Kanti    ",
+    "name": "Salemir Hossain Chowdhury",
     "bangla_name": "পীযূষ ",
-    "specialty": "ABC",
+    "specialty": "Psychiatry (Mental Diseases, Headache, Epilepsy, Drug Addiction) Specialist",
     "display_order": 1000001,
-    "qualification": "ABC" ,
-    "experience": "ABCv",
+    "qualification": "MBBS, FCPS (Psychiatry), FRSH (London), IM, APO(America), WHO Fellow (Bangalore) " ,
+    "experience": "Professor of Psychiatry at Shahabuddin Medical College & Hospital",
     "phone": "+88018747741",
     "special_notes": "ABC",
     "description": "ABC" ,
@@ -1310,3 +1310,37 @@ Read-only public schedule endpoint
 
 Soft deletes or effective date ranges (future-proofing)
 ========================
+When frontend-only i18n does make sense
+
+Use frontend / Rails locales only if:
+
+Content is static
+
+No CRUD
+
+No SEO
+
+No search
+
+No admin
+
+Example:
+
+Marketing landing page
+
+Legal pages
+
+App chrome
+
+Medic-bd is none of these.
+
+Final answer (clear stance)
+
+Yes, Rails fullstack can technically do everything via locale switching.
+No, it is not feasible for medic-bd’s core data without serious long-term damage.
+------------------------------
+### Optional but recommended additions (later)
+.github/
+├── ISSUE_TEMPLATE/
+│   ├── bug_report.md
+│   └── feature_request.md

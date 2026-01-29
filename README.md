@@ -105,7 +105,7 @@ Tailwind CSS styling
 API v1 endpoints remain unchanged and backward-compatible
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-🧱 Architecture Overview <a name="architecture-overview"></a>
+## 🧱 Architecture Overview <a name="architecture-overview"></a>
 
 Controller Separation:
 
@@ -134,7 +134,11 @@ Web layer evolution without cross-contamination
 
 markdown
 
-🚀 Getting Started <a name="getting-started"></a>
+### Conventions
+**Language & Naming Conventions** — v1 (Bangla‑first)
+- File location [/docs/language-and-naming-v1.md]
+
+## 🚀 Getting Started <a name="getting-started"></a>
 
 Check Ruby & Node:
 

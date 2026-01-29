@@ -37,6 +37,7 @@
 # Ignore seed.md
 /_NOTES/seed.md
 /_NOTES/non-sharebleNOTE.md
+/_NOTES/PRIVATE/*
 
 /config/credentials/production.key
 
@@ -47,5 +48,4 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
-/_NOTES/PRIVATE/*
 
