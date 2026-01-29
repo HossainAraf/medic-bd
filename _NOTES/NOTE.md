@@ -1310,12 +1310,3 @@ Read-only public schedule endpoint
 
 Soft deletes or effective date ranges (future-proofing)
 ========================
-
-
-
-
-
-
-Hi! Good morning.
-I thiink, it's time to lock medic-bd . v1-api. Because we tested and deployed these branches: deploy/fly-test &  deploy/v1-render-test.
-
