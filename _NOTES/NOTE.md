@@ -1,3 +1,52 @@
+ # active/current schema:
+ run
+ ```
+ ActiveRecord::Base.connection.current_schema
+```
+=====
+One rule you must follow
+
+When using schema isolation:
+
+✅ Always create the schema before migrations
+CREATE SCHEMA IF NOT EXISTS medicbd;
+
+
+Then run:
+
+RAILS_ENV=production rails db:migrate
+
+
+Rails will not auto-create custom schemas.
+=====================================
+What you must do (minimal)
+fly deploy
+
+
+That’s it.
+
+If you want to be explicit:
+
+fly deploy --remote-only
+
+How to confirm which version is running
+fly releases
+
+
+or
+
+fly status
+
+
+If the release timestamp didn’t change → no deployment occurred.
+
+Important clarification (compared to Render)
+Platform	Auto deploy on git push
+Render	✅ Yes
+Fly.io	❌ No (manual deploy)
+
+This difference alone causes most Fly confusion for Rails devs coming from Render.
+================================
 #  Check Current Search Path:
 -- Shows what schemas are searched and in what order
 SHOW search_path;
@@ -247,7 +296,8 @@ private
 # Rails + PostgreSQL Notes
 
 ## Table Name Prefix
-- `self.table_name_prefix = 'md_'` in `ApplicationRecord` applies only to models that inherit from it.
+<!-- - `self.table_name_prefix = 'md_'` in `ApplicationRecord` applies only to models that inherit from it. --> (Removed and implemented schema_path)
+
 - Existing migrations are unaffected; only new models will get prefixed tables.
 - Explicit `self.table_name` overrides the prefix.
 - Best practice: use prefix only for user/auth tables (e.g., `medic_users`).
@@ -1235,6 +1285,14 @@ Data consistency > speed
 
 So :destroy is the correct choice
 ======================================
+Decision Table (very important)
+Situation	Where to start testing
+New model	Model test
+New validation	Model test
+New association	Model test
+API endpoint	Request test
+Refactor controller	Request test
+UI flow	System test (rare)
 ======================================
 “Bulk schedule update via PATCH — accepted for v1”
 
@@ -1252,3 +1310,12 @@ Read-only public schedule endpoint
 
 Soft deletes or effective date ranges (future-proofing)
 ========================
+
+
+
+
+
+
+Hi! Good morning.
+I thiink, it's time to lock medic-bd . v1-api. Because we tested and deployed these branches: deploy/fly-test &  deploy/v1-render-test.
+
