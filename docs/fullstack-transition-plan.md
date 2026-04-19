@@ -5,9 +5,16 @@
 - Keep `/api/v1` stable while introducing server-rendered public pages.
 - Launch an MVP that can prove search visibility and booking conversion impact.
 
+## Core Business Logic (Must Preserve)
+- Doctor discovery is always narrowed by both specialization and district.
+- The main doctor listing flow should encourage users to select specialization first, then district.
+- Chamber discovery is district-first and independent of doctor search.
+- Chamber pages are for diagnosis, admission, and facility search, not primary doctor matching.
+- Keep result sets narrow and relevant for Bangladesh local search behavior.
+
 ## Recommended Branch Strategy
 - Dedicated foundation branch: `epic/fullstack-foundation`
-- Long-running epic branch: `feat/fullstack-mvp`
+- Long-running branch: `feat/fullstack-mvp`
 - Feature branch pattern: `feat/fullstack-<feature>`
 - Release branch pattern: `release/fullstack-m1`, `release/fullstack-m2`, `release/fullstack-mvp`
 
@@ -35,6 +42,8 @@
 - Specialization listing page.
 - District listing page.
 - Internal links between doctors, specializations, districts, and chambers.
+- Doctor search UI with required specialization + district filter pair.
+- Chamber search UI with district-only filter.
 
 ### Milestone 2: Availability + Booking MVP (Week 4-5)
 - Show chamber schedules on doctor detail pages.
@@ -107,22 +116,38 @@ docs/
 - Keep current API routes under `/api/v1` unchanged.
 - Add web routes for crawlable pages:
   - `/` -> home
-  - `/doctors` -> doctor index
+  - `/doctors` -> doctor index (requires specialization + district query params for filtered results)
   - `/doctors/:slug` -> doctor detail
   - `/specializations` -> specialization index
   - `/specializations/:slug` -> specialization detail
   - `/districts` -> district index
   - `/districts/:slug` -> district detail
+  - `/chambers` -> chamber index (district filter first)
+  - `/chambers/:id` -> chamber detail
+
+## Filtering Contract (Web + API)
+- Doctors:
+  - Required filters: `specialization_id` and `district_id`
+  - Optional filters can be added later, but must not replace the required pair in the main flow.
+- Chambers:
+  - Required filter: `district_id`
+  - Optional filter: `category` (diagnostic, hospital, clinic) for refinement.
+- UX rule:
+  - If required filters are missing, show guided empty state and filter prompts instead of broad unfiltered results.
 
 ## MVP Scope (Must Have)
 - SSR doctor index and doctor detail pages.
 - SSR specialization and district pages.
+- Chamber index page filtered by district.
 - Unique `<title>`, meta description, canonical on each page.
 - XML sitemap and robots.txt configured.
 - Schedule block with freshness timestamp on doctor page.
 - Booking request form on doctor detail page.
+- Doctor search form enforcing specialization + district.
 - Analytics events:
   - `doctor_profile_view`
+  - `doctor_filter_applied`
+  - `chamber_filter_applied`
   - `booking_click`
   - `booking_submit`
   - `booking_confirm`
@@ -140,6 +165,8 @@ docs/
 - Avoid thin pages (add descriptive content blocks).
 - Add breadcrumbs and internal links for crawl depth.
 - Pagination on large lists; avoid rendering huge datasets in one response.
+- Keep filtered URLs crawl-safe (index pages canonicalized, detail pages indexable).
+- Preserve intent-driven landing pages for specialization + district combinations.
 
 ## Engineering Checklist Per Feature
 - Route, controller, view, and tests included.
