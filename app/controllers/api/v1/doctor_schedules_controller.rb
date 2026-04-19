@@ -30,11 +30,12 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   def create
     schedules = []
     payload = schedules_params
+    normalized_times = payload[:times].to_h.transform_keys(&:to_s).transform_values { |value| value.to_h.symbolize_keys }
 
     ActiveRecord::Base.transaction do
       payload[:available_days].each do |day|
         payload[:slots].each do |slot|
-          time = payload.dig(:times, slot) || payload.dig(:times, slot.to_s) || payload.dig(:times, slot.to_sym)
+          time = normalized_times[slot.to_s]
 
           raise ArgumentError, "Missing times for slot: #{slot}" unless time
 
