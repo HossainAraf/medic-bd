@@ -35,10 +35,8 @@ class Api::V1::UserFeedbacksController < ApplicationController
       render json: { error: 'User feedback not found' }, status: :not_found
     end
   end
+end
 
-  private
-
-  def user_feedback_params
-    params.expect(user_feedback: %i[name email feedback phone])
-  end
+def user_feedback_params
+  params.expect(user_feedback: %i[name email feedback phone])
 end

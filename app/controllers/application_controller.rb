@@ -51,11 +51,15 @@ class ApplicationController < ActionController::API
 
   def extract_token_from_header
     header = request.headers['Authorization']
+    log_debug("Authorization Header: #{header}")
     header&.split&.last
   end
 
   def decode_token(token)
-    JsonWebToken.decode(token)
+    log_debug("Extracted Token: #{token}")
+    payload = JsonWebToken.decode(token)
+    log_debug("Decoded Payload: #{payload.inspect}")
+    payload
   end
 
   def log_debug(message)

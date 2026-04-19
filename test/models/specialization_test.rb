@@ -4,7 +4,7 @@ class SpecializationTest < ActiveSupport::TestCase
   # ---------------------
   # Presence Validations
   # --------------------
-  test 'is invalid without name' do
+  test 'is valid without name' do
     specialization = Specialization.new
     assert_not specialization.valid?
     assert_includes specialization.errors[:name], "can't be blank"

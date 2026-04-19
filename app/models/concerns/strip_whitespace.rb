@@ -9,8 +9,12 @@ module StripWhitespace
   private
 
   def strip_whitespace
+    Rails.logger.debug { "StripWhitespace called for #{self.class.name} with attributes: #{attributes}" }
     attributes.each do |key, value|
-      self[key] = value.strip.gsub(/\s+/, ' ') if value.is_a?(String)
+      if value.is_a?(String)
+        Rails.logger.debug { "Processing attribute: #{key}, value: '#{value}'" }
+        self[key] = value.strip.gsub(/\s+/, ' ')
+      end
     end
   end
 end

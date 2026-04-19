@@ -12,9 +12,9 @@ class Api::V1::MedicUsersController < ApplicationController
     user = MedicUser.new(user_params)
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
-      response.headers['Cache-Control'] = 'no-store'
-      response.headers['Pragma'] = 'no-cache'
       render json: { token: token, user: user_response(user) }, status: :created
+      response.headers['Cache_Control'] = 'no-store' # prevent caching of sensitive data
+      response.headers['Pragma'] = 'no-cache' # for older browsers
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_content
     end

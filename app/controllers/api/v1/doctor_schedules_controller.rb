@@ -29,12 +29,12 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   # Bulk upsert schedules (create or update per day+slot)
   def create
     schedules = []
-    payload = schedules_params
+    payload = schedule_params
 
     ActiveRecord::Base.transaction do
       payload[:available_days].each do |day|
         payload[:slots].each do |slot|
-          time = payload.dig(:times, slot) || payload.dig(:times, slot.to_s) || payload.dig(:times, slot.to_sym)
+          time = payload.dig(:times, slot)
 
           raise ArgumentError, "Missing times for slot: #{slot}" unless time
 
@@ -105,9 +105,5 @@ class Api::V1::DoctorSchedulesController < ApplicationController
           times: {} }
       ]
     )
-  end
-
-  def schedule_params
-    params.expect(doctor_schedule: %i[chamber_id available_day slot start_time end_time])
   end
 end
