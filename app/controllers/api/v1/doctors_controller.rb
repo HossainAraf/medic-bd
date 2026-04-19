@@ -16,8 +16,8 @@ class Api::V1::DoctorsController < ApplicationController
 
     render json: doctors.as_json(
       include: {
-        chambers: { only: %i[id name category address district_id] },
-        doctor_schedules: { only: %i[id available_day slot start_time end_time contact chamber_id] },
+        chambers: { only: %i[id name category address contact district_id] },
+        doctor_schedules: { only: %i[id available_day slot start_time end_time chamber_id] },
         specializations: { only: %i[id name] }
       }
     ), status: :ok
@@ -27,8 +27,8 @@ class Api::V1::DoctorsController < ApplicationController
   def show
     render json: @doctor.as_json(
       include: {
-        chambers: { only: %i[id name category address district_id] },
-        doctor_schedules: { only: %i[id available_day slot start_time end_time contact chamber_id] },
+        chambers: { only: %i[id name category address contact district_id] },
+        doctor_schedules: { only: %i[id available_day slot start_time end_time chamber_id] },
         specializations: { only: %i[id name] }
       }
     ), status: :ok
@@ -55,8 +55,8 @@ class Api::V1::DoctorsController < ApplicationController
 
     render json: doctors.as_json(
       include: {
-        chambers: { only: %i[id name category address district_id] },
-        doctor_schedules: { only: %i[id available_day slot start_time end_time contact chamber_id] },
+        chambers: { only: %i[id name category address contact district_id] },
+        doctor_schedules: { only: %i[id available_day slot start_time end_time chamber_id] },
         specializations: { only: %i[id name] }
       }
     ), status: :ok

@@ -25,6 +25,8 @@ module DoctorSchedules
         raise ActiveRecord::Rollback if @errors.any?
       end
 
+      return Result.new(success: false, data: nil, errors: @errors, message: 'Update failed') if @errors.any?
+
       if @schedules.empty?
         Result.new(success: true, data: nil, message: 'No schedules were changed')
       else

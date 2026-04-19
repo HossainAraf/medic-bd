@@ -13,21 +13,24 @@ class Api::V1::SpecializationsController < ApplicationController
   end
 
   def doctors
-    # Find doctors with the specified specialization_id and include associated data
-    @doctors = Doctor.joins(:specialization, doctor_schedule: :chamber)
-      .where(specialization_id: params[:id])
-      .select('doctors*,
-      specializations.name AS specialization_name,
-      chambers.name AS chamber_name,
-      doctor_schedule.available_day, doctor_schedule.available_time')
+    @doctors = Doctor.includes(:specializations, doctor_schedules: :chamber)
+                     .joins(:specializations)
+                     .where(specializations: { id: params[:id] })
+                     .distinct
 
     if @doctors.any?
       render json: @doctors.as_json(
         only: %i[id name],
-        methods: [:specialization_name, chamber_name, available_day, available_time]
+        include: {
+          specializations: { only: %i[id name] },
+          doctor_schedules: {
+            only: %i[id available_day slot start_time end_time chamber_id],
+            include: { chamber: { only: %i[id name category address contact district_id] } }
+          }
+        }
       )
     else
-      render json: { error: 'No doctors found with this specified specialization' }
+      render json: { error: 'No doctors found with this specified specialization' }, status: :not_found
     end
   end
 
