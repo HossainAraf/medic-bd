@@ -1,5 +1,6 @@
-class Api::V1::SpecializationsController < ApplicationController
-  skip_before_action :authorize_request, only: %i[index show doctors create]
+class Api::V1::SpecializationsController < Api::BaseController
+  before_action :authorize_admin, except: %i[index show doctors]
+  skip_before_action :authorize_request, only: %i[index show doctors]
 
   def index
     specializations = Specialization.all
@@ -13,21 +14,35 @@ class Api::V1::SpecializationsController < ApplicationController
   end
 
   def doctors
-    # Find doctors with the specified specialization_id and include associated data
-    @doctors = Doctor.joins(:specialization, doctor_schedule: :chamber)
-      .where(specialization_id: params[:id])
-      .select('doctors*,
+    specialization = Specialization.find(params[:id])
+    select_sql = <<~SQL.squish
+      doctors.id,
+      doctors.name,
       specializations.name AS specialization_name,
       chambers.name AS chamber_name,
-      doctor_schedule.available_day, doctor_schedule.available_time')
+      doctor_schedules.available_day,
+      doctor_schedules.start_time,
+      doctor_schedules.end_time
+    SQL
 
-    if @doctors.any?
-      render json: @doctors.as_json(
-        only: %i[id name],
-        methods: [:specialization_name, chamber_name, available_day, available_time]
-      )
+    doctors = Doctor.joins(:specializations, doctor_schedules: :chamber)
+      .where(specializations: { id: specialization.id })
+      .select(select_sql)
+
+    if doctors.any?
+      render json: doctors.map { |doctor|
+        {
+          id: doctor.id,
+          name: doctor.name,
+          specialization_name: doctor.specialization_name,
+          chamber_name: doctor.chamber_name,
+          available_day: doctor.available_day,
+          start_time: doctor.start_time,
+          end_time: doctor.end_time
+        }
+      }
     else
-      render json: { error: 'No doctors found with this specified specialization' }
+      render json: { error: 'No doctors found with this specified specialization' }, status: :not_found
     end
   end
 

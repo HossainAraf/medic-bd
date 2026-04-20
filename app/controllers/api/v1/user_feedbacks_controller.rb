@@ -1,4 +1,6 @@
-class Api::V1::UserFeedbacksController < ApplicationController
+class Api::V1::UserFeedbacksController < Api::BaseController
+  before_action :authorize_admin, except: %i[index create]
+  skip_before_action :authorize_request, only: %i[index create]
   def index
     user_feedbacks = UserFeedback.order(created_at: :desc)
     render json: user_feedbacks
@@ -35,8 +37,10 @@ class Api::V1::UserFeedbacksController < ApplicationController
       render json: { error: 'User feedback not found' }, status: :not_found
     end
   end
-end
 
-def user_feedback_params
-  params.expect(user_feedback: %i[name email feedback phone])
+  private
+
+  def user_feedback_params
+    params.expect(user_feedback: %i[name email feedback phone])
+  end
 end

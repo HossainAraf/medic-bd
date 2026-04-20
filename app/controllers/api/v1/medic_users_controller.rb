@@ -1,4 +1,4 @@
-class Api::V1::MedicUsersController < ApplicationController
+class Api::V1::MedicUsersController < Api::BaseController
   skip_before_action :authorize_request, only: [:create]
 
   # GET /api/v1/medic_users
@@ -13,7 +13,7 @@ class Api::V1::MedicUsersController < ApplicationController
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
       render json: { token: token, user: user_response(user) }, status: :created
-      response.headers['Cache_Control'] = 'no-store' # prevent caching of sensitive data
+      response.headers['Cache-Control'] = 'no-store' # prevent caching of sensitive data
       response.headers['Pragma'] = 'no-cache' # for older browsers
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_content

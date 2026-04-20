@@ -1,4 +1,4 @@
-class Api::V1::DoctorsController < ApplicationController
+class Api::V1::DoctorsController < Api::BaseController
   # Skip auth for public GET requests
   skip_before_action :authorize_request, only: %i[index show by_specialization_query filter_by_display_order]
   # Set doctor for show and update actions
@@ -89,7 +89,6 @@ class Api::V1::DoctorsController < ApplicationController
 
   def set_doctor
     @doctor = Doctor.find_by!(slug: params[:slug])
-    render json: { error: 'Doctor not found' }, status: :not_found unless @doctor
   end
 
   def doctor_params
