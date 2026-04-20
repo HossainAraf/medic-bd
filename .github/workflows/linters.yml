@@ -20,5 +20,5 @@ jobs:
           ruby-version: 3.3.9
           bundler-cache: true
       - name: Rubocop Report
-        run: bundle exec rubocop --color
+        run: bundle exec rubocop --config .rubocop.yml --color
   
