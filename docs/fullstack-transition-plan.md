@@ -64,6 +64,7 @@ app/
   controllers/
     api/
       v1/
+      base_controller.rb
     web/
       base_controller.rb
       home_controller.rb
