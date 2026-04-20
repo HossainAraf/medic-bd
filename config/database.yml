@@ -9,8 +9,6 @@ development:
   database: medic_bd_dev
   user: <%= Rails.application.credentials.dig(:development, :database_user) %>
   password: <%= Rails.application.credentials.dig(:development, :database_password) %>
-  host: 127.0.0.1
-  port: 5432
   schema_search_path: medicbd, public
 
 test:
