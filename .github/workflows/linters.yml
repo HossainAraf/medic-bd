@@ -1,6 +1,10 @@
 name: Linters
 
-on: pull_request
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 env:
   FORCE_COLOR: 1
@@ -10,14 +14,11 @@ jobs:
     name: Rubocop
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-ruby@v1
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.x
-      - name: Setup Rubocop
-        run: |
-          gem install --no-document rubocop -v '>= 1.0, < 2.0' # https://docs.rubocop.org/en/stable/installation/
-          [ -f .rubocop.yml ] || wget https://raw.githubusercontent.com/microverseinc/linters-config/master/ror/.rubocop.yml
+          ruby-version: 3.3.9
+          bundler-cache: true
       - name: Rubocop Report
-        run: rubocop --color
+        run: bundle exec rubocop --color
   

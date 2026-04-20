@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'auth/login', to: 'sessions#create'
 
-      resources :medic_users, except: %i[new edit]
+      resources :medic_users, only: %i[index create]
       resources :chambers, only: %i[index show create update destroy]
       resources :districts
 
