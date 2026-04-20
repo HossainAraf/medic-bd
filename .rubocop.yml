@@ -1,5 +1,7 @@
-require:
+plugins:
   - rubocop-rails
+
+require:
   - ./rubocop/cop/rails/rails8_enum_syntax.rb
 
 AllCops:
