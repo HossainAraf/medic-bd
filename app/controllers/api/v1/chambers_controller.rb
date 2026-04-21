@@ -1,6 +1,7 @@
-class Api::V1::ChambersController < ApplicationController
-  skip_before_action :authorize_request, only: %i[index]
-  before_action :set_chamber, only: %i[update]
+class Api::V1::ChambersController < Api::BaseController
+  before_action :authorize_admin, except: %i[index show]
+  skip_before_action :authorize_request, only: %i[index show]
+  before_action :set_chamber, only: %i[show update destroy]
 
   def index
     chambers = Chamber.includes(:district)
@@ -12,6 +13,10 @@ class Api::V1::ChambersController < ApplicationController
     chambers = chambers.where(category: params[:category].split(',').map(&:strip)) if params[:category].present?
 
     render json: chambers.as_json(include: { district: { only: [:name] } })
+  end
+
+  def show
+    render json: @chamber.as_json(include: { district: { only: [:name] } })
   end
 
   def create
@@ -29,6 +34,11 @@ class Api::V1::ChambersController < ApplicationController
     else
       render json: { errors: @chamber.errors.full_messages }, status: :unprocessable_content
     end
+  end
+
+  def destroy
+    @chamber.destroy
+    head :no_content
   end
 
   private

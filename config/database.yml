@@ -7,17 +7,19 @@ default: &default
 development:
   <<: *default
   database: medic_bd_dev
-  user: <%= Rails.application.credentials.dig(:development, :database_user) %>
-  password: <%= Rails.application.credentials.dig(:development, :database_password) %>
-  host: 127.0.0.1
-  port: 5432
+  username: <%= ENV['DB_USER'] || Rails.application.credentials.dig(:development, :database_user) || ENV['USER'] %>
+  password: <%= ENV['DB_PASSWORD'] || Rails.application.credentials.dig(:development, :database_password) %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV.fetch('DB_PORT', 5432) %>
   schema_search_path: medicbd, public
 
 test:
   <<: *default
   database: medic_bd_test
-  user: <%= Rails.application.credentials.dig(:test, :database_user) %>
-  password: <%= Rails.application.credentials.dig(:test, :database_password) %>
+  username: <%= ENV['DB_USER'] || Rails.application.credentials.dig(:test, :database_user) || ENV['USER'] %>
+  password: <%= ENV['DB_PASSWORD'] || Rails.application.credentials.dig(:test, :database_password) %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV.fetch('DB_PORT', 5432) %>
   schema_search_path: medicbd, public
   
 

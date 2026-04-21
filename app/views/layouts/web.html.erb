@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for?(:title) ? yield(:title) : "My Website" %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+</head>
+<body>
+  <header>
+    <%= render 'layouts/nav' %>
+  </header>
+  <main>
+    <%= yield %>
+  </main>
+  <%= render 'layouts/footer' %>  
+</body>
+</html>

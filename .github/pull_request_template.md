@@ -1,4 +1,4 @@
-## Language & Data Compliance (v1)
+## Language & Data Compliance (fullstack-v1)
 
 - [ ] All patient-facing content is stored in the **database**, not locale files
 - [ ] No domain data (doctor names, qualifications, specialties, addresses) added to `config/locales/*`

@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
-  # API root welcome
-  root to: proc { [200, {}, ['{"message": "Welcome to the API"}']] }, via: :get
-
-  # Lightweight health check
   get '/health', to: ->(_) { [200, {}, ['OK']] }
-
+  # --------------------
+  # API routes
+  # --------------------
   namespace :api do
     namespace :v1 do
       post 'auth/login', to: 'sessions#create'
 
-      resources :medic_users, except: %i[new edit]
+      resources :medic_users, only: %i[index create]
       resources :chambers, only: %i[index show create update destroy]
       resources :districts
 
@@ -31,5 +29,13 @@ Rails.application.routes.draw do
         end
       end
     end
+  end
+
+  # --------------------
+      # Web routes
+  # --------------------
+  root to: 'web/home#index'
+  scope module: :web do
+    resources :specializations, only: %i[index]
   end
 end

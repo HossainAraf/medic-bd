@@ -1,4 +1,4 @@
-class Api::V1::DoctorSchedulesController < ApplicationController
+class Api::V1::DoctorSchedulesController < Api::BaseController
   rescue_from ActiveRecord::RecordNotUnique do
     render json: {
       error: 'Schedule slot already exists for this doctor, chamber, and day'
@@ -29,7 +29,7 @@ class Api::V1::DoctorSchedulesController < ApplicationController
   # Bulk upsert schedules (create or update per day+slot)
   def create
     schedules = []
-    payload = schedule_params
+    payload = schedules_params
 
     ActiveRecord::Base.transaction do
       payload[:available_days].each do |day|
@@ -105,5 +105,9 @@ class Api::V1::DoctorSchedulesController < ApplicationController
           times: {} }
       ]
     )
+  end
+
+  def schedule_params
+    params.expect(doctor_schedule: %i[chamber_id available_day slot start_time end_time])
   end
 end

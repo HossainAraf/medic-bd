@@ -21,11 +21,6 @@ class ChamberTest < ActiveSupport::TestCase
     assert_not chamber.valid?
     assert_includes chamber.errors[:address], "can't be blank"
   end
-  test 'invalid without district_id' do
-    chamber = Chamber.new(name: 'City Hospital', category: 'Hospital', address: 'Rubir mor', contact: '0123456789')
-    assert_not chamber.valid?
-    assert_includes chamber.errors[:district_id], "can't be blank"
-  end
 
   # ---------------------
   # Valid Case

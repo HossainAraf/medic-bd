@@ -1,5 +1,6 @@
-class Api::V1::MedicUsersController < ApplicationController
+class Api::V1::MedicUsersController < Api::BaseController
   skip_before_action :authorize_request, only: [:create]
+  before_action :authorize_admin, only: [:index]
 
   # GET /api/v1/medic_users
   def index
@@ -13,7 +14,7 @@ class Api::V1::MedicUsersController < ApplicationController
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
       render json: { token: token, user: user_response(user) }, status: :created
-      response.headers['Cache_Control'] = 'no-store' # prevent caching of sensitive data
+      response.headers['Cache-Control'] = 'no-store' # prevent caching of sensitive data
       response.headers['Pragma'] = 'no-cache' # for older browsers
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_content
@@ -23,7 +24,7 @@ class Api::V1::MedicUsersController < ApplicationController
   private
 
   def user_params
-    params.expect(medic_user: %i[name email phone password password_confirmation role])
+    params.expect(medic_user: %i[name email phone password password_confirmation])
   end
 
   def user_response(user)
