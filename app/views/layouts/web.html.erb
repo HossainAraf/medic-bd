@@ -14,8 +14,6 @@
   <main>
     <%= yield %>
   </main>
-  <footer>
-    <p>&copy; <%= Time.current.year %> My Website. All rights reserved.</p>
-  </footer>
+  <%= render 'layouts/footer' %>  
 </body>
 </html>
