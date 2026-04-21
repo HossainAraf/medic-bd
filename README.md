@@ -7,293 +7,183 @@ MedicBD — Hybrid Rails (API + Full-Stack)
 - 📖 [About the Project](#about-project)
 - 🔗 [Live Links](#live-links)
 - 🛠 [Built With](#built-with)
-- ✨ [Key Features](#key-features)
-- 📜 [Project Evolution](#project-evolution)
+- 📚 [Current Scope](#current-scope)
 - 🧱 [Architecture Overview](#architecture-overview)
 - 💻 [Getting Started](#getting-started)
   - ⚙️ [Setup](#setup)
+  - 🛠 [Development](#development)
+  - ✅ [Testing](#testing)
   - 🌿 [Branching Strategy](#branching-strategy)
   - 🔌 [API Endpoints](#api-endpoints)
-- ⚠️ [Common Pitfalls (Solved)](#pitfalls)
-- 🔭 [Future Roadmap](#future-features)
+- ⚠️ [Common Pitfalls](#common-pitfalls)
+- 🔭 [Roadmap](#roadmap)
+- 📖 [Documentation](#documentation)
 - 👥 [Authors](#authors)
 - 📝 [License](#license)
 - 🙏 [Acknowledgements](#acknowledgements)
 
+## About the Project
+MedicBD is a hybrid Ruby on Rails application that started as an API-only backend and is now expanding into a fullstack experience.
 
-About the Project <a name="about-project"></a>
+The current codebase keeps the API stable while the web layer grows in small, safe slices. At the moment, the web side includes the home page and the specializations index, while the broader doctor and chamber SSR work is tracked in the transition plan.
 
-MedicBD is a hybrid Ruby on Rails application. It started as an API-only backend and now is evolving into a full-stack Rails app using Hotwire and Tailwind.
+This project focuses on:
 
-This project demonstrates:
+- Clean API design for v1 with JWT authentication.
+- A clear separation between API and web controllers.
+- A safe transition from API-only Rails to a fullstack Rails app.
+- Modern Rails 8 tooling with Tailwind CSS and Hotwire-ready structure.
 
-Clean API design (v1) with JWT authentication
+## Live Links
+- [Render](https://medic-bd-api.onrender.com/)
+- [Fly](https://medic-bd-api-late-cherry-5634.fly.dev/)
 
-Hybrid Rails approach with clear separation of API and Web layers
+## Built With
+- Ruby on Rails 8.1.1
+- PostgreSQL
+- Tailwind CSS
+- Hotwire-ready Rails structure
+- JWT authentication for the API layer
+- Rails test framework
 
-Safe transition from API-only → full-stack Rails
+## Current Scope
+- API v1 resources for doctors, chambers, districts, specializations, doctor schedules, medic users, and auth login.
+- Web routes for the home page and specializations listing.
+- API controllers that enforce JWT authentication in `Api::BaseController`.
+- Web controllers that use `Web::BaseController` with CSRF protection and the `web` layout.
+- Transition planning for SSR doctor and chamber pages in [docs/fullstack-transition-plan.md](docs/fullstack-transition-plan.md).
 
-Modern Rails 7 tooling: Hotwire, Tailwind, Importmap
+## Architecture Overview
+The app keeps the API and web layers separate:
 
-Production-ready thinking and maintainable architecture
-
-🔗 Live Links:<a name="about-project"></a>
-
- - <a href="https://medic-bd-api.onrender.com/">Render</a>
- - <a href="https://medic-bd-api-late-cherry-5634.fly.dev/">Fly</a>
-
-
-🛠 Built With <a name="built-with"></a>
-
-Ruby on Rails 7
-
-PostgreSQL
-
-Hotwire (Turbo + Stimulus)
-
-Tailwind CSS
-
-✨ Key Features <a name="key-features"></a>
-
-API (v1)
-
-Doctors, Specializations, Chambers, Districts
-
-Filter doctors by specialization & district
-
-Bulk update doctor schedules via service objects
-
-JWT-based authentication
-
-Designed for React / mobile clients
-
-Web (Full-Stack Rails)
-
-Server-rendered HTML (ERB)
-
-Hotwire (Turbo + Stimulus)
-
-Tailwind CSS
-
-Session-based authentication (planned)
-
-📜 Project Evolution <a name="project-evaluation"></a>
-Phase 1 — API-Only Rails (v1)
-
-Rails API-only mode
-
-JWT authentication
-
-JSON endpoints for doctors, chambers, districts, and feedback
-
-Designed for React and mobile clients
-
-Stable and production-ready
-
-Snapshot preserved in v1.0-api branch.
-
-Phase 2 — Hybrid Rails (Current)
-
-Transitioned to full-stack Rails
-
-Added Web controllers alongside API controllers
-
-Hotwire (Turbo + Stimulus) for UI interactivity
-
-Tailwind CSS styling
-
-API v1 endpoints remain unchanged and backward-compatible
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-## 🧱 Architecture Overview <a name="architecture-overview"></a>
-
-Controller Separation:
-
+```text
 ApplicationController < ActionController::Base
-└── Web::BaseController
-    ├── Web::HomeController
-    └── Web::DoctorsController
+├── Web::BaseController
+│   ├── Web::HomeController
+│   └── Web::SpecializationsController
+└── Api::BaseController < ActionController::API
+    ├── Api::V1::SessionsController
+    ├── Api::V1::DoctorsController
+    ├── Api::V1::ChambersController
+    ├── Api::V1::DistrictsController
+    ├── Api::V1::SpecializationsController
+    ├── Api::V1::DoctorSchedulesController
+    ├── Api::V1::MedicUsersController
+    └── Api::V1::UserFeedbacksController
+```
 
-Api::BaseController < ActionController::API
-└── Api::V1::DoctorsController
+The practical difference is simple:
 
+- API: stateless, JWT-based, JSON responses.
+- Web: server-rendered HTML, sessions/cookies, CSRF protection.
 
-Key Differences
+This separation keeps `/api/v1` backward-compatible while the web layer evolves.
 
-Concern	API	Web
-State	Stateless	Stateful
-Auth	JWT	Session + Cookies
-CSRF	Not needed	Required
-Views	❌	✅
+## Getting Started
+### Setup
+Install dependencies:
 
-This separation ensures:
+```bash
+bundle install
+```
 
-API backward-compatibility
+Create and prepare the database:
 
-Web layer evolution without cross-contamination
+```bash
+bundle exec rails db:create
+bundle exec rails db:migrate
+```
 
-markdown
+If you need a fresh test database, run:
 
-### Conventions
-**Language & Naming Conventions** — v1 (Bangla‑first)
-- File location [/docs/language-and-naming-v1.md]
+```bash
+RAILS_ENV=test bundle exec rails db:create
+RAILS_ENV=test bundle exec rails db:migrate
+```
 
-## 🚀 Getting Started <a name="getting-started"></a>
-
-Check Ruby & Node:
+### Development
+Check your Ruby version first:
 
 ```bash
 ruby --version
-node --version
-```
-Install dependencies:
-bash
-```
-bundle install
-npm install
-```
-Database Setup <a name="setup"></a>
-
-Create the database:
-bash
-```
-rails db:create
-```
-Schema setup for multiple APIs in a common DB
-
-When running multiple APIs on the same Postgres database, use separate schemas to isolate each API’s tables. For example:
-bash
-```
-psql $DATABASE_URL -c "CREATE SCHEMA medicbd;"
-psql $DATABASE_URL -c "CREATE SCHEMA another_api;"
-psql $DATABASE_URL -c "CREATE SCHEMA reporting_api;"
-```
-Then configure each API’s config/database.yml with its own schema_search_path:
-yaml
-
-production:
-  <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
-  schema_search_path: medicbd
-
-yaml
-
-production:
-  <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
-  schema_search_path: another_api
-
-This way, all APIs share the same DB instance but keep their tables isolated in separate schemas.
-
-Run migrations for each API:
-bash
-```
-rails db:migrate
-rails db:fixtures:load
 ```
 
-For specific environments:
-bash
-```
-RAILS_ENV=test rails db:create
-RAILS_ENV=production rails db:migrate
-```
+Start the app with the development process runner:
 
-Running the App
-
-Development (Full-Stack)
-```
+```bash
 bin/dev
 ```
 
-Important: bin/dev runs Rails + Tailwind watcher.
-rails s alone will not compile CSS.
+`bin/dev` runs the Rails server and the Tailwind watcher together. If you run `bin/rails s` directly, CSS will not rebuild automatically.
 
-API-only branches
+### Testing
+Run the test suite:
+
+```bash
+bundle exec rails test
 ```
-rails s
+
+Run linting:
+
+```bash
+bundle exec rubocop --color
 ```
-Running Tests
-```
-rails test
-```
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-🌿 Branching Strategy <a name="branching-strategy"></a>
-Branch	Purpose
-dev	Development branch
-v1.0-api	Stable API-only snapshot
-fullstack	Hotwire + Tailwind work
-main	Production-ready code
 
-This allows:
+## Branching Strategy
+Current branch flow follows the transition plan in [docs/branching_strategy.md](docs/branching_strategy.md):
 
-Safe experimentation
+- `main` for production-ready code.
+- `epic/fullstack-foundation` for the foundation work.
+- `feat/fullstack-mvp` for the long-running integration branch.
+- `feat/fullstack-<feature>` for small vertical slices.
+- `release/fullstack-m<milestone>` or `release/fullstack-mvp` for release cuts.
+- `hotfix/<scope>-<short-description>` for urgent fixes.
 
-API stability
+## API Endpoints
+The API base URL is:
 
-Clear project evolution history
-
-🔌 API Endpoints (v1) <a name="api-endpoints"></a>
-
-Base URL:
-
+```text
 http://127.0.0.1:3000/api/v1
-
-
-Examples:
-```
-| Endpoint                                      | Method | Description                                                          |
-| --------------------------------------------- | ------ | -------------------------------------------------------------------- |
-| `/doctors/:slug/doctor_schedules`             | POST   | Create a new schedule for a doctor. `:slug` refers to `doctor.slug`. |
-| `/doctors/:slug/doctor_schedules/bulk_update` | PATCH  | Bulk update schedules for a doctor. `:slug` refers to `doctor.slug`. |
 ```
 
-Full payload examples are documented in docs/api.md.
+Current v1 routes include:
 
-⚠️ Common Pitfalls (Solved) <a name="pitfalls"></a>
+- `POST /api/v1/auth/login`
+- `GET /api/v1/doctors`
+- `GET /api/v1/doctors/:slug`
+- `GET /api/v1/doctors/:slug/doctor_schedules`
+- `POST /api/v1/doctors/:slug/doctor_schedules`
+- `PATCH /api/v1/doctors/:slug/doctor_schedules/bulk_update`
+- `GET /api/v1/chambers`
+- `GET /api/v1/districts`
+- `GET /api/v1/specializations`
+- `GET /api/v1/specializations/:id`
+- `GET /api/v1/specializations/:id/doctors`
 
-Tailwind not updating? → Always use bin/dev
+## Common Pitfalls
+- Use `bin/dev` during web development so Tailwind recompiles correctly.
+- Keep JWT authentication inside `Api::BaseController`; do not move it into `ApplicationController`.
+- Keep web-only behavior in `Web::BaseController` so CSRF and layout handling stay isolated.
+- If the database schema is missing or migrations fail, review [docs/setup.md](docs/setup.md) before changing the app config.
 
-JWT auth removed from ApplicationController → API auth belongs in Api::BaseController
+## Roadmap
+The active transition plan is documented in [docs/fullstack-transition-plan.md](docs/fullstack-transition-plan.md). The next high-value steps are the SSR doctor pages, SEO metadata, and the booking flow.
 
-Web layer uses sessions + CSRF
+## Documentation
+- [Branching strategy](docs/branching_strategy.md)
+- [Database setup](docs/setup.md)
+- [Fullstack transition plan](docs/fullstack-transition-plan.md)
+- [Language and naming conventions](docs/language-and-naming-v1.md)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-🔭 Future Roadmap <a name="future-features"></a>
-
-Shared service objects for filtered doctors
-
-Turbo-powered filters
-
-Stimulus carousel for doctor sliders
-
-Appointment booking (full-stack)
-
-🧠 What This Project Demonstrates
-
-Rails controller inheritance mastery
-
-JWT vs session authentication knowledge
-
-Safe refactoring mindset
-
-Hotwire implemented intentionally
-
-Production-quality thinking
-
-
-👥 Authors:<a name="authors"></a>
-
+## Authors
 **Md Arafat Hossain**
 
-- GitHub: <a href="https://github.com/HossainAraf">HossainAraf </a>
-- LinkedIn: <a href="https://linkedin.com/in/md-arafat-hossain-111403275"> Md. Arafat Hossain </a>
-📄 License <a name="license"></a>
+- GitHub: [HossainAraf](https://github.com/HossainAraf)
+- LinkedIn: [Md. Arafat Hossain](https://linkedin.com/in/md-arafat-hossain-111403275)
 
-MIT License — see LICENSE.md
+## License
+MIT License. See [LICENSE](LICENSE).
 
-🙏 Acknowledgements <a name="acknowledgements"></a>
-
-Family support
-
-Microverse — structure, standards, and discipline
+## Acknowledgements
+- Family support.
+- Microverse for structure, standards, and discipline.
