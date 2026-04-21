@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   get '/health', to: ->(_) { [200, {}, ['OK']] }
-
+  # --------------------
   # API routes
+  # --------------------
   namespace :api do
     namespace :v1 do
       post 'auth/login', to: 'sessions#create'
@@ -30,7 +31,10 @@ Rails.application.routes.draw do
     end
   end
 
-  # Web routes
+  # --------------------
+      # Web routes
+  # --------------------
+  root to: 'web/home#index'
   scope module: :web do
     resources :specializations, only: %i[index]
   end
