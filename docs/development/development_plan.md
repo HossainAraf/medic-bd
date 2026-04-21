@@ -88,7 +88,7 @@ This branch intentionally avoids major database/search changes. Data/search work
 4. CSRF/session behavior is correct for web pages.✅
 5. CORS policy is not overbroad for production intent.✅
 6. CI lint and test remain passing.✅
-7. Configure tailwind css
+7. Configure tailwind css.✅
 
 ## Out of scope (explicit)
 1. Alias dictionary/search migration

@@ -12,7 +12,7 @@
 app/views/
 ├── layouts/
 │   ├── web.html.erb        # Main layout shell
-│   ├── _navbar.html.erb            # Global navigation
+│   ├── _nav.html.erb               # Global navigation
 │   ├── _footer.html.erb            # Global footer
 │   └── _seo.html.erb               # Title/meta/canonical/open graph tags
 │
@@ -47,7 +47,7 @@ app/views/
 │
 ├── appointments/
 │   ├── new.html.erb                # Appointment booking form page
-│   ├── create.turbo_stream.erb     # Success/error partial update response
+│   ├── create.turbo_stream.erb     # Optional future response when Hotwire/Turbo is introduced
 │   └── _form.html.erb              # Reusable booking form
 │
 ├── chambers/

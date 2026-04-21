@@ -14,10 +14,10 @@
 - [✅] Keep `Web::SpecializationsController#index` working
 
 ## Views/Layout
-- [ ] Add `app/views/layouts/web.html.erb`
+- [✅] Add `app/views/layouts/web.html.erb`
 - [✅] Add `app/views/web/home/index.html.erb`
 - [✅] Keep `app/views/web/specializations/index.html.erb` rendering
-- [] Configure tailwind css.
+- [✅] Configure Tailwind CSS
 
 ## Security and Config
 - [✅] Web pages use CSRF/session-safe behavior
