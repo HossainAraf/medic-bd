@@ -82,11 +82,11 @@ This branch intentionally avoids major database/search changes. Data/search work
 - Add/adjust a controller/integration test for web specializations page.
 
 ## Done criteria for this branch
-1. Web root page renders in browser.
-2. Web specialization index renders successfully.
+1. Web root page renders in browser.✅
+2. Web specialization index renders successfully.✅
 3. API routes and behavior remain backward-compatible.
-4. CSRF/session behavior is correct for web pages.
-5. CORS policy is not overbroad for production intent.
+4. CSRF/session behavior is correct for web pages.✅
+5. CORS policy is not overbroad for production intent.✅
 6. CI lint and test remain passing.
 
 ## Out of scope (explicit)

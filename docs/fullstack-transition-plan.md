@@ -193,8 +193,9 @@ docs/
 - Booking confirmation rate.
 - North-star metric: confirmed appointments per 100 doctor profile views.
 
-## First 10 Execution Tasks
-1. Create branch: `git checkout -b feat/fullstack-seo-mvp`
+## Initial Execution Tasks
+These are the first implementation steps for the foundation phase.
+1. Create branch: `git checkout -b epic/fullstack-foundation`
 2. Split routes into API and web route files.
 3. Add `Web::BaseController` and web layout.
 4. Build `Web::DoctorsController#index` + view.
@@ -215,7 +216,7 @@ docs/
 
 ## Quick Start Command Set
 ```bash
-git checkout -b feat/fullstack-seo-mvp
+git checkout -b epic/fullstack-foundation
 bundle install
 bin/rails routes
 ```
