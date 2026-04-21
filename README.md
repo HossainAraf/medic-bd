@@ -3,26 +3,8 @@ MedicBD — Hybrid Rails (API + Full-Stack)
 <a name="readme-top"></a>
 
 <div align="center"> <br/> </div>
-# 📗 Table of Contents
-- 📖 [About the Project](#about-project)
-- 🔗 [Live Links](#live-links)
-- 🛠 [Built With](#built-with)
-- 📚 [Current Scope](#current-scope)
-- 🧱 [Architecture Overview](#architecture-overview)
-- 💻 [Getting Started](#getting-started)
-  - ⚙️ [Setup](#setup)
-  - 🛠 [Development](#development)
-  - ✅ [Testing](#testing)
-  - 🌿 [Branching Strategy](#branching-strategy)
-  - 🔌 [API Endpoints](#api-endpoints)
-- ⚠️ [Common Pitfalls](#common-pitfalls)
-- 🔭 [Roadmap](#roadmap)
-- 📖 [Documentation](#documentation)
-- 👥 [Authors](#authors)
-- 📝 [License](#license)
-- 🙏 [Acknowledgements](#acknowledgements)
 
-## About the Project
+## 📖 About the Project
 MedicBD is a hybrid Ruby on Rails application that started as an API-only backend and is now expanding into a fullstack experience.
 
 The current codebase keeps the API stable while the web layer grows in small, safe slices. At the moment, the web side includes the home page and the specializations index, while the broader doctor and chamber SSR work is tracked in the transition plan.
@@ -34,11 +16,11 @@ This project focuses on:
 - A safe transition from API-only Rails to a fullstack Rails app.
 - Modern Rails 8 tooling with Tailwind CSS and Hotwire-ready structure.
 
-## Live Links
+## 🔗 Live Links
 - [Render](https://medic-bd-api.onrender.com/)
 - [Fly](https://medic-bd-api-late-cherry-5634.fly.dev/)
 
-## Built With
+## 🛠 Built With
 - Ruby on Rails 8.1.1
 - PostgreSQL
 - Tailwind CSS
@@ -46,14 +28,14 @@ This project focuses on:
 - JWT authentication for the API layer
 - Rails test framework
 
-## Current Scope
+## 📚 Current Scope
 - API v1 resources for doctors, chambers, districts, specializations, doctor schedules, medic users, and auth login.
 - Web routes for the home page and specializations listing.
 - API controllers that enforce JWT authentication in `Api::BaseController`.
 - Web controllers that use `Web::BaseController` with CSRF protection and the `web` layout.
 - Transition planning for SSR doctor and chamber pages in [docs/fullstack-transition-plan.md](docs/fullstack-transition-plan.md).
 
-## Architecture Overview
+## 🧱 Architecture Overview
 The app keeps the API and web layers separate:
 
 ```text
@@ -79,8 +61,8 @@ The practical difference is simple:
 
 This separation keeps `/api/v1` backward-compatible while the web layer evolves.
 
-## Getting Started
-### Setup
+## 💻 Getting Started
+### ⚙️ Setup
 Install dependencies:
 
 ```bash
@@ -101,7 +83,7 @@ RAILS_ENV=test bundle exec rails db:create
 RAILS_ENV=test bundle exec rails db:migrate
 ```
 
-### Development
+### 🛠 Development
 Check your Ruby version first:
 
 ```bash
@@ -116,7 +98,7 @@ bin/dev
 
 `bin/dev` runs the Rails server and the Tailwind watcher together. If you run `bin/rails s` directly, CSS will not rebuild automatically.
 
-### Testing
+### ✅ Testing
 Run the test suite:
 
 ```bash
@@ -129,7 +111,7 @@ Run linting:
 bundle exec rubocop --color
 ```
 
-## Branching Strategy
+## 🌿 Branching Strategy
 Current branch flow follows the transition plan in [docs/branching_strategy.md](docs/branching_strategy.md):
 
 - `main` for production-ready code.
@@ -139,7 +121,7 @@ Current branch flow follows the transition plan in [docs/branching_strategy.md](
 - `release/fullstack-m<milestone>` or `release/fullstack-mvp` for release cuts.
 - `hotfix/<scope>-<short-description>` for urgent fixes.
 
-## API Endpoints
+## 🔌 API Endpoints
 The API base URL is:
 
 ```text
@@ -160,30 +142,30 @@ Current v1 routes include:
 - `GET /api/v1/specializations/:id`
 - `GET /api/v1/specializations/:id/doctors`
 
-## Common Pitfalls
+## ⚠️ Common Pitfalls
 - Use `bin/dev` during web development so Tailwind recompiles correctly.
 - Keep JWT authentication inside `Api::BaseController`; do not move it into `ApplicationController`.
 - Keep web-only behavior in `Web::BaseController` so CSRF and layout handling stay isolated.
 - If the database schema is missing or migrations fail, review [docs/setup.md](docs/setup.md) before changing the app config.
 
-## Roadmap
+## 🔭 Roadmap
 The active transition plan is documented in [docs/fullstack-transition-plan.md](docs/fullstack-transition-plan.md). The next high-value steps are the SSR doctor pages, SEO metadata, and the booking flow.
 
-## Documentation
+## 📖 Documentation
 - [Branching strategy](docs/branching_strategy.md)
 - [Database setup](docs/setup.md)
 - [Fullstack transition plan](docs/fullstack-transition-plan.md)
 - [Language and naming conventions](docs/language-and-naming-v1.md)
 
-## Authors
+## 👥 Authors
 **Md Arafat Hossain**
 
 - GitHub: [HossainAraf](https://github.com/HossainAraf)
 - LinkedIn: [Md. Arafat Hossain](https://linkedin.com/in/md-arafat-hossain-111403275)
 
-## License
+## 📝 License
 MIT License. See [LICENSE](LICENSE).
 
-## Acknowledgements
+## 🙏 Acknowledgements
 - Family support.
 - Microverse for structure, standards, and discipline.
