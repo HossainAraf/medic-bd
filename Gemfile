@@ -11,6 +11,9 @@ gem 'pg', '~> 1.6'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 6.4'
 
+# Asset pipeline required by tailwindcss-rails installer tasks
+gem 'sprockets-rails'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
@@ -52,3 +55,5 @@ group :development do
 end
 
 gem 'dockerfile-rails', '>= 1.7', group: :development
+
+gem 'tailwindcss-rails', '~> 4.4'

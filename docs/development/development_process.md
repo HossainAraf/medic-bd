@@ -13,7 +13,17 @@
 
 ### Configure tailwind css
 
-run
+Add tainlwind css gem
 ```ruby
 bundle add tailwindcss-rails
+```
+
+Install tailwind css
+```ruby
+bin/rails tailwindcss:install
+```
+
+Add 'sprockets-rails' gem to ensure asset pipeline
+```ruby
+bundle add sprockets-rails
 ```

@@ -11,7 +11,7 @@
 ```text
 app/views/
 ├── layouts/
-│   ├── application.html.erb        # Main layout shell
+│   ├── web.html.erb        # Main layout shell
 │   ├── _navbar.html.erb            # Global navigation
 │   ├── _footer.html.erb            # Global footer
 │   └── _seo.html.erb               # Title/meta/canonical/open graph tags
