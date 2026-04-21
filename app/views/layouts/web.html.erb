@@ -1,0 +1,28 @@
+# web.html.erb [default layout for web pages]
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for?(:title) ? yield(:title) : "My Website" %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_pack_tag 'application' %>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><%= link_to 'Home', root_path %></li>
+        <li><%= link_to 'About', about_path %></li>
+        <li><%= link_to 'Contact', contact_path %></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <%= yield %>
+  </main>
+  <footer>
+    <p>&copy; <%= Time.current.year %> My Website. All rights reserved.</p>
+  </footer>
+</body>
+</html>
